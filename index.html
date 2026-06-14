@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free AI Token Counter & System Prompt Wrapper - No Signup</title>
+    <meta name="description" content="Calculate prompt tokens instantly and clean up code layout gapping with our free, lightweight system prompt wrapper tool. No signup or login required.">
+    <meta name="google-site-verification" content="ms0zfheV324R0EqUXlXutVtivDEFxUi0rvMsceQG44" />
+    <style>
+        body { background-color: #0b0f19; color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; min-height: 100vh; display: flex; flex-direction: column; justify-content: space-between; padding: 2rem 1rem; box-sizing: border-box; }
+        .container { max-w: 800px; width: 100%; margin: 0 auto; display: flex; flex-direction: column; flex-grow: 1; }
+        header { text-align: center; margin-bottom: 2rem; }
+        h1 { font-size: 2.5rem; font-weight: 800; color: #22d3ee; margin: 0 0 0.5rem 0; letter-spacing: -0.025rem; }
+        header p { color: #94a3b8; margin: 0; font-size: 1rem; }
+        main { background-color: #111827; border: 1px solid #1f2937; padding: 1.5rem; border-radius: 1rem; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.5); display: flex; flex-direction: column; flex-grow: 1; margin-bottom: 2rem; }
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; background-color: #030712; padding: 1rem; border-radius: 0.75rem; border: 1px solid #1f2937; text-align: center; margin-bottom: 1.5rem; }
+        .stat-item span:first-child { display: block; color: #64748b; text-transform: uppercase; font-size: 0.65rem; letter-spacing: 0.05rem; font-weight: 700; margin-bottom: 0.25rem; }
+        .stat-cyan { color: #22d3ee; font-size: 1.25rem; font-weight: 700; }
+        .stat-indigo { color: #818cf8; font-size: 1.25rem; font-weight: 700; }
+        .stat-emerald { color: #34d399; font-size: 1.25rem; font-weight: 700; }
+        textarea { width: 100%; flex-grow: 1; min-height: 250px; padding: 1rem; background-color: #030712; border: 1px solid #1f2937; border-radius: 0.75rem; color: #e2e8f0; font-family: monospace; font-size: 0.875rem; resize: none; box-sizing: border-box; outline: none; }
+        textarea:focus { border-color: #22d3ee; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>PromptLightning</h1>
+            <p>Clean code spaces, count tokens, and wrap system prompts instantly.</p>
+        </header>
+        <main>
+            <div class="stats-grid">
+                <div class="stat-item"><span>Tokens</span><span id="tokenCount" class="stat-cyan">0</span></div>
+                <div class="stat-item"><span>Characters</span><span id="charCount" class="stat-indigo">0</span></div>
+                <div class="stat-item"><span>Lines</span><span id="lineCount" class="stat-emerald">0</span></div>
+            </div>
+            <textarea id="promptInput" placeholder="Paste your system prompt or dirty code block here..."></textarea>
+        </main>
+    </div>
+    <script>
+        const input = document.getElementById('promptInput');
+        const tokenCount = document.getElementById('tokenCount');
+        const charCount = document.getElementById('charCount');
+        const lineCount = document.getElementById('lineCount');
+        function updateMetrics() {
+            const text = input.value;
+            charCount.textContent = text.length;
+            lineCount.textContent = text ? text.split('\n').length : 0;
+            const cleaned = text.replace(/\s+/g, ' ').trim();
+            const tokens = cleaned ? Math.round(cleaned.split(' ').length * 1.3) : 0;
+            tokenCount.textContent = tokens;
+        }
+        input.addEventListener('input', updateMetrics);
+    </script>
+</body>
+</html>
