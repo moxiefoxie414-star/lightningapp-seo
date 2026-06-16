@@ -36,6 +36,25 @@
                 <div class="stat-item"><span>Lines</span><span id="lineCount" class="stat-emerald">0</span></div>
             </div>
             <textarea id="promptInput" placeholder="Paste your system prompt or dirty code block here..."></textarea>
+             <!-- LLM Testing Controls -->
+        <div style="margin-top: 15px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+            <label for="modelSelector" style="color: #ccc; font-size: 14px;">Select Model:</label>
+            <select id="modelSelector" style="background: #222; color: #fff; border: 1px solid #444; padding: 6px 12px; border-radius: 4px; cursor: pointer;">
+                <option value="GPT-4 Omni">GPT-4 Omni</option>
+                <option value="Claude 3.5 Sonnet">Claude 3.5 Sonnet</option>
+                <option value="Gemini 1.5 Pro">Gemini 1.5 Pro</option>
+            </select>
+            <button id="testPromptBtn" style="background: #0070f3; color: white; border: none; padding: 7px 15px; cursor: pointer; border-radius: 4px; font-weight: 500;">Test Prompt</button>
+        </div>
+
+        <!-- Persistent Storage History Panel -->
+        <div id="history-container" style="margin-top: 25px; padding-top: 15px; border-top: 1px solid #333;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <h3 style="margin: 0; font-size: 16px; color: #fff;">Saved Prompt History</h3>
+                <button id="clear-history" style="background: transparent; color: #ff4d4d; border: 1px solid #ff4d4d; padding: 4px 8px; cursor: pointer; border-radius: 4px; font-size: 12px;">Clear All</button>
+            </div>
+            <ul id="history-list" style="list-style-type: none; padding-left: 0; margin: 0; max-height: 200px; overflow-y: auto;"></ul>
+        </div>
         </main>
     </div>
     <script>
@@ -52,6 +71,74 @@
             tokenCount.textContent = tokens;
         }
         input.addEventListener('input', updateMetrics);
-    </script>
+          // Setup elements for History and LLM testing
+    const modelSelector = document.getElementById('modelSelector');
+    const testPromptBtn = document.getElementById('testPromptBtn');
+    const historyList = document.getElementById('history-list');
+    const clearBtn = document.getElementById('clear-history');
+
+    // 1. Persistent Storage: Load history immediately from browser storage
+    let savedPrompts = JSON.parse(localStorage.getItem('promptHistory')) || [];
+    renderHistory();
+
+    // 2. LLM Testing: Action when clicking the test button
+    testPromptBtn.addEventListener('click', () => {
+        const text = input.value.trim();
+        const selectedModel = modelSelector.value;
+
+        if (!text) {
+            alert('Please paste or type a prompt first!');
+            return;
+        }
+
+        // Add to history array
+        savedPrompts.unshift({
+            text: text,
+            model: selectedModel,
+            timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        });
+
+        // Keep only the last 10 entries
+        if (savedPrompts.length > 10) savedPrompts.pop();
+
+        // Save to browser persistent local storage
+        localStorage.setItem('promptHistory', JSON.stringify(savedPrompts));
+        renderHistory();
+
+        // Visual feedback simulating LLM Testing execution
+        testPromptBtn.textContent = 'Running...';
+        testPromptBtn.style.background = '#222';
+        setTimeout(() => {
+            testPromptBtn.textContent = 'Test Prompt';
+            testPromptBtn.style.background = '#0070f3';
+            alert(`Prompt successfully simulated against ${selectedModel}! Check your console or visual logs.`);
+        }, 800);
+    });
+
+    // 3. Render history items to the screen UI
+    function renderHistory() {
+        if (savedPrompts.length === 0) {
+            historyList.innerHTML = `<li style="color: #666; font-size: 13px; font-style: italic; padding: 5px 0;">No history saved yet.</li>`;
+            return;
+        }
+        historyList.innerHTML = savedPrompts.map(item => `
+            <li style="padding: 10px; border-bottom: 1px solid #222; font-size: 13px; color: #ddd; background: #111; margin-bottom: 6px; border-radius: 4px; line-height: 1.4;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                    <span style="font-weight: bold; font-size: 11px; color: #0070f3;">[${item.model}]</span>
+                    <span style="color: #555; font-size: 11px;">${item.timestamp}</span>
+                </div>
+                <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;">
+                    ${item.text}
+                </div>
+            </li>
+        `).join('');
+    }
+
+    // 4. Clear all persistent history data
+    clearBtn.addEventListener('click', () => {
+        savedPrompts = [];
+        localStorage.removeItem('promptHistory');
+        renderHistory();
+    });    </script>
 </body>
 </html>
