@@ -115,24 +115,33 @@
         }, 800);
     });
 
-    // 3. Render history items to the screen UI
+    // 3. Render history items to the screen UI (with restoration click)
     function renderHistory() {
         if (savedPrompts.length === 0) {
             historyList.innerHTML = `<li style="color: #666; font-size: 13px; font-style: italic; padding: 5px 0;">No history saved yet.</li>`;
             return;
         }
-        historyList.innerHTML = savedPrompts.map(item => `
-            <li style="padding: 10px; border-bottom: 1px solid #222; font-size: 13px; color: #ddd; background: #111; margin-bottom: 6px; border-radius: 4px; line-height: 1.4;">
-                <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+        historyList.innerHTML = savedPrompts.map((item, index) => `
+            <li onclick="restorePrompt(${index})" style="padding: 10px; border-bottom: 1px solid #222; font-size: 13px; color: #ddd; background: #111; margin-bottom: 6px; border-radius: 4px; line-height: 1.4; cursor: pointer; transition: background 0.2s;" onmouseover="this.style.background='#1a1a1a'" onmouseout="this.style.background='#111'">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 4px; pointer-events: none;">
                     <span style="font-weight: bold; font-size: 11px; color: #0070f3;">[${item.model}]</span>
                     <span style="color: #555; font-size: 11px;">${item.timestamp}</span>
                 </div>
-                <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;">
+                <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; pointer-events: none;">
                     ${item.text}
                 </div>
             </li>
         `).join('');
     }
+
+    // New Helper: Restore the clicked prompt and recalculate your counters automatically
+    window.restorePrompt = function(index) {
+        if (savedPrompts[index]) {
+            input.value = savedPrompts[index].text;
+            modelSelector.value = savedPrompts[index].model;
+            updateMetrics(); // Fires your existing counter update logic instantly
+        }
+    };
 
     // 4. Clear all persistent history data
     clearBtn.addEventListener('click', () => {
