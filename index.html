@@ -102,7 +102,7 @@
         let savedPrompts = JSON.parse(localStorage.getItem('promptHistory')) || [];
         renderHistory();
 
-        function updateMetrics() {
+            function updateMetrics() {
             const text = input.value;
             const charCount = text.length;
             const lineCount = text === '' ? 0 : text.split('\n').length;
