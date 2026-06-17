@@ -34,45 +34,8 @@
                 <div class="stat-item"><span>Characters</span><span id="charCount" class="stat-indigo">0</span></div>
                 <div class="stat-item"><span>Lines</span><span id="lineCount" class="stat-emerald">0</span></div>
             </div>
-            
+
             <textarea id="promptInput" placeholder="Paste your system prompt or dirty code block here..."></textarea>
-
-            <!-- Real-Time Cost Estimation Metadata -->
-            <div style="margin-top: 10px; font-size: 13px; color: #888;">
-                Estimated Input Cost: <span id="costDisplay" style="color: #0070f3; font-weight: bold;">$0.000000</span>
-            </div>
-
-            <!-- LLM Testing Controls -->
-            <div style="margin-top: 15px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
-                <label for="modelSelector" style="color: #ccc; font-size: 14px;">Select Model:</label>
-                <select id="modelSelector" style="background: #222; color: #fff; border: 1px solid #444; padding: 6px 12px; border-radius: 4px; cursor: pointer;">
-                    <option value="GPT-4 Omni">GPT-4 Omni</option>
-                    <option value="Claude 3.5 Sonnet">Claude 3.5 Sonnet</option>
-                    <option value="Gemini 1.5 Pro">Gemini 1.5 Pro</option>
-                </select>
-                <button id="testPromptBtn" style="background: #0070f3; color: white; border: none; padding: 7px 15px; cursor: pointer; border-radius: 4px; font-weight: 500;">Test Prompt</button>
-            </div>
-
-            <!-- Mock AI Output Terminal Screen -->
-            <div id="outputTerminal" style="display: none; margin-top: 20px; padding: 15px; background: #0c1017; border: 1px solid #30363d; border-radius: 6px;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                    <span id="terminalTitle" style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: bold;">AI Response</span>
-                    <button id="copyOutputBtn" style="background: #21262d; color: #c9d1d9; border: 1px solid #30363d; padding: 4px 8px; font-size: 12px; border-radius: 4px; cursor: pointer;">Copy Output</button>
-                </div>
-                <div id="terminalBody" style="font-family: monospace; font-size: 14px; color: #e6edf3; line-height: 1.5; white-space: pre-wrap;"></div>
-            </div>
-
-            <!-- Persistent Storage History Panel -->
-            <div id="history-container" style="margin-top: 25px; padding-top: 15px; border-top: 1px solid #333;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                    <h3 style="margin: 0; font-size: 16px; color: #fff;">Saved Prompt History</h3>
-                    <div style="display: flex; gap: 8px;">
-                        <button id="downloadLogBtn" style="background: transparent; color: #0070f3; border: 1px solid #0070f3; padding: 4px 8px; cursor: pointer; border-radius: 4px; font-size: 12px;">Download Log</button>
-                        <button id="clear-history" style="background: transparent; color: #ff4d4d; border: 1px solid #ff4d4d; padding: 4px 8px; cursor: pointer; border-radius: 4px; font-size: 12px;">Clear All</button>
-                    </div>
-                </div>
-                <ul id="history-list" style="list-style-type: none; padding-left: 0; margin: 0; max-height: 200px; overflow-y: auto;"></ul>
-            </div>
         </main>
     </div>
 
@@ -81,31 +44,6 @@
         var tokenCountDisplay = document.getElementById('tokenCount');
         var charCountDisplay = document.getElementById('charCount');
         var lineCountDisplay = document.getElementById('lineCount');
-        
-        var costDisplay = document.getElementById('costDisplay');
-        var modelSelector = document.getElementById('modelSelector');
-        var testPromptBtn = document.getElementById('testPromptBtn');
-        var outputTerminal = document.getElementById('outputTerminal');
-        var terminalTitle = document.getElementById('terminalTitle');
-        var terminalBody = document.getElementById('terminalBody');
-        var copyOutputBtn = document.getElementById('copyOutputBtn');
-        var downloadLogBtn = document.getElementById('downloadLogBtn');
-        var historyList = document.getElementById('history-list');
-        var clearBtn = document.getElementById('clear-history');
-
-        var pricingMap = {
-            "GPT-4 Omni": 0.0025,       
-            "Claude 3.5 Sonnet": 0.003, 
-            "Gemini 1.5 Pro": 0.00125   
-        };
-
-        var savedPrompts = [];
-        try {
-            var rawData = localStorage.getItem('promptHistory');
-            if (rawData) { savedPrompts = JSON.parse(rawData); }
-        } catch(e) { savedPrompts = []; }
-        
-        renderHistory();
 
         function updateMetrics() {
             var text = input.value;
@@ -116,117 +54,10 @@
             tokenCountDisplay.textContent = tokenCount;
             charCountDisplay.textContent = charCount;
             lineCountDisplay.textContent = lineCount;
-
-            var currentModel = modelSelector.value;
-            var pricePerThousand = pricingMap[currentModel] || 0.002;
-            var calculatedCost = (tokenCount / 1000) * pricePerThousand;
-            costDisplay.textContent = '$' + calculatedCost.toFixed(6);
         }
 
         input.addEventListener('input', updateMetrics);
-        modelSelector.addEventListener('change', updateMetrics);
-
-        testPromptBtn.addEventListener('click', function() {
-            var text = input.value.trim();
-            var selectedModel = modelSelector.value;
-
-            if (!text) {
-                alert('Please paste or type a prompt first!');
-                return;
-            }
-
-            savedPrompts.unshift({
-                text: text,
-                model: selectedModel,
-                timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-            });
-            if (savedPrompts.length > 10) savedPrompts.pop();
-            try {
-                localStorage.setItem('promptHistory', JSON.stringify(savedPrompts));
-            } catch(e) {}
-            renderHistory();
-
-            testPromptBtn.textContent = 'Processing...';
-            testPromptBtn.style.background = '#222';
-            
-            var mockResponses = [
-                '[System Engine: ' + selectedModel + ']\nSuccessfully analyzed your prompt layout. Structural parsing suggests optimal clarity metrics. Token configuration is stable. Ready for API routing deployment.',
-                '[System Engine: ' + selectedModel + ']\nPrompt execution simulation completed. Metrics indicate strong context grounding. Token distribution is fully optimized for continuous model processing.'
-            ];
-            var chosenResponse = mockResponses[Math.floor(Math.random() * mockResponses.length)];
-
-            outputTerminal.style.display = 'block';
-            terminalTitle.textContent = selectedModel + ' Output Response';
-            terminalTitle.style.color = '#0070f3';
-            terminalBody.textContent = '';
-            
-            var idx = 0;
-            function typeWriter() {
-                if (idx < chosenResponse.length) {
-
-terminalBody.textContent += chosenResponse.charAt(idx);
-idx++;
-setTimeout(typeWriter, 15);
-} else {
-testPromptBtn.textContent = 'Test Prompt';
-testPromptBtn.style.background = '#0070f3';
-}
-}
-typeWriter();
-});
-copyOutputBtn.addEventListener('click', function() {
-var outputText = terminalBody.textContent;
-if (outputText) {
-navigator.clipboard.writeText(outputText);
-var originalText = copyOutputBtn.textContent;
-copyOutputBtn.textContent = 'Copied!';
-setTimeout(function() { copyOutputBtn.textContent = originalText; }, 1500);
-}
-});
-downloadLogBtn.addEventListener('click', function() {
-if (savedPrompts.length === 0) {
-alert('Your history is empty! Nothing to download.');
-return;
-}
-var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(savedPrompts, null, 2));
-var downloadAnchor = document.createElement('a');
-downloadAnchor.setAttribute("href", dataStr);
-downloadAnchor.setAttribute("download", "prompt_lightning_log.json");
-document.body.appendChild(downloadAnchor);
-downloadAnchor.click();
-downloadAnchor.remove();
-});
-function renderHistory() {
-if (savedPrompts.length === 0) {
-historyList.innerHTML = 'No history saved yet.';
-return;
-}
-var listHtml = '';
-for(var i = 0; i < savedPrompts.length; i++) {
-var item = savedPrompts[i];
-listHtml += '' +
-'' +
-'[' + item.model + ']' +
-'' + item.timestamp + '' +
-'' +
-'' +
-item.text +
-'' +
-'';
-}
-historyList.innerHTML = listHtml;
-}
-window.restorePrompt = function(index) {
-if (savedPrompts[index]) {
-input.value = savedPrompts[index].text;
-modelSelector.value = savedPrompts[index].model;
-updateMetrics();
-}
-};
-clearBtn.addEventListener('click', function() {
-savedPrompts = [];
-localStorage.removeItem('promptHistory');
-outputTerminal.style.display = 'none';
-renderHistory();
-});
-updateMetrics();
+        updateMetrics();
+    </script>
+</body>
+</html>
