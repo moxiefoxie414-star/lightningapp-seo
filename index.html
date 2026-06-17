@@ -77,53 +77,58 @@
     </div>
 
     <script>
-        const input = document.getElementById('promptInput');
-        const tokenCountDisplay = document.getElementById('tokenCount');
-        const charCountDisplay = document.getElementById('charCount');
-        const lineCountDisplay = document.getElementById('lineCount');
+        var input = document.getElementById('promptInput');
+        var tokenCountDisplay = document.getElementById('tokenCount');
+        var charCountDisplay = document.getElementById('charCount');
+        var lineCountDisplay = document.getElementById('lineCount');
         
-        const costDisplay = document.getElementById('costDisplay');
-        const modelSelector = document.getElementById('modelSelector');
-        const testPromptBtn = document.getElementById('testPromptBtn');
-        const outputTerminal = document.getElementById('outputTerminal');
-        const terminalTitle = document.getElementById('terminalTitle');
-        const terminalBody = document.getElementById('terminalBody');
-        const copyOutputBtn = document.getElementById('copyOutputBtn');
-        const downloadLogBtn = document.getElementById('downloadLogBtn');
-        const historyList = document.getElementById('history-list');
-        const clearBtn = document.getElementById('clear-history');
+        var costDisplay = document.getElementById('costDisplay');
+        var modelSelector = document.getElementById('modelSelector');
+        var testPromptBtn = document.getElementById('testPromptBtn');
+        var outputTerminal = document.getElementById('outputTerminal');
+        var terminalTitle = document.getElementById('terminalTitle');
+        var terminalBody = document.getElementById('terminalBody');
+        var copyOutputBtn = document.getElementById('copyOutputBtn');
+        var downloadLogBtn = document.getElementById('downloadLogBtn');
+        var historyList = document.getElementById('history-list');
+        var clearBtn = document.getElementById('clear-history');
 
-        const pricingMap = {
+        var pricingMap = {
             "GPT-4 Omni": 0.0025,       
             "Claude 3.5 Sonnet": 0.003, 
             "Gemini 1.5 Pro": 0.00125   
         };
 
-        let savedPrompts = JSON.parse(localStorage.getItem('promptHistory')) || [];
+        var savedPrompts = [];
+        try {
+            var rawData = localStorage.getItem('promptHistory');
+            if (rawData) { savedPrompts = JSON.parse(rawData); }
+        } catch(e) { savedPrompts = []; }
+        
         renderHistory();
 
         function updateMetrics() {
-            const text = input.value;
-            const charCount = text.length;
-            const lineCount = text === '' ? 0 : text.split('\n').length;
-            const tokenCount = Math.ceil(charCount / 4);
+            var text = input.value;
+            var charCount = text.length;
+            var lineCount = text === '' ? 0 : text.split('\n').length;
+            var tokenCount = Math.ceil(charCount / 4);
 
             tokenCountDisplay.textContent = tokenCount;
             charCountDisplay.textContent = charCount;
             lineCountDisplay.textContent = lineCount;
 
-            const currentModel = modelSelector.value;
-            const pricePerThousand = pricingMap[currentModel] || 0.002;
-            const calculatedCost = (tokenCount / 1000) * pricePerThousand;
-            costDisplay.textContent = `$${calculatedCost.toFixed(6)}`;
+            var currentModel = modelSelector.value;
+            var pricePerThousand = pricingMap[currentModel] || 0.002;
+            var calculatedCost = (tokenCount / 1000) * pricePerThousand;
+            costDisplay.textContent = '$' + calculatedCost.toFixed(6);
         }
 
         input.addEventListener('input', updateMetrics);
         modelSelector.addEventListener('change', updateMetrics);
 
-        testPromptBtn.addEventListener('click', () => {
-            const text = input.value.trim();
-            const selectedModel = modelSelector.value;
+        testPromptBtn.addEventListener('click', function() {
+            var text = input.value.trim();
+            var selectedModel = modelSelector.value;
 
             if (!text) {
                 alert('Please paste or type a prompt first!');
@@ -136,30 +141,32 @@
                 timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
             });
             if (savedPrompts.length > 10) savedPrompts.pop();
-            localStorage.setItem('promptHistory', JSON.stringify(savedPrompts));
+            try {
+                localStorage.setItem('promptHistory', JSON.stringify(savedPrompts));
+            } catch(e) {}
             renderHistory();
 
             testPromptBtn.textContent = 'Processing...';
             testPromptBtn.style.background = '#222';
             
-            const mockResponses = [
-                `[System Engine: \${selectedModel}]\nSuccessfully analyzed your prompt layout. Structural parsing suggests optimal clarity metrics. Token configuration is stable. Ready for API routing deployment.`,
-                `[System Engine: \${selectedModel}]\nPrompt execution simulation completed. Metrics indicate strong context grounding. Token distribution is fully optimized for continuous model processing.`
+            var mockResponses = [
+                '[System Engine: ' + selectedModel + ']\nSuccessfully analyzed your prompt layout. Structural parsing suggests optimal clarity metrics. Token configuration is stable. Ready for API routing deployment.',
+                '[System Engine: ' + selectedModel + ']\nPrompt execution simulation completed. Metrics indicate strong context grounding. Token distribution is fully optimized for continuous model processing.'
             ];
-            const chosenResponse = mockResponses[Math.floor(Math.random() * mockResponses.length)];
+            var chosenResponse = mockResponses[Math.floor(Math.random() * mockResponses.length)];
 
             outputTerminal.style.display = 'block';
-            terminalTitle.textContent = \`\${selectedModel} Output Response\`;
+            terminalTitle.textContent = selectedModel + ' Output Response';
             terminalTitle.style.color = '#0070f3';
             terminalBody.textContent = '';
             
-            let idx = 0;
+            var idx = 0;
             function typeWriter() {
                 if (idx < chosenResponse.length) {
-                    terminalBody.textContent += chosenResponse.charAt(idx);
-                    idx++;
-                    setTimeout(typeWriter, 15); 
 
+terminalBody.textContent += chosenResponse.charAt(idx);
+idx++;
+setTimeout(typeWriter, 15);
 } else {
 testPromptBtn.textContent = 'Test Prompt';
 testPromptBtn.style.background = '#0070f3';
@@ -167,22 +174,22 @@ testPromptBtn.style.background = '#0070f3';
 }
 typeWriter();
 });
-copyOutputBtn.addEventListener('click', () => {
-const outputText = terminalBody.textContent;
+copyOutputBtn.addEventListener('click', function() {
+var outputText = terminalBody.textContent;
 if (outputText) {
 navigator.clipboard.writeText(outputText);
-const originalText = copyOutputBtn.textContent;
+var originalText = copyOutputBtn.textContent;
 copyOutputBtn.textContent = 'Copied!';
-setTimeout(() => copyOutputBtn.textContent = originalText, 1500);
+setTimeout(function() { copyOutputBtn.textContent = originalText; }, 1500);
 }
 });
-downloadLogBtn.addEventListener('click', () => {
+downloadLogBtn.addEventListener('click', function() {
 if (savedPrompts.length === 0) {
 alert('Your history is empty! Nothing to download.');
 return;
 }
-const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(savedPrompts, null, 2));
-const downloadAnchor = document.createElement('a');
+var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(savedPrompts, null, 2));
+var downloadAnchor = document.createElement('a');
 downloadAnchor.setAttribute("href", dataStr);
 downloadAnchor.setAttribute("download", "prompt_lightning_log.json");
 document.body.appendChild(downloadAnchor);
@@ -191,20 +198,23 @@ downloadAnchor.remove();
 });
 function renderHistory() {
 if (savedPrompts.length === 0) {
-historyList.innerHTML = <li style="color: #666; font-size: 13px; font-style: italic; padding: 5px 0;">No history saved yet.</li>;
+historyList.innerHTML = 'No history saved yet.';
 return;
 }
-historyList.innerHTML = savedPrompts.map((item, index) => `
-
-
-[${item.model}]
-${item.timestamp}
-
-
-${item.text}
-
-
-`).join('');
+var listHtml = '';
+for(var i = 0; i < savedPrompts.length; i++) {
+var item = savedPrompts[i];
+listHtml += '' +
+'' +
+'[' + item.model + ']' +
+'' + item.timestamp + '' +
+'' +
+'' +
+item.text +
+'' +
+'';
+}
+historyList.innerHTML = listHtml;
 }
 window.restorePrompt = function(index) {
 if (savedPrompts[index]) {
@@ -213,11 +223,10 @@ modelSelector.value = savedPrompts[index].model;
 updateMetrics();
 }
 };
-clearBtn.addEventListener('click', () => {
+clearBtn.addEventListener('click', function() {
 savedPrompts = [];
 localStorage.removeItem('promptHistory');
 outputTerminal.style.display = 'none';
 renderHistory();
 });
 updateMetrics();
-
