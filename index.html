@@ -18,7 +18,7 @@
         .stat-cyan { color: #22d3ee; font-size: 1.25rem; font-weight: 700; }
         .stat-indigo { color: #818cf8; font-size: 1.25rem; font-weight: 700; }
         .stat-emerald { color: #34d399; font-size: 1.25rem; font-weight: 700; }
-        textarea { width: 100%; box-sizing: border-box; flex-grow: 1; min-height: 250px; padding: 1rem; background-color: #030712; border: 1px solid #1f2937; border-radius: 0.5rem; color: #f0fafc; font-family: monospace; font-size: 0.95rem; line-height: 1.5; resize: vertical; outline: none; }
+        textarea { width: 100%; box-sizing: border-box; flex-grow: 1; min-height: 250px; padding: 1rem; background-color: #030712; border: 1px solid #1f2937; border-radius: 0.5rem; color: #f0fafc; font-family: monospace; font-size: 0.95rem; line-height: 1.5; resize: vertical; outline: none; margin-bottom: 15px; }
         textarea:focus { border-color: #22d3ee; }
     </style>
 </head>
@@ -36,6 +36,22 @@
             </div>
 
             <textarea id="promptInput" placeholder="Paste your system prompt or dirty code block here..."></textarea>
+
+            <div style="display: flex; gap: 10px; margin-bottom: 25px;">
+                <button id="savePromptBtn" style="background: #0070f3; color: white; border: none; padding: 8px 16px; cursor: pointer; border-radius: 4px; font-weight: 500;">Save Prompt</button>
+            </div>
+
+            <!-- Working Persistent Storage History Panel -->
+            <div id="history-container" style="padding-top: 15px; border-top: 1px solid #333;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <h3 style="margin: 0; font-size: 16px; color: #fff;">Saved Prompt History</h3>
+                    <div style="display: flex; gap: 8px;">
+                        <button id="downloadLogBtn" style="background: transparent; color: #0070f3; border: 1px solid #0070f3; padding: 4px 8px; cursor: pointer; border-radius: 4px; font-size: 12px;">Download Log</button>
+                        <button id="clear-history" style="background: transparent; color: #ff4d4d; border: 1px solid #ff4d4d; padding: 4px 8px; cursor: pointer; border-radius: 4px; font-size: 12px;">Clear All</button>
+                    </div>
+                </div>
+                <ul id="history-list" style="list-style-type: none; padding-left: 0; margin: 0; max-height: 200px; overflow-y: auto;"></ul>
+            </div>
         </main>
     </div>
 
@@ -44,6 +60,19 @@
         var tokenCountDisplay = document.getElementById('tokenCount');
         var charCountDisplay = document.getElementById('charCount');
         var lineCountDisplay = document.getElementById('lineCount');
+
+        var savePromptBtn = document.getElementById('savePromptBtn');
+        var downloadLogBtn = document.getElementById('downloadLogBtn');
+        var historyList = document.getElementById('history-list');
+        var clearBtn = document.getElementById('clear-history');
+
+        var savedPrompts = [];
+        try {
+            var rawData = localStorage.getItem('promptHistory');
+            if (rawData) { savedPrompts = JSON.parse(rawData); }
+        } catch(e) { savedPrompts = []; }
+
+        renderHistory();
 
         function updateMetrics() {
             var text = input.value;
@@ -57,6 +86,75 @@
         }
 
         input.addEventListener('input', updateMetrics);
+
+        savePromptBtn.addEventListener('click', function() {
+            var text = input.value.trim();
+            if (!text) {
+                alert('Please type or paste some text first!');
+                return;
+            }
+
+            savedPrompts.unshift({
+                text: text,
+                timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+            });
+            if (savedPrompts.length > 10) savedPrompts.pop();
+
+            try {
+                localStorage.setItem('promptHistory', JSON.stringify(savedPrompts));
+            } catch(e) {}
+
+            renderHistory();
+        });
+
+        downloadLogBtn.addEventListener('click', function() {
+            if (savedPrompts.length === 0) {
+                alert('Your history is empty! Nothing to download.');
+                return;
+            }
+            var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(savedPrompts, null, 2));
+            var downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", "prompt_lightning_log.json");
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+        });
+
+        function renderHistory() {
+            if (savedPrompts.length === 0) {
+                historyList.innerHTML = '<li style="color: #666; font-size: 13px; font-style: italic; padding: 5px 0;">No history saved yet.</li>';
+                return;
+            }
+            var listHtml = '';
+            for(var i = 0; i < savedPrompts.length; i++) {
+                var item = savedPrompts[i];
+                listHtml += '<li onclick="restorePrompt(' + i + ')" style="padding: 10px; border-bottom: 1px solid #222; font-size: 13px; color: #ddd; background: #111; margin-bottom: 6px; border-radius: 4px; line-height: 1.4; cursor: pointer; transition: background 0.2s;" onmouseover="this.style.background=\'#1a1a1a\'" onmouseout="this.style.background=\'#111\'">' +
+                    '<div style="display: flex; justify-content: space-between; margin-bottom: 4px; pointer-events: none;">' +
+                        '<span style="font-weight: bold; font-size: 11px; color: #22d3ee;">[Saved Prompt]</span>' +
+                        '<span style="color: #555; font-size: 11px;">' + item.timestamp + '</span>' +
+                    '</div>' +
+                    '<div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; pointer-events: none;">' +
+                        item.text +
+                    '</div>' +
+                '</li>';
+            }
+            historyList.innerHTML = listHtml;
+        }
+
+        window.restorePrompt = function(index) {
+            if (savedPrompts[index]) {
+                input.value = savedPrompts[index].text;
+                updateMetrics();
+            }
+        };
+
+        clearBtn.addEventListener('click', function() {
+            savedPrompts = [];
+            localStorage.removeItem('promptHistory');
+            renderHistory();
+        });
+
         updateMetrics();
     </script>
 </body>
