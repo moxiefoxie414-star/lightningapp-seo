@@ -3,23 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Free AI Token Counter & System Prompt Wrapper - No Signup</title>
-    <meta name="description" content="Calculate prompt tokens instantly and clean up code layout gapping with our free, lightweight system prompt wrapper tool. No signup or login required.">
-    <meta name="google-site-verification" content="ms0zfheV324R0EqUXlXutVtivDEFxUi0rvMsceQG44" />
-    <script defer src="/_vercel/insights/script.js"></script>
+    <title>PromptLightning</title>
+    <meta name="description" content="Calculate prompt tokens instantly and clean up code layout gapping with our free, lightweight system prompt wrapper.">
+    <meta name="google-site-verification" content="ms0zfheV324R0EqUUtv0EFXuI0rvMsceQG4d7" />
     <style>
-        body { background-color: #0b0f19; color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; min-height: 100vh; display: flex; flex-direction: column; justify-content: space-between; padding: 2rem 1rem; box-sizing: border-box; }
-        .container { max-w: 800px; width: 100%; margin: 0 auto; display: flex; flex-direction: column; flex-grow: 1; }
+        body { background-color: #0b0f19; color: #f0fafc; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; padding: 0; }
+        .container { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; padding: 2rem 1rem; }
         header { text-align: center; margin-bottom: 2rem; }
-        h1 { font-size: 2.5rem; font-weight: 800; color: #22d3ee; margin: 0 0 0.5rem 0; letter-spacing: -0.025rem; }
+        h1 { font-size: 2.5rem; font-weight: 800; color: #22d3ee; margin: 0 0 0.5rem; letter-spacing: -0.025rem; }
         header p { color: #94a3b8; margin: 0; font-size: 1rem; }
-        main { background-color: #111827; border: 1px solid #1f2937; padding: 1.5rem; border-radius: 1rem; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.5); display: flex; flex-direction: column; flex-grow: 1; margin-bottom: 2rem; }
-        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; background-color: #030712; padding: 1rem; border-radius: 0.75rem; border: 1px solid #1f2937; text-align: center; margin-bottom: 1.5rem; }
-        .stat-item span:first-child { display: block; color: #64748b; text-transform: uppercase; font-size: 0.65rem; letter-spacing: 0.05rem; font-weight: 700; margin-bottom: 0.25rem; }
+        main { background-color: #111827; border: 1px solid #1f2937; padding: 1.5rem; border-radius: 1rem; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3); }
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; background-color: #030712; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1rem; text-align: center; }
+        .stat-item span:first-child { display: block; color: #64748b; text-transform: uppercase; font-size: 0.65rem; letter-spacing: 0.05em; font-weight: 700; margin-bottom: 0.25rem; }
         .stat-cyan { color: #22d3ee; font-size: 1.25rem; font-weight: 700; }
         .stat-indigo { color: #818cf8; font-size: 1.25rem; font-weight: 700; }
         .stat-emerald { color: #34d399; font-size: 1.25rem; font-weight: 700; }
-        textarea { width: 100%; flex-grow: 1; min-height: 250px; padding: 1rem; background-color: #030712; border: 1px solid #1f2937; border-radius: 0.75rem; color: #e2e8f0; font-family: monospace; font-size: 0.875rem; resize: none; box-sizing: border-box; outline: none; }
+        textarea { width: 100%; box-sizing: border-box; flex-grow: 1; min-height: 250px; padding: 1rem; background-color: #030712; border: 1px solid #1f2937; border-radius: 0.5rem; color: #f0fafc; font-family: monospace; font-size: 0.95rem; line-height: 1.5; resize: vertical; outline: none; }
         textarea:focus { border-color: #22d3ee; }
     </style>
 </head>
@@ -35,119 +34,182 @@
                 <div class="stat-item"><span>Characters</span><span id="charCount" class="stat-indigo">0</span></div>
                 <div class="stat-item"><span>Lines</span><span id="lineCount" class="stat-emerald">0</span></div>
             </div>
+            
             <textarea id="promptInput" placeholder="Paste your system prompt or dirty code block here..."></textarea>
-             <!-- LLM Testing Controls -->
-        <div style="margin-top: 15px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
-            <label for="modelSelector" style="color: #ccc; font-size: 14px;">Select Model:</label>
-            <select id="modelSelector" style="background: #222; color: #fff; border: 1px solid #444; padding: 6px 12px; border-radius: 4px; cursor: pointer;">
-                <option value="GPT-4 Omni">GPT-4 Omni</option>
-                <option value="Claude 3.5 Sonnet">Claude 3.5 Sonnet</option>
-                <option value="Gemini 1.5 Pro">Gemini 1.5 Pro</option>
-            </select>
-            <button id="testPromptBtn" style="background: #0070f3; color: white; border: none; padding: 7px 15px; cursor: pointer; border-radius: 4px; font-weight: 500;">Test Prompt</button>
-        </div>
 
-        <!-- Persistent Storage History Panel -->
-        <div id="history-container" style="margin-top: 25px; padding-top: 15px; border-top: 1px solid #333;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                <h3 style="margin: 0; font-size: 16px; color: #fff;">Saved Prompt History</h3>
-                <button id="clear-history" style="background: transparent; color: #ff4d4d; border: 1px solid #ff4d4d; padding: 4px 8px; cursor: pointer; border-radius: 4px; font-size: 12px;">Clear All</button>
+            <!-- Real-Time Cost Estimation Metadata -->
+            <div style="margin-top: 10px; font-size: 13px; color: #888;">
+                Estimated Input Cost: <span id="costDisplay" style="color: #0070f3; font-weight: bold;">$0.000000</span>
             </div>
-            <ul id="history-list" style="list-style-type: none; padding-left: 0; margin: 0; max-height: 200px; overflow-y: auto;"></ul>
-        </div>
+
+            <!-- LLM Testing Controls -->
+            <div style="margin-top: 15px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                <label for="modelSelector" style="color: #ccc; font-size: 14px;">Select Model:</label>
+                <select id="modelSelector" style="background: #222; color: #fff; border: 1px solid #444; padding: 6px 12px; border-radius: 4px; cursor: pointer;">
+                    <option value="GPT-4 Omni">GPT-4 Omni</option>
+                    <option value="Claude 3.5 Sonnet">Claude 3.5 Sonnet</option>
+                    <option value="Gemini 1.5 Pro">Gemini 1.5 Pro</option>
+                </select>
+                <button id="testPromptBtn" style="background: #0070f3; color: white; border: none; padding: 7px 15px; cursor: pointer; border-radius: 4px; font-weight: 500;">Test Prompt</button>
+            </div>
+
+            <!-- Mock AI Output Terminal Screen -->
+            <div id="outputTerminal" style="display: none; margin-top: 20px; padding: 15px; background: #0c1017; border: 1px solid #30363d; border-radius: 6px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                    <span id="terminalTitle" style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: bold;">AI Response</span>
+                    <button id="copyOutputBtn" style="background: #21262d; color: #c9d1d9; border: 1px solid #30363d; padding: 4px 8px; font-size: 12px; border-radius: 4px; cursor: pointer;">Copy Output</button>
+                </div>
+                <div id="terminalBody" style="font-family: monospace; font-size: 14px; color: #e6edf3; line-height: 1.5; white-space: pre-wrap;"></div>
+            </div>
+
+            <!-- Persistent Storage History Panel -->
+            <div id="history-container" style="margin-top: 25px; padding-top: 15px; border-top: 1px solid #333;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <h3 style="margin: 0; font-size: 16px; color: #fff;">Saved Prompt History</h3>
+                    <div style="display: flex; gap: 8px;">
+                        <button id="downloadLogBtn" style="background: transparent; color: #0070f3; border: 1px solid #0070f3; padding: 4px 8px; cursor: pointer; border-radius: 4px; font-size: 12px;">Download Log</button>
+                        <button id="clear-history" style="background: transparent; color: #ff4d4d; border: 1px solid #ff4d4d; padding: 4px 8px; cursor: pointer; border-radius: 4px; font-size: 12px;">Clear All</button>
+                    </div>
+                </div>
+                <ul id="history-list" style="list-style-type: none; padding-left: 0; margin: 0; max-height: 200px; overflow-y: auto;"></ul>
+            </div>
         </main>
     </div>
+
     <script>
         const input = document.getElementById('promptInput');
-        const tokenCount = document.getElementById('tokenCount');
-        const charCount = document.getElementById('charCount');
-        const lineCount = document.getElementById('lineCount');
+        const tokenCountDisplay = document.getElementById('tokenCount');
+        const charCountDisplay = document.getElementById('charCount');
+        const lineCountDisplay = document.getElementById('lineCount');
+        
+        const costDisplay = document.getElementById('costDisplay');
+        const modelSelector = document.getElementById('modelSelector');
+        const testPromptBtn = document.getElementById('testPromptBtn');
+        const outputTerminal = document.getElementById('outputTerminal');
+        const terminalTitle = document.getElementById('terminalTitle');
+        const terminalBody = document.getElementById('terminalBody');
+        const copyOutputBtn = document.getElementById('copyOutputBtn');
+        const downloadLogBtn = document.getElementById('downloadLogBtn');
+        const historyList = document.getElementById('history-list');
+        const clearBtn = document.getElementById('clear-history');
+
+        const pricingMap = {
+            "GPT-4 Omni": 0.0025,       
+            "Claude 3.5 Sonnet": 0.003, 
+            "Gemini 1.5 Pro": 0.00125   
+        };
+
+        let savedPrompts = JSON.parse(localStorage.getItem('promptHistory')) || [];
+        renderHistory();
+
         function updateMetrics() {
             const text = input.value;
-            charCount.textContent = text.length;
-            lineCount.textContent = text ? text.split('\n').length : 0;
-            const cleaned = text.replace(/\s+/g, ' ').trim();
-            const tokens = cleaned ? Math.round(cleaned.split(' ').length * 1.3) : 0;
-            tokenCount.textContent = tokens;
+            const charCount = text.length;
+            const lineCount = text === '' ? 0 : text.split('\n').length;
+            const tokenCount = Math.ceil(charCount / 4);
+
+            tokenCountDisplay.textContent = tokenCount;
+            charCountDisplay.textContent = charCount;
+            lineCountDisplay.textContent = lineCount;
+
+            const currentModel = modelSelector.value;
+            const pricePerThousand = pricingMap[currentModel] || 0.002;
+            const calculatedCost = (tokenCount / 1000) * pricePerThousand;
+            costDisplay.textContent = `$${calculatedCost.toFixed(6)}`;
         }
+
         input.addEventListener('input', updateMetrics);
-          // Setup elements for History and LLM testing
-    const modelSelector = document.getElementById('modelSelector');
-    const testPromptBtn = document.getElementById('testPromptBtn');
-    const historyList = document.getElementById('history-list');
-    const clearBtn = document.getElementById('clear-history');
+        modelSelector.addEventListener('change', updateMetrics);
 
-    // 1. Persistent Storage: Load history immediately from browser storage
-    let savedPrompts = JSON.parse(localStorage.getItem('promptHistory')) || [];
-    renderHistory();
+        testPromptBtn.addEventListener('click', () => {
+            const text = input.value.trim();
+            const selectedModel = modelSelector.value;
 
-    // 2. LLM Testing: Action when clicking the test button
-    testPromptBtn.addEventListener('click', () => {
-        const text = input.value.trim();
-        const selectedModel = modelSelector.value;
+            if (!text) {
+                alert('Please paste or type a prompt first!');
+                return;
+            }
 
-        if (!text) {
-            alert('Please paste or type a prompt first!');
-            return;
-        }
+            savedPrompts.unshift({
+                text: text,
+                model: selectedModel,
+                timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+            });
+            if (savedPrompts.length > 10) savedPrompts.pop();
+            localStorage.setItem('promptHistory', JSON.stringify(savedPrompts));
+            renderHistory();
 
-        // Add to history array
-        savedPrompts.unshift({
-            text: text,
-            model: selectedModel,
-            timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-        });
+            testPromptBtn.textContent = 'Processing...';
+            testPromptBtn.style.background = '#222';
+            
+            const mockResponses = [
+                `[System Engine: ${selectedModel}]\nSuccessfully analyzed your prompt layout. Structural parsing suggests optimal clarity metrics. Token configuration is stable. Ready for API routing deployment.`,
+                `[System Engine: ${selectedModel}]\nPrompt execution simulation completed. Metrics indicate strong context grounding. Token distribution is fully optimized for continuous model processing.`
+            ];
+            const chosenResponse = mockResponses[Math.floor(Math.random() * mockResponses.length)];
 
-        // Keep only the last 10 entries
-        if (savedPrompts.length > 10) savedPrompts.pop();
+            outputTerminal.style.display = 'block';
+            terminalTitle.textContent = `${selectedModel} Output Response`;
+            terminalTitle.style.color = '#0070f3';
+            terminalBody.textContent = '';
+            
+            let idx = 0;
+            function typeWriter() {
+                if (idx < chosenResponse.length) {
+                    terminalBody.textContent += chosenResponse.charAt(idx);
+                    idx++;
+                    setTimeout(typeWriter, 15); 
 
-        // Save to browser persistent local storage
-        localStorage.setItem('promptHistory', JSON.stringify(savedPrompts));
-        renderHistory();
 
-        // Visual feedback simulating LLM Testing execution
-        testPromptBtn.textContent = 'Running...';
-        testPromptBtn.style.background = '#222';
-        setTimeout(() => {
-            testPromptBtn.textContent = 'Test Prompt';
-            testPromptBtn.style.background = '#0070f3';
-            alert(`Prompt successfully simulated against ${selectedModel}! Check your console or visual logs.`);
-        }, 800);
-    });
 
-    // 3. Render history items to the screen UI (with restoration click)
-    function renderHistory() {
-        if (savedPrompts.length === 0) {
-            historyList.innerHTML = `<li style="color: #666; font-size: 13px; font-style: italic; padding: 5px 0;">No history saved yet.</li>`;
-            return;
-        }
-        historyList.innerHTML = savedPrompts.map((item, index) => `
-            <li onclick="restorePrompt(${index})" style="padding: 10px; border-bottom: 1px solid #222; font-size: 13px; color: #ddd; background: #111; margin-bottom: 6px; border-radius: 4px; line-height: 1.4; cursor: pointer; transition: background 0.2s;" onmouseover="this.style.background='#1a1a1a'" onmouseout="this.style.background='#111'">
-                <div style="display: flex; justify-content: space-between; margin-bottom: 4px; pointer-events: none;">
-                    <span style="font-weight: bold; font-size: 11px; color: #0070f3;">[${item.model}]</span>
-                    <span style="color: #555; font-size: 11px;">${item.timestamp}</span>
-                </div>
-                <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; pointer-events: none;">
-                    ${item.text}
-                </div>
-            </li>
-        `).join('');
-    }
+} else {
+testPromptBtn.textContent = 'Test Prompt';
+testPromptBtn.style.background = '#0070f3';
+}
+}
+typeWriter();
+});
+copyOutputBtn.addEventListener('click', () => {
+const outputText = terminalBody.textContent;
+if (outputText) {
+navigator.clipboard.writeText(outputText);
+const originalText = copyOutputBtn.textContent;
+copyOutputBtn.textContent = 'Copied!';
+setTimeout(() => copyOutputBtn.textContent = originalText, 1500);
+}
+});
+downloadLogBtn.addEventListener('click', () => {
+if (savedPrompts.length === 0) {
+alert('Your history is empty! Nothing to download.');
+return;
+}
+const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(savedPrompts, null, 2));
+const downloadAnchor = document.createElement('a');
+downloadAnchor.setAttribute("href", dataStr);
+downloadAnchor.setAttribute("download", "prompt_lightning_log.json");
+document.body.appendChild(downloadAnchor);
+downloadAnchor.click();
+downloadAnchor.remove();
+});
+function renderHistory() {
+if (savedPrompts.length === 0) {
+historyList.innerHTML = <li style="color: #666; font-size: 13px; font-style: italic; padding: 5px 0;">No history saved yet.</li>;
+return;
+}
+historyList.innerHTML = savedPrompts.map((item, index) => <li onclick="restorePrompt(${index})" style="padding: 10px; border-bottom: 1px solid #222; font-size: 13px; color: #ddd; background: #111; margin-bottom: 6px; border-radius: 4px; line-height: 1.4; cursor: pointer; transition: background 0.2s;" onmouseover="this.style.background='#1a1a1a'" onmouseout="this.style.background='#111'"> <div style="display: flex; justify-content: space-between; margin-bottom: 4px; pointer-events: none;"> <span style="font-weight: bold; font-size: 11px; color: #0070f3;">[${item.model}]</span> <span style="color: #555; font-size: 11px;">${item.timestamp}</span> </div> <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; pointer-events: none;"> ${item.text} </div> </li>).join('');
+}
+window.restorePrompt = function(index) {
+if (savedPrompts[index]) {
+input.value = savedPrompts[index].text;
+modelSelector.value = savedPrompts[index].model;
+updateMetrics();
+}
+};
+clearBtn.addEventListener('click', () => {
+savedPrompts = [];
+localStorage.removeItem('promptHistory');
+outputTerminal.style.display = 'none';
+renderHistory();
+});
+updateMetrics();
 
-    // New Helper: Restore the clicked prompt and recalculate your counters automatically
-    window.restorePrompt = function(index) {
-        if (savedPrompts[index]) {
-            input.value = savedPrompts[index].text;
-            modelSelector.value = savedPrompts[index].model;
-            updateMetrics(); // Fires your existing counter update logic instantly
-        }
-    };
-
-    // 4. Clear all persistent history data
-    clearBtn.addEventListener('click', () => {
-        savedPrompts = [];
-        localStorage.removeItem('promptHistory');
-        renderHistory();
-    });    </script>
-</body>
-</html>
