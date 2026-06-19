@@ -3,159 +3,149 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PromptLightning</title>
-    <meta name="description" content="Calculate prompt tokens instantly and clean up code layout gapping with our free, lightweight system prompt wrapper.">
-    <meta name="google-site-verification" content="ms0zfheV324R0EqUUtv0EFXuI0rvMsceQG4d7" />
+    <title>PromptLightning Ultra - Premium AI Prompt Workspace</title>
+    <script src="https://tailwindcss.com"></script>
     <style>
-        body { background-color: #0b0f19; color: #f0fafc; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; padding: 0; }
-        .container { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; padding: 2rem 1rem; }
-        header { text-align: center; margin-bottom: 2rem; }
-        h1 { font-size: 2.5rem; font-weight: 800; color: #22d3ee; margin: 0 0 0.5rem; letter-spacing: -0.025rem; }
-        header p { color: #94a3b8; margin: 0; font-size: 1rem; }
-        main { background-color: #111827; border: 1px solid #1f2937; padding: 1.5rem; border-radius: 1rem; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3); }
-        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; background-color: #030712; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1rem; text-align: center; }
-        .stat-item span:first-child { display: block; color: #64748b; text-transform: uppercase; font-size: 0.65rem; letter-spacing: 0.05em; font-weight: 700; margin-bottom: 0.25rem; }
-        .stat-cyan { color: #22d3ee; font-size: 1.25rem; font-weight: 700; }
-        .stat-indigo { color: #818cf8; font-size: 1.25rem; font-weight: 700; }
-        .stat-emerald { color: #34d399; font-size: 1.25rem; font-weight: 700; }
-        textarea { width: 100%; box-sizing: border-box; flex-grow: 1; min-height: 250px; padding: 1rem; background-color: #030712; border: 1px solid #1f2937; border-radius: 0.5rem; color: #f0fafc; font-family: monospace; font-size: 0.95rem; line-height: 1.5; resize: vertical; outline: none; margin-bottom: 15px; }
-        textarea:focus { border-color: #22d3ee; }
+        body { background-color: #090d16; color: #f1f5f9; font-family: system-ui, sans-serif; }
     </style>
 </head>
-<body>
-    <div class="container">
-        <header>
-            <h1>PromptLightning</h1>
-            <p>Clean code spaces, count tokens, and wrap system prompts instantly.</p>
-        </header>
-        <main>
-            <div class="stats-grid">
-                <div class="stat-item"><span>Tokens</span><span id="tokenCount" class="stat-cyan">0</span></div>
-                <div class="stat-item"><span>Characters</span><span id="charCount" class="stat-indigo">0</span></div>
-                <div class="stat-item"><span>Lines</span><span id="lineCount" class="stat-emerald">0</span></div>
+<body class="min-h-screen flex flex-col justify-between">
+
+    <!-- Header Panel -->
+    <header class="border-b border-slate-800 bg-slate-950/40 backdrop-blur-md px-6 py-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div class="flex items-center space-x-3">
+            <div class="h-10 w-10 rounded-xl bg-gradient-to-tr from-amber-500 to-yellow-400 flex items-center justify-center text-xl shadow-lg shadow-amber-500/20">⚡</div>
+            <div>
+                <h1 class="text-xl font-black tracking-tight text-white">PROMPT LIGHTNING <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/30">PRO EDITION</span></h1>
+                <p class="text-xs text-slate-400">LightningAI Utility Portfolio • Advanced Developer Scratchpad</p>
             </div>
+        </div>
+        <div class="flex items-center gap-3">
+            <label class="text-xs text-slate-400 font-medium">Target Architecture:</label>
+            <select id="modelSelector" onchange="calculateMetrics()" class="bg-slate-900 border border-slate-700 text-xs rounded-lg px-3 py-1.5 text-slate-200 focus:outline-none">
+                <option value="gpt4">OpenAI GPT-4o</option>
+                <option value="claude">Anthropic Claude 3.5</option>
+                <option value="gemini">Google Gemini 1.5</option>
+            </select>
+        </div>
+    </header>
 
-            <textarea id="promptInput" placeholder="Paste your system prompt or dirty code block here..."></textarea>
-
-            <div style="display: flex; gap: 10px; margin-bottom: 25px;">
-                <button id="savePromptBtn" style="background: #0070f3; color: white; border: none; padding: 8px 16px; cursor: pointer; border-radius: 4px; font-weight: 500;">Save Prompt</button>
+    <!-- Workspace Dashboard Grid -->
+    <main class="flex-1 max-w-[1600px] w-full mx-auto p-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
+        
+        <!-- Left Side: Inputs & Tools -->
+        <div class="flex flex-col space-y-4">
+            <div class="flex justify-between items-center">
+                <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400">Raw Prompt Blueprint</h2>
+                <button onclick="clearAll()" class="text-xs text-slate-500 hover:text-rose-400 transition">Clear Draft</button>
             </div>
+            <textarea id="rawInput" class="flex-1 w-full min-h-[420px] p-4 bg-slate-900 border border-slate-800 rounded-xl focus:outline-none focus:border-amber-500 text-slate-200 font-mono text-sm resize-none" placeholder="Paste your raw system criteria or prompt context here..."></textarea>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <button onclick="cleanCodeSpacing()" class="py-2.5 px-3 bg-slate-900 hover:bg-slate-800 border border-slate-800 text-xs font-bold rounded-lg text-slate-300 transition">✨ Advanced Data Stripper</button>
+                <button onclick="openWrapperModal()" class="py-2.5 px-3 bg-slate-900 hover:bg-slate-800 border border-slate-800 text-xs font-bold rounded-lg text-slate-300 transition">🛡️ Wrap System Rules</button>
+                <button onclick="optimizeStructure()" class="py-2.5 px-3 bg-slate-900 hover:bg-slate-800 border border-slate-800 text-xs font-bold rounded-lg text-slate-300 transition">🧬 Auto-Indent Structure</button>
+            </div>
+        </div>
 
-            <!-- Working Persistent Storage History Panel -->
-            <div id="history-container" style="padding-top: 15px; border-top: 1px solid #333;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                    <h3 style="margin: 0; font-size: 16px; color: #fff;">Saved Prompt History</h3>
-                    <div style="display: flex; gap: 8px;">
-                        <button id="downloadLogBtn" style="background: transparent; color: #0070f3; border: 1px solid #0070f3; padding: 4px 8px; cursor: pointer; border-radius: 4px; font-size: 12px;">Download Log</button>
-                        <button id="clear-history" style="background: transparent; color: #ff4d4d; border: 1px solid #ff4d4d; padding: 4px 8px; cursor: pointer; border-radius: 4px; font-size: 12px;">Clear All</button>
+        <!-- Right Side: Metrics & Output -->
+        <div class="flex flex-col space-y-4">
+            <div class="bg-slate-900/60 border border-slate-800 p-4 rounded-xl space-y-3">
+                <div class="grid grid-cols-3 gap-4 text-center">
+                    <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800">
+                        <div class="text-[10px] uppercase font-bold text-slate-500">Lines</div>
+                        <div id="lineCount" class="font-mono text-lg font-black text-slate-200">0</div>
+                    </div>
+                    <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800">
+                        <div class="text-[10px] uppercase font-bold text-slate-500">Characters</div>
+                        <div id="charCount" class="font-mono text-lg font-black text-slate-200">0</div>
+                    </div>
+                    <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800">
+                        <div class="text-[10px] uppercase font-bold text-slate-500">Est. Tokens</div>
+                        <div id="tokenCount" class="font-mono text-lg font-black text-emerald-400">0</div>
                     </div>
                 </div>
-                <ul id="history-list" style="list-style-type: none; padding-left: 0; margin: 0; max-height: 200px; overflow-y: auto;"></ul>
+                <div class="space-y-1">
+                    <div class="flex justify-between text-[11px] font-bold text-slate-400">
+                        <span>Context Target Weight</span>
+                        <span id="progressBarPercent">0%</span>
+                    </div>
+                    <div class="w-full bg-slate-950 h-2 rounded-full overflow-hidden border border-slate-800">
+                        <div id="progressBar" class="bg-gradient-to-r from-emerald-500 to-amber-500 h-full w-0 transition-all duration-300"></div>
+                    </div>
+                </div>
             </div>
-        </main>
+
+            <div class="relative flex-1 flex flex-col">
+                <textarea id="finalOutput" readonly class="flex-1 w-full min-h-[340px] p-4 bg-slate-900/40 border border-slate-800 rounded-xl text-slate-400 font-mono text-sm resize-none focus:outline-none" placeholder="Your production-optimized output will generate here..."></textarea>
+                <div class="absolute bottom-4 right-4">
+                    <button id="copyBtn" onclick="copyFinalOutput()" class="py-2.5 px-6 bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 text-slate-950 font-black text-xs uppercase tracking-wider rounded-lg shadow-lg flex items-center gap-2">📋 Copy Final Prompt</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal Selection Screen -->
+    <div id="wrapperModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
+        <div class="bg-slate-900 border border-slate-800 max-w-md w-full rounded-xl p-6 space-y-4 shadow-2xl">
+            <div class="flex justify-between items-center">
+                <h3 class="text-sm font-bold uppercase text-white">Select System Core Matrix</h3>
+                <button onclick="closeWrapperModal()" class="text-slate-400 hover:text-white text-sm">✕</button>
+            </div>
+            <div class="space-y-2">
+                <button onclick="applySystemWrap('standard')" class="w-full text-left p-3 rounded-lg bg-slate-950 hover:bg-slate-800 border border-slate-800 text-xs transition">
+                    <div class="font-bold text-amber-400">⚡ Standard Core Sandbox</div>
+                    <div class="text-slate-500 mt-0.5">Appends plain context markdown structural boundaries.</div>
+                </button>
+                <button onclick="applySystemWrap('cot')" class="w-full text-left p-3 rounded-lg bg-slate-950 hover:bg-slate-800 border border-slate-800 text-xs transition">
+                    <div class="font-bold text-indigo-400">🧠 Chain-of-Thought Protocol</div>
+                    <div class="text-slate-500 mt-0.5">Forces explicit step-by-step logic tracking commands.</div>
+                </button>
+                <button onclick="applySystemWrap('role')" class="w-full text-left p-3 rounded-lg bg-slate-950 hover:bg-slate-800 border border-slate-800 text-xs transition">
+                    <div class="font-bold text-emerald-400">🎭 Strict Persona Lock</div>
+                    <div class="text-slate-500 mt-0.5">Binds model responses to a dedicated expert profile.</div>
+                </button>
+            </div>
+        </div>
     </div>
 
+    <footer class="border-t border-slate-900 bg-slate-950/60 p-4 text-center text-[11px] text-slate-600 font-mono">
+        PRIVACY GUARANTEED: Execution runs fully local. No tracking pipelines connected.
+    </footer>
+
+    <!-- Interactive Logic Script Engine -->
     <script>
-        var input = document.getElementById('promptInput');
-        var tokenCountDisplay = document.getElementById('tokenCount');
-        var charCountDisplay = document.getElementById('charCount');
-        var lineCountDisplay = document.getElementById('lineCount');
+        const rawInput = document.getElementById('rawInput');
+        const finalOutput = document.getElementById('finalOutput');
+        const lineCount = document.getElementById('lineCount');
+        const charCount = document.getElementById('charCount');
+        const tokenCount = document.getElementById('tokenCount');
+        const progressBar = document.getElementById('progressBar');
+        const progressBarPercent = document.getElementById('progressBarPercent');
+        const modelSelector = document.getElementById('modelSelector');
+        const wrapperModal = document.getElementById('wrapperModal');
+        const copyBtn = document.getElementById('copyBtn');
 
-        var savePromptBtn = document.getElementById('savePromptBtn');
-        var downloadLogBtn = document.getElementById('downloadLogBtn');
-        var historyList = document.getElementById('history-list');
-        var clearBtn = document.getElementById('clear-history');
-
-        var savedPrompts = [];
-        try {
-            var rawData = localStorage.getItem('promptHistory');
-            if (rawData) { savedPrompts = JSON.parse(rawData); }
-        } catch(e) { savedPrompts = []; }
-
-        renderHistory();
-
-        function updateMetrics() {
-            var text = input.value;
-            var charCount = text.length;
-            var lineCount = text === '' ? 0 : text.split('\n').length;
-            var tokenCount = Math.ceil(charCount / 4);
-
-            tokenCountDisplay.textContent = tokenCount;
-            charCountDisplay.textContent = charCount;
-            lineCountDisplay.textContent = lineCount;
-        }
-
-        input.addEventListener('input', updateMetrics);
-
-        savePromptBtn.addEventListener('click', function() {
-            var text = input.value.trim();
-            if (!text) {
-                alert('Please type or paste some text first!');
-                return;
+        rawInput.addEventListener('input', () => {
+            if(!finalOutput.value || finalOutput.getAttribute('data-mode') === 'live') {
+                finalOutput.value = rawInput.value;
+                finalOutput.setAttribute('data-mode', 'live');
             }
-
-            savedPrompts.unshift({
-                text: text,
-                timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-            });
-            if (savedPrompts.length > 10) savedPrompts.pop();
-
-            try {
-                localStorage.setItem('promptHistory', JSON.stringify(savedPrompts));
-            } catch(e) {}
-
-            renderHistory();
+            calculateMetrics();
         });
 
-        downloadLogBtn.addEventListener('click', function() {
-            if (savedPrompts.length === 0) {
-                alert('Your history is empty! Nothing to download.');
-                return;
-            }
-            var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(savedPrompts, null, 2));
-            var downloadAnchor = document.createElement('a');
-            downloadAnchor.setAttribute("href", dataStr);
-            downloadAnchor.setAttribute("download", "prompt_lightning_log.json");
-            document.body.appendChild(downloadAnchor);
-            downloadAnchor.click();
-            downloadAnchor.remove();
-        });
+        function calculateMetrics() {
+            const content = finalOutput.value || rawInput.value || "";
+            const chars = content.length;
+            const lines = content === "" ? 0 : content.split('\n').length;
+            
+            let tokenRatio = 4; 
+            let maxTarget = 10000; 
 
-        function renderHistory() {
-            if (savedPrompts.length === 0) {
-                historyList.innerHTML = '<li style="color: #666; font-size: 13px; font-style: italic; padding: 5px 0;">No history saved yet.</li>';
-                return;
-            }
-            var listHtml = '';
-            for(var i = 0; i < savedPrompts.length; i++) {
-                var item = savedPrompts[i];
-                listHtml += '<li onclick="restorePrompt(' + i + ')" style="padding: 10px; border-bottom: 1px solid #222; font-size: 13px; color: #ddd; background: #111; margin-bottom: 6px; border-radius: 4px; line-height: 1.4; cursor: pointer; transition: background 0.2s;" onmouseover="this.style.background=\'#1a1a1a\'" onmouseout="this.style.background=\'#111\'">' +
-                    '<div style="display: flex; justify-content: space-between; margin-bottom: 4px; pointer-events: none;">' +
-                        '<span style="font-weight: bold; font-size: 11px; color: #22d3ee;">[Saved Prompt]</span>' +
-                        '<span style="color: #555; font-size: 11px;">' + item.timestamp + '</span>' +
-                    '</div>' +
-                    '<div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; pointer-events: none;">' +
-                        item.text +
-                    '</div>' +
-                '</li>';
-            }
-            historyList.innerHTML = listHtml;
-        }
+            if (modelSelector.value === 'gpt4') { tokenRatio = 3.8; maxTarget = 8000; }
+            else if (modelSelector.value === 'claude') { tokenRatio = 3.5; maxTarget = 12000; }
+            else if (modelSelector.value === 'gemini') { tokenRatio = 4.2; maxTarget = 20000; }
 
-        window.restorePrompt = function(index) {
-            if (savedPrompts[index]) {
-                input.value = savedPrompts[index].text;
-                updateMetrics();
-            }
-        };
-
-        clearBtn.addEventListener('click', function() {
-            savedPrompts = [];
-            localStorage.removeItem('promptHistory');
-            renderHistory();
-        });
-
-        updateMetrics();
-    </script>
-</body>
-</html>
+            const tokens = Math.ceil(chars / tokenRatio);
+            
+            charCount.textContent = chars.toLocaleString();
