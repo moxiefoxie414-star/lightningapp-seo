@@ -126,9 +126,10 @@
     </div>
 
     <!-- Free-tier Native Royalty-Free Audio Stream Links -->
-  <audio id="audio1" loop src="data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQQAAAAAAAQA"></audio>
-<audio id="audio2" loop src="data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQQAAAAAAAQA"></audio>
-<audio id="audio3" loop src="data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQQAAAAAAAQA"></audio>
+<!-- PASTE THESE INSTEAD -->
+<audio id="audio1" loop src="https://actions.google.com/sounds/v1/ambiences/brown_noise.ogg"></audio>
+<audio id="audio2" loop src="https://actions.google.com/sounds/v1/weather/rain_heavy_loud.ogg"></audio>
+<audio id="audio3" loop src="https://actions.google.com/sounds/v1/science_fiction/alien_spaceship_hum.ogg"></audio>
     <footer>PROMPT LIGHTNING LABS © 2026 • SECURITY VERIFIED BY VERCEL SHIELD</footer>
 
     <script>
@@ -148,7 +149,21 @@
             claudeEst.innerText = Math.ceil(text.length / 3.5);
         });
 
-        // --- Ambient Sound Slider Brain Matrix ---
+        // --- Ambient Sound Slider Brain Matrix ---// --- Add this block to unlock browser audio restrictions ---
+const unlockAudio = () => {
+    ['audio1', 'audio2', 'audio3'].forEach(id => {
+        const audio = document.getElementById(id);
+        // Play and immediately pause to prime the browser's permission engine
+        audio.play().then(() => {
+            audio.pause();
+        }).catch(() => {});
+    });
+    // Clean up listeners once unlocked
+    document.removeEventListener('click', unlockAudio);
+    document.removeEventListener('touchstart', unlockAudio);
+};
+document.addEventListener('click', unlockAudio);
+document.addEventListener('touchstart', unlockAudio);        
         const setupSound = (sliderId, valueId, audioId) => {
             const slider = document.getElementById(sliderId);
             const valueLabel = document.getElementById(valueId);
