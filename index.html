@@ -103,25 +103,7 @@
             <div style="text-align: center;"><div class="privacy-badge">🔒 Enterprise Data Shield Active: 0 Bits Sent to Cloud</div></div>
         </div>
 
-        <!-- RIGHT CONSOLE: Product #2 - The Ambient Focus Audio Deck -->
-        <div class="panel audio-panel">
-            <h1>Ambient Focus Deck</h1>
-            <div class="subtitle">SLIDE TO BLEND PRODUCTIVITY FREQUENCIES</div>
-
-            <div class="audio-row">
-                <div class="row-header"><span class="sound-name">🎛️ Deep Brown Noise</span><span class="volume-label" id="val1">0%</span></div>
-                <input type="range" id="vol1" min="0" max="100" value="0">
-            </div>
-
-            <div class="audio-row">
-                <div class="row-header"><span class="sound-name">🌧️ Autumn Rain</span><span class="volume-label" id="val2">0%</span></div>
-                <input type="range" id="vol2" min="0" max="100" value="0">
-            </div>
-
-            
-
- 
-
+        
     <footer>PROMPT LIGHTNING LABS © 2026 • SECURITY VERIFIED BY VERCEL SHIELD</footer>
 
     <script>
@@ -141,42 +123,9 @@
             claudeEst.innerText = Math.ceil(text.length / 3.5);
         });
 
-        // --- Ambient Sound Slider Brain Matrix ---// --- Add this block to unlock browser audio restrictions ---
-const unlockAudio = () => {
-    ['audio1', 'audio2', 'audio3'].forEach(id => {
-        const audio = document.getElementById(id);
-        // Play and immediately pause to prime the browser's permission engine
-        audio.play().then(() => {
-            audio.pause();
-        }).catch(() => {});
-    });
-    // Clean up listeners once unlocked
-    document.removeEventListener('click', unlockAudio);
-    document.removeEventListener('touchstart', unlockAudio);
-};
-document.addEventListener('click', unlockAudio);
-document.addEventListener('touchstart', unlockAudio);        
-        const setupSound = (sliderId, valueId, audioId) => {
-            const slider = document.getElementById(sliderId);
-            const valueLabel = document.getElementById(valueId);
-            const audio = document.getElementById(audioId);
-
-            slider.addEventListener('input', (e) => {
-                const val = e.target.value;
-                valueLabel.innerText = val + '%';
-                audio.volume = val / 100;
-
-                if (val > 0 && audio.paused) {
-                    audio.play().catch(err => console.log("Stream initialize barrier handled:", err));
-                } else if (val == 0) {
-                    audio.pause();
-                }
-            });
-        };
-
-        setupSound('vol1', 'val1', 'audio1');
-        setupSound('vol2', 'val2', 'audio2');
-        setupSound('vol3', 'val3', 'audio3');
+       
+ 
+            
     </script>
 </body>
 </html>
