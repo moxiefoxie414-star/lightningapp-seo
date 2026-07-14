@@ -66,12 +66,10 @@
 <body>
 
     <div class="main-workspace">
-        <!-- LEFT CONSOLE: Prompt Token Engine Matrix -->
         <div class="panel counter-panel">
             <h1>Prompt Core Matrix</h1>
             <div class="subtitle">100% LOCAL BROWSER SANDBOX RUNNING</div>
             
-            <!-- PREMIUM TEMPLATE SELECTOR MENU -->
             <div style="margin-bottom: 25px;">
                 <label for="templateSelect" style="font-size: 11px; color: #9ca3af; display: block; margin-bottom: 8px; letter-spacing: 1px; font-weight: 600;">SELECT PREMIUM VAULT FRAMEWORK</label>
                 <select id="templateSelect" style="width: 100%; background-color: #1f2937; border: 1px solid #374151; border-radius: 12px; color: #f3f4f6; padding: 14px; font-size: 14px; outline: none; cursor: pointer; border: 1px solid #374151;">
@@ -106,20 +104,18 @@
         const claudeEst = document.getElementById('claudeEst');
         const templateSelect = document.getElementById('templateSelect');
         
-        // --- Premium Vault Content Data Objects ---
         const vaultTemplates = {
-            hook: "Act as an Elite Social Media Copywriter and Human Behavior Expert.\nI am going to give you a core topic, and you will generate 5 high-converting Instagram Reel hooks designed to stop the scroll in under 3 seconds using strict curiosity loops.\n\nCore Topic Input: [ENTER YOUR TOPIC HERE]",
+            hook: "Act as an Elite Social Media Copywriter and Human Behavior Expert.\nI am going to give you a core topic, and you will generate 5 high-converting Instagram Reel hooks designed to stop the scroll in under 3 seconds using strict curiosity loops.\n\n[PREMIUM SETTINGS]: Optimize for a slow, deliberate reading cadence. Maintain a low-tonality, quiet-luxury voice. Strictly forbid all exclamation marks, emojis, or marketing hype words.\n\nCore Topic Input: [ENTER YOUR TOPIC HERE]",
             
-            pastor: "Act as a Master Conversion Copywriter.\nI am going to give you a product or service name, and you will structure a high-converting long-form sales page using the strict P.A.S.T.O.R. copywriting framework.\n\nProduct/Service Input: [ENTER YOUR OFFER HERE]",
+            pastor: "Act as a Master Conversion Copywriter.\nI am going to give you a product or service name, and you will structure a high-converting long-form sales page using the strict P.A.S.T.O.R. copywriting framework.\n\n[PREMIUM SETTINGS]: Apply strict spatial padding. Maximum of 2 sentences per text block. Enforce double line breaks between all paragraphs to maximize negative space. Avoid all hype words.\n\nProduct/Service Input: [ENTER YOUR OFFER HERE]",
             
-            pitch: "Act as an Elite Business Development Director and Master B2B Copywriter.\nI am going to give you a Target Client Company and the Service I Offer. You will generate a hyper-targeted, minimalist cold outreach email under 120 words using the 'Peer-to-Peer Inverse Pitch' framework.\n\nTarget Client Input: [ENTER TARGET CLIENT HERE]\nService Offered Input: [ENTER YOUR SERVICE HERE]",
+            pitch: "Act as an Elite Business Development Director and Master B2B Copywriter.\nI am going to give you a Target Client Company and the Service I Offer. You will generate a hyper-targeted, minimalist cold outreach email under 120 words using the 'Peer-to-Peer Inverse Pitch' framework.\n\n[PREMIUM SETTINGS]: Utilize cognitive curiosity loops. The opening line must highlight a subtle, overlooked friction point. Keep the tone sophisticated, calm, and free of sales jargon.\n\nTarget Client Input: [ENTER TARGET CLIENT HERE]\nService Offered Input: [ENTER YOUR SERVICE HERE]",
             
-            caption: "Act as an Elite Editorial Typographer and Social Media Layout Expert.\nI am going to give you raw, unformatted notes or text. You will restructure this content into a premium, single-column social caption utilizing strict visual spatial padding rules.\n\nRaw Text Input: [ENTER RAW CAPTION TEXT HERE]",
+            caption: "Act as an Elite Editorial Typographer and Social Media Layout Expert.\nI am going to give you raw, unformatted notes or text. You will restructure this content into a premium, single-column social caption utilizing strict visual spatial padding rules.\n\n[PREMIUM SETTINGS]: Enforce strict spatial padding. Maximum of 2 sentences per text block. Enforce double line breaks between distinct thoughts to maximize negative space.\n\nRaw Text Input: [ENTER RAW CAPTION TEXT HERE]",
             
-            manifesto: "Act as a Luxury Brand Strategist and Master Editorial Copywriter.\nI am going to give you a Core Product or Philosophy. You will generate a high-end brand manifesto structured for a website landing page header.\n\nCore Philosophy Input: [ENTER BRAND PHILOSOPHY HERE]"
+            manifesto: "Act as a Luxury Brand Strategist and Master Editorial Copywriter.\nI am going to give you a Core Product or Philosophy. You will generate a high-end brand manifesto structured for a website landing page header.\n\n[PREMIUM SETTINGS]: Use extremely brief, rhythmic, and poetic sentence structures. Avoid all modern marketing words like 'solution' or 'best'. Lean heavily on themes of stillness and raw materials.\n\nCore Philosophy Input: [ENTER BRAND PHILOSOPHY HERE]"
         };
 
-        // --- Core Token Engine Logic ---
         promptInput.addEventListener('input', () => {
             const text = promptInput.value;
             charCount.innerText = text.length;
@@ -129,7 +125,6 @@
             claudeEst.innerText = Math.ceil(text.length / 3.5);
         });
 
-        // --- Automate Template Injection Handler ---
         templateSelect.addEventListener('change', () => {
             const selectedValue = templateSelect.value;
             if (selectedValue && vaultTemplates[selectedValue]) {
