@@ -3,25 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lightning AI Token & Prompt Utility | Deep Focus Workspace</title>
-    <meta name="description" content="Optimize layouts, format templates, and accurately estimate token weights for OpenAI, Claude, and Gemini 100% locally and privately in your browser sandbox.">
+    <title>Prompt Lightning Studio | Premium Focus Workspace</title>
     <script src="https://tailwindcss.com"></script>
-
-    <!-- Google Analytics Tracking (GA4) -->
-    <script async src="https://googletagmanager.com"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-TRACKING_ID');
-    </script>
-
-    <!-- Vercel Web Analytics -->
-    <script>
-        window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
-    </script>
-    <script defer src="/_vercel/insights/script.js"></script>
-
     <style>
         body {
             background-color: #0b0f19;
@@ -53,7 +36,6 @@
             box-sizing: border-box;
         }
         .counter-panel { flex: 1; min-width: 320px; }
-        .audio-panel { width: 380px; }
         h1 { font-size: 24px; color: #38bdf8; margin-top: 0; margin-bottom: 5px; font-weight: 600; }
         .subtitle { color: #6b7280; font-size: 13px; margin-bottom: 25px; letter-spacing: 0.5px; }
         textarea {
@@ -75,15 +57,10 @@
         .stat-box { background-color: #1f2937; padding: 15px; border-radius: 12px; border: 1px solid #374151; }
         .stat-num { font-size: 20px; font-weight: bold; color: #38bdf8; font-family: monospace; }
         .stat-label { font-size: 12px; color: #9ca3af; margin-top: 4px; }
-        .audio-row { margin-bottom: 25px; }
-        .row-header { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 8px; font-weight: 500; }
-        .sound-name { color: #e5e7eb; }
-        .volume-label { color: #38bdf8; font-family: monospace; }
-        input[type="range"] { width: 100%; -webkit-appearance: none; background: #1f2937; height: 6px; border-radius: 5px; outline: none; }
-        input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; background: #38bdf8; width: 16px; height: 16px; border-radius: 50%; cursor: pointer; box-shadow: 0 0 8px #38bdf8; transition: 0.1s; }
-        input[type="range"]::-webkit-slider-thumb:hover { background: #60a5fa; box-shadow: 0 0 12px #60a5fa; }
         .privacy-badge { margin-top: 25px; font-size: 12px; color: #10b981; background-color: rgba(16, 185, 129, 0.1); padding: 8px 16px; border-radius: 20px; border: 1px solid rgba(16, 185, 129, 0.2); display: inline-block; font-weight: 500; text-align: center; }
         footer { margin-top: 40px; color: #4b5563; font-size: 12px; letter-spacing: 0.5px; }
+        select { transition: 0.2s; }
+        select:focus { border-color: #38bdf8; box-shadow: 0 0 10px rgba(56, 189, 248, 0.2); }
     </style>
 </head>
 <body>
@@ -93,7 +70,22 @@
         <div class="panel counter-panel">
             <h1>Prompt Core Matrix</h1>
             <div class="subtitle">100% LOCAL BROWSER SANDBOX RUNNING</div>
+            
+            <!-- PREMIUM TEMPLATE SELECTOR MENU -->
+            <div style="margin-bottom: 25px;">
+                <label for="templateSelect" style="font-size: 11px; color: #9ca3af; display: block; margin-bottom: 8px; letter-spacing: 1px; font-weight: 600;">SELECT PREMIUM VAULT FRAMEWORK</label>
+                <select id="templateSelect" style="width: 100%; background-color: #1f2937; border: 1px solid #374151; border-radius: 12px; color: #f3f4f6; padding: 14px; font-size: 14px; outline: none; cursor: pointer; border: 1px solid #374151;">
+                    <option value="">-- Select a Blank Canvas --</option>
+                    <option value="hook">⚡ Vault Slot 1: The Viral IG Hook Generator</option>
+                    <option value="pastor">💼 Vault Slot 2: P.A.S.T.O.R. Sales Page Framework</option>
+                    <option value="pitch">🎯 Vault Slot 3: High-Ticket Client Pitch Deck</option>
+                    <option value="caption">📝 Vault Slot 4: Social Media Caption Matrix</option>
+                    <option value="manifesto">💎 Vault Slot 5: Luxury Brand Manifesto Template</option>
+                </select>
+            </div>
+
             <textarea id="promptInput" placeholder="Paste your proprietary prompt or engineering code strings here to evaluate structure..."></textarea>
+            
             <div class="stats-grid">
                 <div class="stat-box"><div class="stat-num" id="charCount">0</div><div class="stat-label">Total Characters</div></div>
                 <div class="stat-box"><div class="stat-num" id="wordCount">0</div><div class="stat-label">Word Units</div></div>
@@ -102,18 +94,32 @@
             </div>
             <div style="text-align: center;"><div class="privacy-badge">🔒 Enterprise Data Shield Active: 0 Bits Sent to Cloud</div></div>
         </div>
+    </div>
 
-        
     <footer>PROMPT LIGHTNING LABS © 2026 • SECURITY VERIFIED BY VERCEL SHIELD</footer>
 
     <script>
-        // --- Core Token Engine Logic Matrix ---
         const promptInput = document.getElementById('promptInput');
         const charCount = document.getElementById('charCount');
         const wordCount = document.getElementById('wordCount');
         const tokenEst = document.getElementById('tokenEst');
         const claudeEst = document.getElementById('claudeEst');
+        const templateSelect = document.getElementById('templateSelect');
+        
+        // --- Premium Vault Content Data Objects ---
+        const vaultTemplates = {
+            hook: "Act as an Elite Social Media Copywriter and Human Behavior Expert.\nI am going to give you a core topic, and you will generate 5 high-converting Instagram Reel hooks designed to stop the scroll in under 3 seconds using strict curiosity loops.\n\nCore Topic Input: [ENTER YOUR TOPIC HERE]",
+            
+            pastor: "Act as a Master Conversion Copywriter.\nI am going to give you a product or service name, and you will structure a high-converting long-form sales page using the strict P.A.S.T.O.R. copywriting framework.\n\nProduct/Service Input: [ENTER YOUR OFFER HERE]",
+            
+            pitch: "Act as an Elite Business Development Director and Master B2B Copywriter.\nI am going to give you a Target Client Company and the Service I Offer. You will generate a hyper-targeted, minimalist cold outreach email under 120 words using the 'Peer-to-Peer Inverse Pitch' framework.\n\nTarget Client Input: [ENTER TARGET CLIENT HERE]\nService Offered Input: [ENTER YOUR SERVICE HERE]",
+            
+            caption: "Act as an Elite Editorial Typographer and Social Media Layout Expert.\nI am going to give you raw, unformatted notes or text. You will restructure this content into a premium, single-column social caption utilizing strict visual spatial padding rules.\n\nRaw Text Input: [ENTER RAW CAPTION TEXT HERE]",
+            
+            manifesto: "Act as a Luxury Brand Strategist and Master Editorial Copywriter.\nI am going to give you a Core Product or Philosophy. You will generate a high-end brand manifesto structured for a website landing page header.\n\nCore Philosophy Input: [ENTER BRAND PHILOSOPHY HERE]"
+        };
 
+        // --- Core Token Engine Logic ---
         promptInput.addEventListener('input', () => {
             const text = promptInput.value;
             charCount.innerText = text.length;
@@ -123,9 +129,17 @@
             claudeEst.innerText = Math.ceil(text.length / 3.5);
         });
 
-       
- 
-            
+        // --- Automate Template Injection Handler ---
+        templateSelect.addEventListener('change', () => {
+            const selectedValue = templateSelect.value;
+            if (selectedValue && vaultTemplates[selectedValue]) {
+                promptInput.value = vaultTemplates[selectedValue];
+                promptInput.dispatchEvent(new Event('input'));
+            } else {
+                promptInput.value = '';
+                promptInput.dispatchEvent(new Event('input'));
+            }
+        });
     </script>
 </body>
 </html>
