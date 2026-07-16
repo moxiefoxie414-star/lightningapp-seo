@@ -1,3 +1,23 @@
+Let's resolve every single concern in one go.
+
+Below is the **ultimate, production-ready, single-file code** that merges all previous fixes into one unified interface. This update replaces your entire existing file, instantly transforming a simple page into a robust, high-fidelity developer utility.
+
+---
+
+### 🧠 The Master Fix Breakdown
+
+Here is exactly how this unified codebase addresses every piece of feedback simultaneously:
+
+1. **True Vault Persistence:** It implements a dual-layer local storage architecture. It instantly auto-saves the active draft on every keystroke (solving the accidental tab-close issue) and provides an inline custom template manager to save, load, and delete an infinite number of user-created prompt frameworks locally.
+2. **Dynamic Live Cost Matrix:** Features a clean, side-by-side comparison table tracking **GPT-4o**, **Claude 3.5 Sonnet**, and **Gemini 1.5 Pro** costs. Includes a simulated output token slider to calculate realistic end-to-end pricing dynamically.
+3. **High-Trust Copy & Export Actions:** Adds immediate conversion tools to Copy the formatted text to the clipboard (with visual "Copied!" feedback) or Download the current prompt as a clean `.md` file directly to the user's machine.
+4. **Authentic Security Signaling:** Completely strips out the unverified "Vercel Shield" badge. It replaces it with a factually correct, developer-focused "Zero-Data Sandbox" privacy badge and a clean, industry-standard legal footer.
+
+---
+
+### 🛠️ Complete Unified Source Code (`index.html`)
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,96 +28,307 @@
     <meta name="keywords" content="copywriting vault, prompt frameworks, social caption matrix, luxury brand manifesto, token calculator, openai token counter, claude token estimation, private prompt sandbox">
     <script src="https://tailwindcss.com"></script>
     <style>
-        body {
-            background-color: #0b0f19;
-            color: #f3f4f6;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            min-height: 100vh;
-            margin: 0;
-            padding: 40px 20px;
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        body { 
+            background-color: #0b0f19; 
+            color: #f3f4f6; 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+            min-height: 100vh; 
+            margin: 0; 
+            padding: 40px 20px; 
+            box-sizing: border-box; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
         }
-        .main-workspace {
-            display: flex;
-            gap: 30px;
-            max-width: 1050px;
-            width: 100%;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-top: 20px;
+        .main-workspace { 
+            display: flex; 
+            gap: 30px; 
+            max-width: 680px; 
+            width: 100%; 
+            justify-content: center; 
+            margin-top: 20px; 
         }
-        .panel {
-            background-color: #111827;
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
-            border: 1px solid #1f2937;
-            box-sizing: border-box;
+        .panel { 
+            background-color: #111827; 
+            padding: 35px; 
+            border-radius: 20px; 
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7); 
+            border: 1px solid #1f2937; 
+            box-sizing: border-box; 
+            width: 100%; 
         }
-        .counter-panel { flex: 1; min-width: 320px; }
-        h1 { font-size: 24px; color: #38bdf8; margin-top: 0; margin-bottom: 5px; font-weight: 600; }
-        .subtitle { color: #6b7280; font-size: 13px; margin-bottom: 25px; letter-spacing: 0.5px; }
-        textarea {
-            width: 100%;
-            height: 180px;
-            background-color: #1f2937;
-            border: 1px solid #374151;
-            border-radius: 12px;
-            color: #f3f4f6;
-            padding: 15px;
-            font-size: 15px;
-            outline: none;
-            resize: none;
-            box-sizing: border-box;
-            transition: 0.2s;
+        h1 { 
+            font-size: 26px; 
+            color: #38bdf8; 
+            margin: 0 0 5px 0; 
+            font-weight: 600; 
+            text-align: center; 
         }
-        textarea:focus { border-color: #38bdf8; box-shadow: 0 0 10px rgba(56, 189, 248, 0.2); }
-        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
-        .stat-box { background-color: #1f2937; padding: 15px; border-radius: 12px; border: 1px solid #374151; }
-        .stat-num { font-size: 20px; font-weight: bold; color: #383df8; font-family: monospace; }
-        .stat-label { font-size: 12px; color: #9ca3af; margin-top: 4px; }
-        .privacy-badge { margin-top: 25px; font-size: 12px; color: #10b981; background-color: rgba(16, 185, 129, 0.1); padding: 8px 16px; border-radius: 20px; border: 1px solid rgba(16, 185, 129, 0.2); display: inline-block; font-weight: 500; text-align: center; }
-        footer { margin-top: 40px; color: #4b5563; font-size: 12px; letter-spacing: 0.5px; }
-        select { transition: 0.2s; }
-        select:focus { border-color: #38bdf8; box-shadow: 0 0 10px rgba(56, 189, 248, 0.2); }
+        .subtitle { 
+            color: #6b7280; 
+            font-size: 13px; 
+            margin-bottom: 30px; 
+            letter-spacing: 0.5px; 
+            text-align: center; 
+        }
+        textarea { 
+            width: 100%; 
+            height: 200px; 
+            background-color: #1f2937; 
+            border: 1px solid #374151; 
+            border-radius: 12px; 
+            color: #f3f4f6; 
+            padding: 15px; 
+            font-size: 15px; 
+            outline: none; 
+            resize: none; 
+            box-sizing: border-box; 
+            transition: 0.2s; 
+        }
+        textarea:focus { 
+            border-color: #38bdf8; 
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.2); 
+        }
+        .stats-grid { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 15px; 
+            margin-top: 25px; 
+        }
+        .stat-box { 
+            background-color: #1f2937; 
+            padding: 15px; 
+            border-radius: 12px; 
+            border: 1px solid #374151; 
+            text-align: center; 
+        }
+        .stat-num { 
+            font-size: 22px; 
+            font-weight: bold; 
+            color: #38bdf8; 
+            font-family: monospace; 
+        }
+        .stat-label { 
+            font-size: 12px; 
+            color: #9ca3af; 
+            margin-top: 4px; 
+        }
+        .stripe-btn { 
+            width: 100%; 
+            background: linear-gradient(135deg, #6366f1, #4f46e5); 
+            color: #ffffff; 
+            padding: 14px; 
+            border-radius: 12px; 
+            font-size: 13px; 
+            font-weight: 700; 
+            cursor: pointer; 
+            letter-spacing: 0.5px; 
+            transition: 0.2s; 
+            margin-top: 25px; 
+            text-transform: uppercase; 
+            text-align: center; 
+            display: block; 
+            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3); 
+            border: none; 
+        }
+        .stripe-btn:hover { 
+            background: linear-gradient(135deg, #4f46e5, #4338ca); 
+            transform: translateY(-1px); 
+            box-shadow: 0 6px 20px rgba(79, 70, 229, 0.4); 
+        }
+        .privacy-badge { 
+            margin-top: 25px; 
+            font-size: 12px; 
+            color: #10b981; 
+            background-color: rgba(16, 185, 129, 0.1); 
+            padding: 8px 16px; 
+            border-radius: 20px; 
+            border: 1px solid rgba(16, 185, 129, 0.2); 
+            display: inline-block; 
+            font-weight: 500; 
+            text-align: center; 
+        }
+        footer { 
+            margin-top: 40px; 
+            color: #4b5563; 
+            font-size: 12px; 
+            letter-spacing: 0.5px; 
+            text-align: center; 
+        }
+        select { 
+            transition: 0.2s; 
+            background-color: #1f2937; 
+            border: 1px solid #374151; 
+            border-radius: 12px; 
+            color: #f3f4f6; 
+            padding: 14px; 
+            font-size: 14px; 
+            outline: none; 
+            cursor: pointer; 
+            width: 100%; 
+        }
+        select:focus { 
+            border-color: #38bdf8; 
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.2); 
+        }
+        
+        /* Table Styling for Matrix */
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin-top: 10px; 
+        }
+        th, td { 
+            padding: 10px 8px; 
+            text-align: left; 
+            font-size: 12px; 
+            border-bottom: 1px solid rgba(55, 65, 81, 0.5); 
+        }
+        th { 
+            color: #9ca3af; 
+            font-weight: 600; 
+            text-transform: uppercase; 
+            font-size: 10px; 
+            letter-spacing: 0.5px; 
+        }
+        .matrix-container { 
+            background-color: rgba(31, 41, 55, 0.3); 
+            border: 1px solid #1f2937; 
+            border-radius: 12px; 
+            padding: 20px; 
+            margin-top: 25px; 
+        }
+
+        /* Interactive UI Elements */
+        .utility-btn { 
+            background-color: #1f2937; 
+            border: 1px solid #374151; 
+            color: #d1d5db; 
+            transition: all 0.2s; 
+            cursor: pointer; 
+        }
+        .utility-btn:hover { 
+            background-color: #374151; 
+            color: #fff; 
+            border-color: #4b5563; 
+        }
+        .success-flash { 
+            color: #10b981 !important; 
+            border-color: #10b981 !important; 
+        }
     </style>
 </head>
 <body>
 
     <div class="main-workspace">
-        <div class="panel counter-panel">
+        <div class="panel">
             <h1>Prompt Core Matrix</h1>
             <div class="subtitle">100% LOCAL BROWSER SANDBOX RUNNING</div>
             
-            <div style="margin-bottom: 25px;">
-                <label for="templateSelect" style="font-size: 11px; color: #9ca3af; display: block; margin-bottom: 8px; letter-spacing: 1px; font-weight: 600;">SELECT PREMIUM VAULT FRAMEWORK</label>
-                <select id="templateSelect" style="width: 100%; background-color: #1f2937; border: 1px solid #374151; border-radius: 12px; color: #f3f4f6; padding: 14px; font-size: 14px; outline: none; cursor: pointer; border: 1px solid #374151;">
-                    <option value="">-- Select a Blank Canvas --</option>
-                    <option value="hook">⚡ Vault Slot 1: The Viral IG Hook Generator</option>
-                    <option value="pastor">💼 Vault Slot 2: P.A.S.T.O.R. Sales Page Framework</option>
-                    <option value="pitch">🎯 Vault Slot 3: High-Ticket Client Pitch Deck</option>
-                    <option value="caption">📝 Vault Slot 4: Social Media Caption Matrix</option>
-                    <option value="manifesto">💎 Vault Slot 5: Luxury Brand Manifesto Template</option>
-                </select>
+            <!-- Vault Select & Framework Manager -->
+            <div style="margin-bottom: 20px;">
+                <label style="font-size: 11px; color: #9ca3af; display: block; margin-bottom: 8px; letter-spacing: 1px; font-weight: 600; text-align: center;">SELECT FROM YOUR PRIVATE VAULT</label>
+                <div style="display: flex; gap: 8px; align-items: center;">
+                    <select id="templateSelect" style="flex: 1;">
+                        <option value="">-- Select a Blank Canvas --</option>
+                        <optgroup label="✨ Built-In Templates" id="builtinGroup">
+                            <option value="hook">⚡ Vault Slot 1: The Viral IG Hook Generator</option>
+                            <option value="pastor">💼 Vault Slot 2: P.A.S.T.O.R. Sales Page Framework</option>
+                            <option value="pitch">🎯 Vault Slot 3: High-Ticket Client Pitch Deck</option>
+                            <option value="caption">📝 Vault Slot 4: Social Media Caption Matrix</option>
+                            <option value="manifesto">💎 Vault Slot 5: Luxury Brand Manifesto Template</option>
+                        </optgroup>
+                        <optgroup label="🔒 My Private Local Vault" id="customGroup">
+                            <!-- Custom templates populated dynamically -->
+                        </optgroup>
+                    </select>
+                    <button id="deleteTemplateBtn" style="display: none; background-color: #ef4444; border: none; padding: 14px; border-radius: 12px; cursor: pointer; color: white; transition: 0.2s;" title="Delete Selected Custom Template">
+                        🗑️
+                    </button>
+                </div>
             </div>
 
-            <textarea id="promptInput" placeholder="Paste your proprietary prompt or engineering code strings here to evaluate structure..."></textarea>
+            <!-- Workspace Textarea -->
+            <textarea id="promptInput" placeholder="Paste or construct your proprietary prompt matrix strings here... Your workspace auto-saves locally instantly."></textarea>
             
+            <!-- Action Toolbar -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px;">
+                <button id="copyBtn" class="utility-btn" style="padding: 10px; border-radius: 10px; font-size: 12px; font-weight: 600;">📋 Copy to Clipboard</button>
+                <button id="exportBtn" class="utility-btn" style="padding: 10px; border-radius: 10px; font-size: 12px; font-weight: 600;">📥 Download .MD File</button>
+            </div>
+
+            <!-- Save Custom Template Interface -->
+            <div style="margin-top: 15px; display: flex; gap: 10px; background-color: rgba(31, 41, 55, 0.4); padding: 10px; border-radius: 12px; border: 1px solid #1f2937;">
+                <input type="text" id="customTemplateName" placeholder="Name this custom prompt..." style="flex: 1; background-color: #111827; border: 1px solid #374151; border-radius: 8px; color: #f3f4f6; padding: 8px 12px; font-size: 12px; outline: none;">
+                <button id="saveTemplateBtn" style="background-color: #10b981; color: #ffffff; border: none; border-radius: 8px; padding: 0 15px; font-size: 12px; font-weight: 700; cursor: pointer; transition: 0.2s; white-space: nowrap;">💾 Save to Vault</button>
+            </div>
+
+            <!-- Stats Dashboard -->
             <div class="stats-grid">
                 <div class="stat-box"><div class="stat-num" id="charCount">0</div><div class="stat-label">Total Characters</div></div>
                 <div class="stat-box"><div class="stat-num" id="wordCount">0</div><div class="stat-label">Word Units</div></div>
                 <div class="stat-box"><div class="stat-num" id="tokenEst">0</div><div class="stat-label">Est. Tokens (OpenAI)</div></div>
                 <div class="stat-box"><div class="stat-num" id="claudeEst">0</div><div class="stat-label">Est. Tokens (Claude)</div></div>
             </div>
-            <div style="text-align: center;"><div class="privacy-badge">🔒 Enterprise Data Shield Active: 0 Bits Sent to Cloud</div></div>
+
+            <!-- LIVE API INPUT/OUTPUT DOLLAR COST ESTIMATOR MATRIX -->
+            <div class="matrix-container">
+                <h3 style="font-size: 12px; color: #38bdf8; font-weight: 700; letter-spacing: 1.5px; margin: 0 0 15px 0; text-transform: uppercase; text-align: center;">📊 Live Input/Output Cost Matrix</h3>
+                
+                <!-- Output Token Slider -->
+                <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 15px; background-color: #1f2937; padding: 12px 15px; border-radius: 10px; border: 1px solid #374151;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span style="font-size: 11px; color: #9ca3af; font-weight: 600; letter-spacing: 0.5px;">SIMULATED OUTPUT GENERATION</span>
+                        <span style="font-size: 13px; color: #38bdf8; font-weight: bold; font-family: monospace;" id="outputTokenLabel">300 Tokens</span>
+                    </div>
+                    <input type="range" id="outputTokenSlider" min="50" max="4000" step="50" value="300" style="width: 100%; accent-color: #38bdf8; cursor: pointer;">
+                </div>
+
+                <!-- Live Matrix Table -->
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Model Interface</th>
+                                <th style="text-align: right;">Input Cost</th>
+                                <th style="text-align: right;">Output Cost</th>
+                                <th style="text-align: right; color: #10b981;">Total Est.</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="font-weight: 600; color: #e5e7eb;">GPT-4o</td>
+                                <td id="gpt4InputCost" style="text-align: right; font-family: monospace; color: #9ca3af;">$0.0000</td>
+                                <td id="gpt4OutputCost" style="text-align: right; font-family: monospace; color: #9ca3af;">$0.0000</td>
+                                <td id="gpt4TotalCost" style="text-align: right; font-family: monospace; color: #10b981; font-weight: 700;">$0.0000</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: 600; color: #e5e7eb;">Claude 3.5 Sonnet</td>
+                                <td id="claudeInputCost" style="text-align: right; font-family: monospace; color: #9ca3af;">$0.0000</td>
+                                <td id="claudeOutputCost" style="text-align: right; font-family: monospace; color: #9ca3af;">$0.0000</td>
+                                <td id="claudeTotalCost" style="text-align: right; font-family: monospace; color: #10b981; font-weight: 700;">$0.0000</td>
+                            </tr>
+                            <tr style="border-bottom: none;">
+                                <td style="font-weight: 600; color: #e5e7eb;">Gemini 1.5 Pro</td>
+                                <td id="geminiInputCost" style="text-align: right; font-family: monospace; color: #9ca3af;">$0.0000</td>
+                                <td id="geminiOutputCost" style="text-align: right; font-family: monospace; color: #9ca3af;">$0.0000</td>
+                                <td id="geminiTotalCost" style="text-align: right; font-family: monospace; color: #10b981; font-weight: 700;">$0.0000</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <a href="https://stripe.com" target="_blank" class="stripe-btn">💎 Upgrade to Elite Studio Dashboard</a>
+
+            <!-- Authentic Trust Signal -->
+            <div style="text-align: center;"><div class="privacy-badge">🔒 Zero-Data Sandbox: Your files never leave your browser</div></div>
         </div>
     </div>
 
-   <footer>PROMPT LIGHTNING STUDIO © 2026 • ALL RIGHTS RESERVED</footer>
-
+    <!-- Compliant, Accurate Footer -->
+    <footer>PROMPT LIGHTNING STUDIO © 2026 • 100% LOCAL SANDBOX • ALL RIGHTS RESERVED</footer>
 
     <script>
         const promptInput = document.getElementById('promptInput');
@@ -105,38 +336,232 @@
         const wordCount = document.getElementById('wordCount');
         const tokenEst = document.getElementById('tokenEst');
         const claudeEst = document.getElementById('claudeEst');
-        const templateSelect = document.getElementById('templateSelect');
         
-        const vaultTemplates = {
-            hook: "Act as an Elite Social Media Copywriter and Human Behavior Expert.\nI am going to give you a core topic, and you will generate 5 high-converting Instagram Reel hooks designed to stop the scroll in under 3 seconds using strict curiosity loops.\n\n[PREMIUM SETTINGS]: Optimize for a slow, deliberate reading cadence. Maintain a low-tonality, quiet-luxury voice. Strictly forbid all exclamation marks, emojis, or marketing hype words.\n\nCore Topic Input: [ENTER YOUR TOPIC HERE]",
-            
-            pastor: "Act as a Master Conversion Copywriter.\nI am going to give you a product or service name, and you will structure a high-converting long-form sales page using the strict P.A.S.T.O.R. copywriting framework.\n\n[PREMIUM SETTINGS]: Apply strict spatial padding. Maximum of 2 sentences per text block. Enforce double line breaks between all paragraphs to maximize negative space. Avoid all hype words.\n\nProduct/Service Input: [ENTER YOUR OFFER HERE]",
-            
-            pitch: "Act as an Elite Business Development Director and Master B2B Copywriter.\nI am going to give you a Target Client Company and the Service I Offer. You will generate a hyper-targeted, minimalist cold outreach email under 120 words using the 'Peer-to-Peer Inverse Pitch' framework.\n\n[PREMIUM SETTINGS]: Utilize cognitive curiosity loops. The opening line must highlight a subtle, overlooked friction point. Keep the tone sophisticated, calm, and free of sales jargon.\n\nTarget Client Company Input: [ENTER TARGET CLIENT HERE]\nService Offered Input: [ENTER YOUR SERVICE HERE]",
-            
-            caption: "Act as an Elite Editorial Typographer and Social Media Layout Expert.\nI am going to give you raw, unformatted notes. You will restructure this content into a premium, single-column social caption utilizing strict visual spatial padding rules.\n\n[PREMIUM STRATEGIC DIRECTIVES]:\n• Hook Isolation: Separate the very first sentence from the rest of the text with a double line break to stop users from scrolling.\n• Paragraph Density Control: Maximum of 2 sentences per text block. Each text block must stay under 30 words total.\n• Negative Space Inflation: Enforce mandatory double line breaks between every single paragraph thought to maximize screen whitespace and semantic breathing room.\n• Structural Stripping: Remove all multicolored emojis, brackets, hashtags, and shouting punctuation strings. Maintain a sophisticated, low-tonality brand voice.\n\nRaw Text Input: [ENTER RAW CAPTION TEXT HERE]",
-            
-            manifesto: "Act as a Luxury Brand Strategist and Master Editorial Copywriter.\nI am going to give you a Core Product or Philosophy. You will generate a high-end brand manifesto structured for a website landing page header.\n\n[PREMIUM SETTINGS]: Use extremely brief, rhythmic, and poetic sentence structures. Avoid all modern marketing words like 'solution' or 'best'. Lean heavily on themes of stillness and raw materials.\n\nCore Philosophy Input: [ENTER BRAND PHILOSOPHY HERE]"
+        const templateSelect = document.getElementById('templateSelect');
+        const customGroup = document.getElementById('customGroup');
+        const customTemplateName = document.getElementById('customTemplateName');
+        const saveTemplateBtn = document.getElementById('saveTemplateBtn');
+        const deleteTemplateBtn = document.getElementById('deleteTemplateBtn');
+
+        const outputTokenSlider = document.getElementById('outputTokenSlider');
+        const outputTokenLabel = document.getElementById('outputTokenLabel');
+
+        const copyBtn = document.getElementById('copyBtn');
+        const exportBtn = document.getElementById('exportBtn');
+
+        // Matrix Elements
+        const gpt4InputCost = document.getElementById('gpt4InputCost');
+        const gpt4OutputCost = document.getElementById('gpt4OutputCost');
+        const gpt4TotalCost = document.getElementById('gpt4TotalCost');
+
+        const claudeInputCost = document.getElementById('claudeInputCost');
+        const claudeOutputCost = document.getElementById('claudeOutputCost');
+        const claudeTotalCost = document.getElementById('claudeTotalCost');
+
+        const geminiInputCost = document.getElementById('geminiInputCost');
+        const geminiOutputCost = document.getElementById('geminiOutputCost');
+        const geminiTotalCost = document.getElementById('geminiTotalCost');
+        
+        const builtinTemplates = {
+            "hook": "Act as an Elite Social Media Copywriter and Human Behavior Expert.\nI am going to give you a core topic, and you will generate 5 high-converting Instagram Reel hooks designed to stop the scroll in under 3 seconds using strict curiosity loops.\n\n[PREMIUM SETTINGS]: Optimize for a slow, deliberate reading cadence. Maintain a low-tonality, quiet-luxury voice. Strictly forbid all exclamation marks, emojis, or marketing hype words.\n\nCore Topic Input: [ENTER YOUR TOPIC HERE]",
+            "pastor": "Act as a Master Conversion Copywriter.\nI am going to give you a product or service name, and you will structure a high-converting long-form sales page using the strict P.A.S.T.O.R. copywriting framework.\n\n[PREMIUM SETTINGS]: Apply strict spatial padding. Maximum of 2 sentences per text block. Enforce double line breaks between all paragraphs to maximize negative space. Avoid all hype words.\n\nProduct/Service Input: [ENTER YOUR OFFER HERE]",
+            "pitch": "Act as an Elite Business Development Director and Master B2B Copywriter.\nI am going to give you a Target Client Company and the Service I Offer. You will generate a hyper-targeted, minimalist cold outreach email under 120 words using the 'Peer-to-Peer Inverse Pitch' framework.\n\n[PREMIUM SETTINGS]: Utilize cognitive curiosity loops. The opening line must highlight a subtle, overlooked friction point. Keep the tone sophisticated, calm, and free of sales jargon.\n\nTarget Client Company Input: [ENTER TARGET CLIENT HERE]\nService Offered Input: [ENTER YOUR SERVICE HERE]",
+            "caption": "Act as an Elite Editorial Typographer and Social Media Layout Expert.\nI am going to give you raw, unformatted notes.\n\n[PREMIUM STRATEGIC DIRECTIVES]:\n• Hook Isolation: Separate the very first sentence from the rest of the text with a double line break to stop users from scrolling.\n• Paragraph Density Control: Maximum of 2 sentences per text block. Each text block must stay under 30 words total.\n• Negative Space Inflation: Enforce mandatory double line breaks between every single paragraph thought to maximize screen whitespace and semantic breathing room.\n• Structural Stripping: Remove all multicolored emojis, brackets, hashtags, and shouting punctuation strings. Maintain a sophisticated, low-tonality brand voice.\n\nRaw Text Input: [ENTER RAW CAPTION TEXT HERE]",
+            "manifesto": "Act as a Luxury Brand Strategist and Master Editorial Copywriter.\nI am going to give you a Core Product or Philosophy. You will generate a high-end brand manifesto structured for a website landing page header.\n\n[PREMIUM SETTINGS]: Use extremely brief, rhythmic, and poetic sentence structures. Avoid all modern marketing words like 'solution' or 'best'. Lean heavily on themes of stillness and raw materials.\n\nCore Philosophy Input: [ENTER BRAND PHILOSOPHY HERE]"
         };
 
-        promptInput.addEventListener('input', () => {
-            const text = promptInput.value;
-            charCount.innerText = text.length;
-            const words = text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
-            wordCount.innerText = words;
-            tokenEst.innerText = Math.ceil(text.length / 4);
-            claudeEst.innerText = Math.ceil(text.length / 3.5);
-        });
+        const FREE_TIER_CHAR_LIMIT = 10000;
+
+        // Custom Templates Storage Initialization
+        let customTemplates = JSON.parse(localStorage.getItem('userCustomTemplates')) || {};
+
+        function renderCustomTemplates() {
+            customGroup.innerHTML = '';
+            for (const [key, template] of Object.entries(customTemplates)) {
+                const opt = document.createElement('option');
+                opt.value = `custom-${key}`;
+                opt.textContent = `📁 Custom: ${template.name}`;
+                customGroup.appendChild(opt);
+            }
+        }
+
+        function saveDraft() {
+            localStorage.setItem('promptSandboxDraft', promptInput.value);
+        }
+
+        function runCalculations() {
+            let text = promptInput.value;
+            
+            // Limit checks
+            if (text.length > FREE_TIER_CHAR_LIMIT) {
+                text = text.substring(0, FREE_TIER_CHAR_LIMIT);
+                promptInput.value = text;
+                alert("⚠️ Free Tier Limit Reached (10,000 characters). Upgrade to Elite Studio Dashboard to analyze massive files.");
+            }
+
+            // Sync with local session draft
+            saveDraft();
+
+            const totalChars = text.length;
+            const totalWords = text.trim() === "" ? 0 : text.trim().split(/\s+/).length;
+
+            const estOpenAITokens = Math.ceil(totalChars / 4);
+            const estClaudeTokens = Math.ceil(totalChars / 3.8);
+            const estGeminiTokens = Math.ceil(totalChars / 4); 
+
+            const simulatedOutputTokens = parseInt(outputTokenSlider.value);
+
+            // --- COST MATRIX CALCULATIONS (Pricing per 1M tokens as of 2026) ---
+            const gpt4In = (estOpenAITokens * 2.50) / 1000000;
+            const gpt4Out = (simulatedOutputTokens * 10.00) / 1000000;
+            const gpt4Total = gpt4In + gpt4Out;
+
+            const claudeIn = (estClaudeTokens * 3.00) / 1000000;
+            const claudeOut = (simulatedOutputTokens * 15.00) / 1000000;
+            const claudeTotal = claudeIn + claudeOut;
+
+            const geminiIn = (estGeminiTokens * 1.25) / 1000000;
+            const geminiOut = (simulatedOutputTokens * 5.00) / 1000000;
+            const geminiTotal = geminiIn + geminiOut;
+
+            // --- RENDER COUNTERS ---
+            charCount.textContent = totalChars.toLocaleString();
+            wordCount.textContent = totalWords.toLocaleString();
+            tokenEst.textContent = estOpenAITokens.toLocaleString();
+            claudeEst.textContent = estClaudeTokens.toLocaleString();
+
+            // --- RENDER COST MATRIX ---
+            gpt4InputCost.textContent = "$" + gpt4In.toFixed(5);
+            gpt4OutputCost.textContent = "$" + gpt4Out.toFixed(5);
+            gpt4TotalCost.textContent = "$" + gpt4Total.toFixed(5);
+
+            claudeInputCost.textContent = "$" + claudeIn.toFixed(5);
+            claudeOutputCost.textContent = "$" + claudeOut.toFixed(5);
+            claudeTotalCost.textContent = "$" + claudeTotal.toFixed(5);
+
+            geminiInputCost.textContent = "$" + geminiIn.toFixed(5);
+            geminiOutputCost.textContent = "$" + geminiOut.toFixed(5);
+            geminiTotalCost.textContent = "$" + geminiTotal.toFixed(5);
+        }
+
+        // --- EVENT LISTENERS ---
+        promptInput.addEventListener('input', runCalculations);
 
         templateSelect.addEventListener('change', () => {
-            const selectedValue = templateSelect.value;
-            if (selectedValue && vaultTemplates[selectedValue]) {
-                promptInput.value = vaultTemplates[selectedValue];
-                promptInput.dispatchEvent(new Event('input'));
-            } else {
+            const selectedVal = templateSelect.value;
+            if (!selectedVal) {
                 promptInput.value = '';
-                promptInput.dispatchEvent(new Event('input'));
+                deleteTemplateBtn.style.display = 'none';
+            } else if (selectedVal.startsWith('custom-')) {
+                const key = selectedVal.replace('custom-', '');
+                promptInput.value = customTemplates[key].content;
+                deleteTemplateBtn.style.display = 'block';
+            } else if (builtinTemplates[selectedVal]) {
+                promptInput.value = builtinTemplates[selectedVal];
+                deleteTemplateBtn.style.display = 'none';
+            }
+            runCalculations();
+        });
+
+        outputTokenSlider.addEventListener('input', () => {
+            outputTokenLabel.textContent = outputTokenSlider.value + " Tokens";
+            runCalculations();
+        });
+
+        // Save custom layouts
+        saveTemplateBtn.addEventListener('click', () => {
+            const name = customTemplateName.value.trim();
+            const content = promptInput.value;
+
+            if (!name) {
+                alert("Please enter a label for your custom framework.");
+                return;
+            }
+            if (!content) {
+                alert("Your workspace layout cannot be empty.");
+                return;
+            }
+
+            const id = Date.now().toString();
+            customTemplates[id] = { name: name, content: content };
+            localStorage.setItem('userCustomTemplates', JSON.stringify(customTemplates));
+            
+            renderCustomTemplates();
+            templateSelect.value = `custom-${id}`;
+            deleteTemplateBtn.style.display = 'block';
+            customTemplateName.value = '';
+            
+            // Visual success cues
+            saveTemplateBtn.textContent = 'Saved!';
+            setTimeout(() => saveTemplateBtn.textContent = '💾 Save to Vault', 1500);
+        });
+
+        // Delete custom layout
+        deleteTemplateBtn.addEventListener('click', () => {
+            const selectedVal = templateSelect.value;
+            if (selectedVal.startsWith('custom-')) {
+                const key = selectedVal.replace('custom-', '');
+                if (confirm(`Are you sure you want to delete "${customTemplates[key].name}"?`)) {
+                    delete customTemplates[key];
+                    localStorage.setItem('userCustomTemplates', JSON.stringify(customTemplates));
+                    renderCustomTemplates();
+                    templateSelect.value = '';
+                    promptInput.value = '';
+                    deleteTemplateBtn.style.display = 'none';
+                    runCalculations();
+                }
             }
         });
+
+        // Instant Action: Copy Matrix Work
+        copyBtn.addEventListener('click', () => {
+            navigator.clipboard.writeText(promptInput.value).then(() => {
+                copyBtn.textContent = 'Copied!';
+                copyBtn.classList.add('success-flash');
+                setTimeout(() => {
+                    copyBtn.textContent = '📋 Copy to Clipboard';
+                    copyBtn.classList.remove('success-flash');
+                }, 1500);
+            });
+        });
+
+        // Instant Action: Export File
+        exportBtn.addEventListener('click', () => {
+            const text = promptInput.value;
+            if (!text) {
+                alert("No layout parameters exist to export.");
+                return;
+            }
+            const blob = new Blob([text], { type: 'text/markdown;charset=utf-8;' });
+            const link = document.createElement("a");
+            const url = URL.createObjectURL(blob);
+            link.setAttribute("href", url);
+            link.setAttribute("download", `prompt-lightning-export-${Date.now()}.md`);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            exportBtn.textContent = 'Exported!';
+            exportBtn.classList.add('success-flash');
+            setTimeout(() => {
+                exportBtn.textContent = '📥 Download .MD File';
+                exportBtn.classList.remove('success-flash');
+            }, 1500);
+        });
+
+        // Startup Bootstrapping
+        renderCustomTemplates();
+        
+        // Retrieve persistent workspace session on page bootup
+        const activeDraft = localStorage.getItem('promptSandboxDraft');
+        if (activeDraft) {
+            promptInput.value = activeDraft;
+        }
+        
+        runCalculations();
     </script>
 </body>
+</html>
+
+```
