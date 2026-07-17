@@ -19,11 +19,12 @@
     </style>
 </head>
 <body class="text-slate-100 min-h-screen py-8 px-4 sm:px-6 lg:px-8">
-<section id="hero" class="text-center py-12 px-6 bg-slate-900/50 rounded-2xl border border-slate-800 mb-8">
+    <section id="hero" class="text-center py-12 px-6 bg-slate-900/50 rounded-2xl border border-slate-800 mb-8">
         <h2 class="text-3xl sm:text-4xl font-extrabold text-white mb-4">Stop writing from scratch. <br>Start drafting with precision.</h2>
         <p class="text-slate-400 text-lg max-w-2xl mx-auto mb-8">The world’s first browser-native copywriting studio. Instant frameworks, zero data tracking, and total privacy.</p>
         <a href="#copy-engine" class="inline-block bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3 px-8 rounded-lg transition-all shadow-lg">View Live Demo Below</a>
     </section>
+    
     <div class="max-w-7xl mx-auto space-y-8">
         
         <!-- HEADER -->
@@ -42,8 +43,8 @@
         <!-- MAIN TWO-COLUMN WORKSPACE -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             
-            <!-- LEFT COLUMN: GENERATION ENGINE PANEL (40% width on desktop) -->
-     <div id="copy-engine" class="lg:col-span-5 space-y-6">       
+            <!-- LEFT COLUMN: GENERATION ENGINE PANEL -->
+            <div id="copy-engine" class="lg:col-span-5 space-y-6">       
                 <div class="glass-panel p-6 rounded-2xl shadow-xl space-y-6">
                     <div class="flex items-center justify-between border-b border-slate-800 pb-3">
                         <h2 class="text-lg font-bold text-indigo-300 flex items-center gap-2">
@@ -54,11 +55,11 @@
                         </button>
                     </div>
 
-                    <!-- AI KEY INPUT DRAWER (Collapsible) -->
+                    <!-- AI KEY INPUT DRAWER -->
                     <div id="ai-settings-drawer" class="hidden bg-slate-950/80 p-4 rounded-xl border border-slate-800 space-y-3 text-xs">
                         <div class="font-semibold text-indigo-400">Secure Direct-AI Connection</div>
                         <p class="text-slate-400 leading-relaxed">
-                            Paste your OpenAI API Key below to enable true AI copywriting generation. Your key remains strictly saved in your local browser storage and queries OpenAI directly.
+                            Paste your OpenAI API Key below. Your key remains strictly saved in your local browser storage and queries OpenAI directly.
                         </p>
                         <div class="space-y-1">
                             <label class="block text-slate-300">OpenAI API Key:</label>
@@ -111,7 +112,7 @@
                 </div>
             </div>
 
-            <!-- RIGHT COLUMN: CORE WORKSPACE & VAULT (70% width on desktop) -->
+            <!-- RIGHT COLUMN: CORE WORKSPACE & VAULT -->
             <div class="lg:col-span-7 space-y-6">
                 
                 <!-- WORKSPACE CARD -->
@@ -121,31 +122,30 @@
                     <div class="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center justify-between border-b border-slate-800 pb-4">
                         <div class="space-y-1 flex-1">
                             <label class="block text-xs font-semibold uppercase tracking-wider text-indigo-400">Active Template Frame</label>
-                            <select id="template-dropdown" onchange="loadSelectedTemplate()" class="w-full bg-slate-900/90 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-indigo-500 transition">
-                                <option value="blank">-- Select a Blank Canvas --</option>
-                                <!-- Preloaded templates -->
-                                <option value="viral-hook">⚡ Vault Slot 1: The Viral IG Hook Generator</option>
-                                <option value="pastor-sales">💼 Vault Slot 2: P.A.S.T.O.R. Sales Page Framework</option>
-                                <option value="pitch-deck">🎯 Vault Slot 3: High-Ticket Client Pitch Deck</option>
-                                <option value="caption-matrix">📝 Vault Slot 4: Social Media Caption Matrix</option>
-                                <option value="brand-manifesto">💎 Vault Slot 5: Luxury Brand Manifesto Template</option>
-                                <option value="cold-email">📧 Vault Slot 6: Cold Email Outreach</option>
-                                <option value="video-script">🎥 Vault Slot 7: Short-Form Video Script</option>
-                                <option value="landing-page">🚀 Vault Slot 8: AIDA Landing Page</option>
-                            </select>                                                                              
-                            <button onclick="deleteCustomTemplate()" class="bg-red-950/40 hover:bg-red-900/60 text-red-400 p-2 rounded-lg border border-red-800/40 transition" title="Delete Custom Template">
-                                🗑️
-                            </button>
+                            <div class="flex gap-2">
+                                <select id="template-dropdown" onchange="loadSelectedTemplate()" class="w-full bg-slate-900/90 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-indigo-500 transition">
+                                    <!-- Options dynamically loaded by JS -->
+                                </select>                                                                              
+                                <button id="delete-btn-container" onclick="deleteCustomTemplate()" class="hidden bg-red-950/40 hover:bg-red-900/60 text-red-400 p-2 rounded-lg border border-red-800/40 transition" title="Delete Custom Template">
+                                    🗑️
+                                </button>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- EXPORT ACTION ROW -->
-                    <div class="flex justify-between items-center gap-2">
-                        <button onclick="copyToClipboard()" class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-200 py-2 px-3 rounded-lg text-xs font-semibold transition flex items-center justify-center gap-2 border border-slate-700/50">
-                            📋 Copy to Clipboard
+                    <!-- EXPORT ACTION ROW (NEW: Added Doc & PDF) -->
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                        <button onclick="copyToClipboard()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 py-2 px-3 rounded-lg text-xs font-semibold transition flex items-center justify-center gap-2 border border-slate-700/50">
+                            📋 Copy Text
                         </button>
-                        <button onclick="downloadMarkdown()" class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-200 py-2 px-3 rounded-lg text-xs font-semibold transition flex items-center justify-center gap-2 border border-slate-700/50">
-                            📥 Download .MD File
+                        <button onclick="downloadMarkdown()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 py-2 px-3 rounded-lg text-xs font-semibold transition flex items-center justify-center gap-2 border border-slate-700/50">
+                            📥 .MD File
+                        </button>
+                        <button onclick="downloadWordDoc()" class="bg-blue-900/40 hover:bg-blue-800/60 text-blue-300 py-2 px-3 rounded-lg text-xs font-semibold transition flex items-center justify-center gap-2 border border-blue-700/50">
+                            📝 Word Doc
+                        </button>
+                        <button onclick="exportPDF()" class="bg-red-900/40 hover:bg-red-800/60 text-red-300 py-2 px-3 rounded-lg text-xs font-semibold transition flex items-center justify-center gap-2 border border-red-700/50">
+                            📄 Print / PDF
                         </button>
                     </div>
 
@@ -228,20 +228,13 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="pt-2">
-                        <button class="w-full bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 border border-indigo-500/20 py-2.5 rounded-xl text-xs font-semibold transition uppercase tracking-wider">
-                            💎 Upgrade to Elite Studio Dashboard
-                        </button>
-                    </div>
                 </div>
             </div>
         </div>
 
         <!-- FOOTER -->
         <footer class="text-center text-slate-500 text-xs py-6 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div>
-                PROMPT LIGHTNING STUDIO &copy; 2026 • ALL RIGHTS RESERVED
-            </div>
+            <div>PROMPT LIGHTNING STUDIO &copy; 2026 • ALL RIGHTS RESERVED</div>
             <div class="text-indigo-400 flex items-center gap-1.5 font-medium">
                 🔒 Zero-Data Sandbox: Your inputs never leave your browser
             </div>
@@ -252,64 +245,14 @@
     <script>
         // Core framework dictionary
         const PRELOADED_TEMPLATES = {
-            'viral-hook': `[Topic: Product/Service Name] [Audience: Target Audience] [Style: Desired Tone]
-
-🎯 VIRAL IG HOOK FRAMEWORK
----
-Hook Option 1 (The Antidote):
-"Everyone tells you to work harder to get [Target Audience] results, but they aren't telling you about [Product/Service Name]..."
-
-Hook Option 2 (The Direct Callout):
-"If you are a [Target Audience] struggling with [Core USP/Primary Benefit], stop scrolling immediately..."
-
-Hook Option 3 (The Pattern Interrupt):
-"Most people think [Core USP/Primary Benefit] requires months. Here is how we do it in minutes with [Product/Service Name]..."`,
-
-            'pastor-sales': `[Topic: Product/Service Name] [Audience: Target Audience] [Style: Desired Tone]
-
-💼 P.A.S.T.O.R. HIGH-CONVERTING SALES PAGE
----
-P - Problem: Are you a [Target Audience] dealing with the painful setup of existing programs?
-A - Amplify: Every hour you waste trying to configure traditional workflows is cash down the drain.
-S - Story: We built [Product/Service Name] specifically to end that cycle. 
-T - Testimony: Imagine getting [Core USP/Primary Benefit] active in your business on day one.
-O - Offer: Get full lifetime access to [Product/Service Name] today and claim your unfair advantage.
-R - Response: Click below to launch.`,
-
-            'pitch-deck': `[Topic: Product/Service Name] [Audience: Target Audience] [Style: Desired Tone]
-
-🎯 HIGH-TICKET CLIENT PITCH FRAMEWORK
----
-The Problem:
-"Most enterprise operations in your space waste thousands of hours on [Core USP/Primary Benefit] bottlenecks. They are bleeding efficiency."
-
-The Solution:
-"Our service, [Product/Service Name], automates this entire process specifically for [Target Audience]."
-
-The Results & Deliverables:
-"By connecting our framework, we guarantee [Core USP/Primary Benefit] within 14 days."`,
-
-            'caption-matrix': `[Topic: Product/Service Name] [Audience: Target Audience] [Style: Desired Tone]
-
-📝 MULTI-PLATFORM SOCIAL MATRIX
----
-Platform: LinkedIn
-"Struggling to find an edge as a [Target Audience]? Here is our blueprint for utilizing [Product/Service Name] to achieve [Core USP/Primary Benefit] in half the time..."
-
-Platform: Twitter/X
-"Too many [Target Audience] suffer from slow processes. 
-[Product/Service Name] fixes this completely. 
-Here is how: [Core USP/Primary Benefit]. 🧵👇"`,
-
-            'brand-manifesto': `[Topic: Product/Service Name] [Audience: Target Audience] [Style: Desired Tone]
-
-💎 LUXURY BRAND MANIFESTO
----
-"To the select few [Target Audience] who refuse to settle. 
-We do not build tools for the masses. We forge frameworks for the exceptional.
-Welcome to [Product/Service Name]. 
-Our obsession is [Core USP/Primary Benefit]. 
-Nothing less, nothing compromised."`
+            'viral-hook': `[Topic: Product/Service Name] [Audience: Target Audience] [Style: Desired Tone]\n\n🎯 VIRAL IG HOOK FRAMEWORK\n---\nHook Option 1 (The Antidote):\n"Everyone tells you to work harder to get [Target Audience] results, but they aren't telling you about [Product/Service Name]..."\n\nHook Option 2 (The Direct Callout):\n"If you are a [Target Audience] struggling with [Core USP/Primary Benefit], stop scrolling immediately..."\n\nHook Option 3 (The Pattern Interrupt):\n"Most people think [Core USP/Primary Benefit] requires months. Here is how we do it in minutes with [Product/Service Name]..."`,
+            'pastor-sales': `[Topic: Product/Service Name] [Audience: Target Audience] [Style: Desired Tone]\n\n💼 P.A.S.T.O.R. HIGH-CONVERTING SALES PAGE\n---\nP - Problem: Are you a [Target Audience] dealing with the painful setup of existing programs?\nA - Amplify: Every hour you waste trying to configure traditional workflows is cash down the drain.\nS - Story: We built [Product/Service Name] specifically to end that cycle. \nT - Testimony: Imagine getting [Core USP/Primary Benefit] active in your business on day one.\nO - Offer: Get full lifetime access to [Product/Service Name] today and claim your unfair advantage.\nR - Response: Click below to launch.`,
+            'pitch-deck': `[Topic: Product/Service Name] [Audience: Target Audience] [Style: Desired Tone]\n\n🎯 HIGH-TICKET CLIENT PITCH FRAMEWORK\n---\nThe Problem:\n"Most enterprise operations in your space waste thousands of hours on [Core USP/Primary Benefit] bottlenecks. They are bleeding efficiency."\n\nThe Solution:\n"Our service, [Product/Service Name], automates this entire process specifically for [Target Audience]."\n\nThe Results & Deliverables:\n"By connecting our framework, we guarantee [Core USP/Primary Benefit] within 14 days."`,
+            'caption-matrix': `[Topic: Product/Service Name] [Audience: Target Audience] [Style: Desired Tone]\n\n📝 MULTI-PLATFORM SOCIAL MATRIX\n---\nPlatform: LinkedIn\n"Struggling to find an edge as a [Target Audience]? Here is our blueprint for utilizing [Product/Service Name] to achieve [Core USP/Primary Benefit] in half the time..."\n\nPlatform: Twitter/X\n"Too many [Target Audience] suffer from slow processes. \n[Product/Service Name] fixes this completely. \nHere is how: [Core USP/Primary Benefit]. 🧵👇"`,
+            'brand-manifesto': `[Topic: Product/Service Name] [Audience: Target Audience] [Style: Desired Tone]\n\n💎 LUXURY BRAND MANIFESTO\n---\n"To the select few [Target Audience] who refuse to settle. \nWe do not build tools for the masses. We forge frameworks for the exceptional.\nWelcome to [Product/Service Name]. \nOur obsession is [Core USP/Primary Benefit]. \nNothing less, nothing compromised."`,
+            'cold-email': `[Topic: Product/Service Name] [Audience: Target Audience] [Style: Desired Tone]\n\n📧 COLD EMAIL OUTREACH\n---\nSubject: Quick question regarding your [Core USP/Primary Benefit]\n\nHi [Name],\n\nNoticed your team at [Company] is scaling. Often, [Target Audience] run into bottlenecks with traditional setups.\n\nWe built [Product/Service Name] to solve exactly this, helping you achieve [Core USP/Primary Benefit] much faster.\n\nWorth a brief chat this week?`,
+            'video-script': `[Topic: Product/Service Name] [Audience: Target Audience] [Style: Desired Tone]\n\n🎥 SHORT-FORM VIDEO SCRIPT\n---\n[0:00 - 0:03] Hook: "If you are a [Target Audience] and you aren't doing this, you're losing money."\n[0:03 - 0:15] Problem: "Most people struggle for months trying to figure out [Core USP/Primary Benefit]."\n[0:15 - 0:30] Solution: "That's why we created [Product/Service Name]. It literally cuts the process in half."\n[0:30 - 0:45] Call to Action: "Click the link in my bio to get [Product/Service Name] today."`,
+            'landing-page': `[Topic: Product/Service Name] [Audience: Target Audience] [Style: Desired Tone]\n\n🚀 AIDA LANDING PAGE FRAMEWORK\n---\nAttention (Headline): Stop wasting time. Get [Core USP/Primary Benefit] today with [Product/Service Name].\nInterest (Sub-headline): The ultimate tool for [Target Audience] who want immediate results.\nDesire (Body): Imagine never having to worry about manual setup again. [Product/Service Name] automates the hard parts.\nAction (CTA): Start your free trial now.`
         };
 
         const workspace = document.getElementById('prompt-workspace');
@@ -317,34 +260,57 @@ Nothing less, nothing compromised."`
 
         // Initial Load on Page Open
         window.addEventListener('DOMContentLoaded', () => {
-            // Restore API Key state
             const key = localStorage.getItem('user_openai_key');
             if (key) {
                 document.getElementById('api-key-input').value = key;
                 updateAiButtonState(true);
             }
 
-            // Restore previous workspace state or fall back to default
+            renderVaultDropdownOptions();
+
             const savedContent = localStorage.getItem('saved_studio_workspace');
             if (savedContent) {
                 workspace.value = savedContent;
+                let matched = false;
+                
+                // Check if it matches a preloaded template
+                for (const [k, v] of Object.entries(PRELOADED_TEMPLATES)) {
+                    if (v === savedContent) {
+                        dropdown.value = k;
+                        matched = true;
+                        break;
+                    }
+                }
+                
+                // Check if it matches a custom vault template
+                if (!matched) {
+                    const vault = JSON.parse(localStorage.getItem('custom_studio_vault')) || {};
+                    for (const [k, v] of Object.entries(vault)) {
+                        if (v === savedContent) {
+                            dropdown.value = k;
+                            matched = true;
+                            toggleDeleteBtn(true);
+                            break;
+                        }
+                    }
+                }
+                
+                if (!matched) dropdown.value = 'blank';
             } else {
                 workspace.value = PRELOADED_TEMPLATES['viral-hook'];
                 dropdown.value = 'viral-hook';
             }
 
-            // Load Custom Dropdowns
-            renderVaultDropdownOptions();
             updateStats();
         });
 
-        // Track user typing in workspace & auto-save to browser
+        // Auto-save typing
         function handleInput() {
             localStorage.setItem('saved_studio_workspace', workspace.value);
             updateStats();
         }
 
-        // Dropdown selection loading
+        // Dropdown Logic
         function loadSelectedTemplate() {
             const selectedVal = dropdown.value;
             if (selectedVal === 'blank') {
@@ -354,7 +320,6 @@ Nothing less, nothing compromised."`
                 workspace.value = PRELOADED_TEMPLATES[selectedVal];
                 toggleDeleteBtn(false);
             } else {
-                // It's a custom template saved in local storage
                 const vault = JSON.parse(localStorage.getItem('custom_studio_vault')) || {};
                 if (vault[selectedVal]) {
                     workspace.value = vault[selectedVal];
@@ -364,19 +329,46 @@ Nothing less, nothing compromised."`
             handleInput();
         }
 
-        // Toggle UI Trashcan for custom templates
         function toggleDeleteBtn(show) {
             const container = document.getElementById('delete-btn-container');
-            if (show) {
-                container.classList.remove('hidden');
-                container.classList.add('flex');
-            } else {
-                container.classList.add('hidden');
-                container.classList.remove('flex');
-            }
+            if (show) { container.classList.remove('hidden'); container.classList.add('flex'); } 
+            else { container.classList.add('hidden'); container.classList.remove('flex'); }
         }
 
-        // SMART LOCAL DRAFT COMPILER
+        // DYNAMIC RENDERING FIX
+        function renderVaultDropdownOptions() {
+            let optionsHTML = `<option value="blank">-- Select a Blank Canvas --</option>`;
+
+            const vaultNames = {
+                'viral-hook': '⚡ Vault Slot 1: The Viral IG Hook',
+                'pastor-sales': '💼 Vault Slot 2: P.A.S.T.O.R. Sales Page',
+                'pitch-deck': '🎯 Vault Slot 3: Pitch Deck Framework',
+                'caption-matrix': '📝 Vault Slot 4: Social Caption Matrix',
+                'brand-manifesto': '💎 Vault Slot 5: Brand Manifesto',
+                'cold-email': '📧 Vault Slot 6: Cold Email Outreach',
+                'video-script': '🎥 Vault Slot 7: Short-Form Video Script',
+                'landing-page': '🚀 Vault Slot 8: AIDA Landing Page'
+            };
+
+            const defaultKeys = Object.keys(PRELOADED_TEMPLATES);
+            defaultKeys.forEach((key) => {
+                optionsHTML += `<option value="${key}">${vaultNames[key] || 'Vault Slot: ' + key}</option>`;
+            });
+
+            const vault = JSON.parse(localStorage.getItem('custom_studio_vault')) || {};
+            const customKeys = Object.keys(vault);
+
+            if (customKeys.length > 0) {
+                optionsHTML += `<option disabled>────────── Private Local Vault ──────────</option>`;
+                customKeys.forEach(key => {
+                    optionsHTML += `<option value="${key}">📁 Custom: ${key}</option>`;
+                });
+            }
+
+            dropdown.innerHTML = optionsHTML;
+        }
+
+        // Smart Local Draft
         function runLocalDraft() {
             const product = document.getElementById('gen-product').value.trim() || '[Your Product]';
             const audience = document.getElementById('gen-audience').value.trim() || '[Your Target Audience]';
@@ -384,8 +376,6 @@ Nothing less, nothing compromised."`
             const tone = document.getElementById('gen-tone').value;
 
             let currentText = workspace.value;
-
-            // Simple regex replacement pattern for our template placeholders
             const replacements = [
                 { pattern: /\[Topic: Product\/Service Name\]/gi, replace: `Product/Service: ${product}` },
                 { pattern: /\[Audience: Target Audience\]/gi, replace: `Target: ${audience}` },
@@ -397,35 +387,19 @@ Nothing less, nothing compromised."`
 
             let modified = false;
             replacements.forEach(item => {
-                if (item.pattern.test(currentText)) {
-                    currentText = currentText.replace(item.pattern, item.replace);
-                    modified = true;
-                }
+                if (item.pattern.test(currentText)) { currentText = currentText.replace(item.pattern, item.replace); modified = true; }
             });
 
             if (!modified) {
-                // If there are no active placeholder tags found, compile a beautiful draft template directly from inputs
-                currentText = `✨ COMPILED LOCAL DRAFT (${tone} Tone)
----
-Target Audience: ${audience}
-Core Hook: "Struggling with ${usp}? We built ${product} specifically to solve this."
-
-The Solution:
-"${product} helps ${audience} achieve ${usp} without the standard painful setup times."
-
-Call To Action:
-"Launch ${product} today and start experiencing real results."`;
+                currentText = `✨ COMPILED LOCAL DRAFT (${tone} Tone)\n---\nTarget Audience: ${audience}\nCore Hook: "Struggling with ${usp}? We built ${product} specifically to solve this."\n\nThe Solution:\n"${product} helps ${audience} achieve ${usp} without the standard painful setup times."\n\nCall To Action:\n"Launch ${product} today and start experiencing real results."`;
             }
 
             workspace.value = currentText;
             handleInput();
         }
 
-        // AI SETTINGS TOGGLE DRAWER
-        function toggleAiSettings() {
-            const drawer = document.getElementById('ai-settings-drawer');
-            drawer.classList.toggle('hidden');
-        }
+        // AI Drawer Logic
+        function toggleAiSettings() { document.getElementById('ai-settings-drawer').classList.toggle('hidden'); }
 
         function saveApiKey() {
             const key = document.getElementById('api-key-input').value.trim();
@@ -434,9 +408,7 @@ Call To Action:
                 updateAiButtonState(true);
                 alert("API Key secured locally in browser!");
                 toggleAiSettings();
-            } else {
-                alert("Please enter a valid key.");
-            }
+            } else { alert("Please enter a valid key."); }
         }
 
         function clearApiKey() {
@@ -459,14 +431,10 @@ Call To Action:
             }
         }
 
-        // LIVE AI COMPILER VIA OPENAI ENDPOINT
+        // AI Generation
         async function runAiGeneration() {
             const apiKey = localStorage.getItem('user_openai_key');
-            if (!apiKey) {
-                alert("Please click 'AI Setup' and enter your OpenAI API key to use true AI generation!");
-                toggleAiSettings();
-                return;
-            }
+            if (!apiKey) { alert("Please enter your OpenAI API key in the AI Setup drawer."); return; }
 
             const product = document.getElementById('gen-product').value.trim() || '[Your Product Name]';
             const audience = document.getElementById('gen-audience').value.trim() || '[Your Target Audience]';
@@ -482,56 +450,32 @@ Call To Action:
             try {
                 const response = await fetch('https://api.openai.com/v1/chat/completions', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${apiKey}`
-                    },
+                    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${apiKey}` },
                     body: JSON.stringify({
                         model: 'gpt-4o-mini',
                         messages: [
-                            { 
-                                role: 'system', 
-                                content: 'You are an elite, high-converting direct response copywriter. Write targeted, production-ready copywriting based exactly on the provided structural framework and inputs.' 
-                            },
-                            { 
-                                role: 'user', 
-                                content: `Using this copywriting template structure:\n\n${templateText}\n\nDraft a ready-to-use version filled out with these custom details:\n- Product/Service: ${product}\n- Target Audience: ${audience}\n- Primary Benefit/USP: ${usp}\n- Copywriting Tone: ${tone}\n\nReturn ONLY the finished written copy beautifully formatted. Do not include introductory conversational text or markdown enclosing code blocks (like \`\`\`).` 
-                            }
+                            { role: 'system', content: 'You are an elite, high-converting direct response copywriter. Write targeted, production-ready copywriting based exactly on the provided structural framework and inputs.' },
+                            { role: 'user', content: `Using this copywriting template structure:\n\n${templateText}\n\nDraft a ready-to-use version filled out with these custom details:\n- Product/Service: ${product}\n- Target Audience: ${audience}\n- Primary Benefit/USP: ${usp}\n- Copywriting Tone: ${tone}\n\nReturn ONLY the finished written copy beautifully formatted. Do not include markdown enclosing code blocks.` }
                         ],
                         temperature: 0.7
                     })
                 });
-
                 const data = await response.json();
                 if (data.choices && data.choices[0]) {
                     workspace.value = data.choices[0].message.content.trim();
                     handleInput();
-                } else if (data.error) {
-                    alert(`API Error: ${data.error.message}`);
-                } else {
-                    alert("AI Generation failed. Please check your credentials.");
-                }
-            } catch (e) {
-                alert("Network Error: Could not connect to OpenAI. Check your internet connection.");
-            } finally {
-                btn.innerHTML = originalText;
-                btn.disabled = false;
-            }
+                } else if (data.error) { alert(`API Error: ${data.error.message}`); } 
+                else { alert("AI Generation failed. Please check your credentials."); }
+            } catch (e) { alert("Network Error: Could not connect to OpenAI."); } 
+            finally { btn.innerHTML = originalText; btn.disabled = false; }
         }
 
-        // SAVE FRAMEWORK TO PRIVATE VAULT
+        // Vault Save & Delete
         function saveToVault() {
             const vaultName = document.getElementById('vault-name').value.trim();
             const textToSave = workspace.value;
-
-            if (!vaultName) {
-                alert("Please name your custom prompt layout before saving.");
-                return;
-            }
-            if (!textToSave.trim()) {
-                alert("Cannot save an empty prompt workspace to your vault.");
-                return;
-            }
+            if (!vaultName) { alert("Please name your custom prompt."); return; }
+            if (!textToSave.trim()) { alert("Cannot save an empty workspace."); return; }
 
             let vault = JSON.parse(localStorage.getItem('custom_studio_vault')) || {};
             vault[vaultName] = textToSave;
@@ -541,22 +485,17 @@ Call To Action:
             dropdown.value = vaultName;
             toggleDeleteBtn(true);
             document.getElementById('vault-name').value = '';
-
-            alert(`📁 Successfully saved "${vaultName}" to your local browser vault!`);
+            alert(`📁 Saved "${vaultName}" to your local vault!`);
         }
 
-        // DELETE CUSTOM TEMPLATE FROM VAULT
         function deleteCustomTemplate() {
             const selectedVal = dropdown.value;
-            if (PRELOADED_TEMPLATES[selectedVal] || selectedVal === 'blank') {
-                return; // Can't delete system preloaded entries
-            }
+            if (PRELOADED_TEMPLATES[selectedVal] || selectedVal === 'blank') return; 
 
-            if (confirm(`Are you sure you want to delete "${selectedVal}" from your private vault?`)) {
+            if (confirm(`Delete "${selectedVal}" from your private vault?`)) {
                 let vault = JSON.parse(localStorage.getItem('custom_studio_vault')) || {};
                 delete vault[selectedVal];
                 localStorage.setItem('custom_studio_vault', JSON.stringify(vault));
-
                 renderVaultDropdownOptions();
                 dropdown.value = 'blank';
                 workspace.value = '';
@@ -565,110 +504,96 @@ Call To Action:
             }
         }
 
-        // RENDER DROP-DOWN LIST ELEMENTS WITH USER-SAVED PRESETS
-        function renderVaultDropdownOptions() {
-            // Keep default preloaded templates intact
-            let optionsHTML = `
-                <option value="blank">-- Select a Blank Canvas --</option>
-                <option value="viral-hook">⚡ Vault Slot 1: The Viral IG Hook Generator</option>
-                <option value="pastor-sales">💼 Vault Slot 2: P.A.S.T.O.R. Sales Page Framework</option>
-                <option value="pitch-deck">🎯 Vault Slot 3: High-Ticket Client Pitch Deck</option>
-                <option value="caption-matrix">📝 Vault Slot 4: Social Media Caption Matrix</option>
-                <option value="brand-manifesto">💎 Vault Slot 5: Luxury Brand Manifesto Template</option>
-            `;
-
-            const vault = JSON.parse(localStorage.getItem('custom_studio_vault')) || {};
-            const keys = Object.keys(vault);
-
-            if (keys.length > 0) {
-                optionsHTML += `<option disabled>────────── Private Local Vault ──────────</option>`;
-                keys.forEach(key => {
-                    optionsHTML += `<option value="${key}">📁 Custom: ${key}</option>`;
-                });
-            }
-
-            dropdown.innerHTML = optionsHTML;
-        }
-
-        // STATS, CHARACTER COUNTER & TOKEN PROXIES
+        // Stats & Cost Matrix
         function updateStats() {
             const text = workspace.value;
             const chars = text.length;
             const words = text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
 
-            // Token proxies: OpenAI average 1 token = 4 characters. Claude average 1 token = 3.5 characters
-            const openaiTokens = Math.ceil(chars / 4);
-            const claudeTokens = Math.ceil(chars / 3.5);
-
             document.getElementById('char-count').innerText = chars.toLocaleString();
             document.getElementById('word-count').innerText = words.toLocaleString();
-            document.getElementById('openai-tokens').innerText = openaiTokens.toLocaleString();
-            document.getElementById('claude-tokens').innerText = claudeTokens.toLocaleString();
-
+            document.getElementById('openai-tokens').innerText = Math.ceil(chars / 4).toLocaleString();
+            document.getElementById('claude-tokens').innerText = Math.ceil(chars / 3.5).toLocaleString();
             updateCosts();
         }
 
-        // DYNAMIC COST MATRIX ENGINE
         function updateCosts() {
             const inTokens = parseInt(document.getElementById('openai-tokens').innerText.replace(/,/g, '')) || 0;
             const outSliderVal = parseInt(document.getElementById('output-slider').value);
-
             document.getElementById('slider-val').innerText = outSliderVal;
 
-            // Up-to-date token pricing models per 1M tokens
-            const models = {
-                gpt4o: { in: 2.50, out: 10.00 },
-                claude: { in: 3.00, out: 15.00 },
-                gemini: { in: 1.25, out: 5.00 }
+            const models = { gpt4o: { in: 2.50, out: 10.00 }, claude: { in: 3.00, out: 15.00 }, gemini: { in: 1.25, out: 5.00 } };
+
+            const calcTotal = (inCost, outCost) => {
+                const inTotal = (inTokens * inCost) / 1000000;
+                const outTotal = (outSliderVal * outCost) / 1000000;
+                return { in: inTotal, out: outTotal, total: inTotal + outTotal };
             };
 
-            const gptIn = (inTokens * models.gpt4o.in) / 1000000;
-            const gptOut = (outSliderVal * models.gpt4o.out) / 1000000;
-            const gptTotal = gptIn + gptOut;
+            const gpt = calcTotal(models.gpt4o.in, models.gpt4o.out);
+            const claude = calcTotal(models.claude.in, models.claude.out);
+            const gemini = calcTotal(models.gemini.in, models.gemini.out);
 
-            const claudeIn = (inTokens * models.claude.in) / 1000000;
-            const claudeOut = (outSliderVal * models.claude.out) / 1000000;
-            const claudeTotal = claudeIn + claudeOut;
+            document.getElementById('cost-gpt-in').innerText = '$' + gpt.in.toFixed(5);
+            document.getElementById('cost-gpt-out').innerText = '$' + gpt.out.toFixed(5);
+            document.getElementById('cost-gpt-total').innerText = '$' + gpt.total.toFixed(5);
 
-            const geminiIn = (inTokens * models.gemini.in) / 1000000;
-            const geminiOut = (outSliderVal * models.gemini.out) / 1000000;
-            const geminiTotal = geminiIn + geminiOut;
+            document.getElementById('cost-claude-in').innerText = '$' + claude.in.toFixed(5);
+            document.getElementById('cost-claude-out').innerText = '$' + claude.out.toFixed(5);
+            document.getElementById('cost-claude-total').innerText = '$' + claude.total.toFixed(5);
 
-            // Render numbers nicely
-            document.getElementById('cost-gpt-in').innerText = '$' + gptIn.toFixed(5);
-            document.getElementById('cost-gpt-out').innerText = '$' + gptOut.toFixed(5);
-            document.getElementById('cost-gpt-total').innerText = '$' + gptTotal.toFixed(5);
-
-            document.getElementById('cost-claude-in').innerText = '$' + claudeIn.toFixed(5);
-            document.getElementById('cost-claude-out').innerText = '$' + claudeOut.toFixed(5);
-            document.getElementById('cost-claude-total').innerText = '$' + claudeTotal.toFixed(5);
-
-            document.getElementById('cost-gemini-in').innerText = '$' + geminiIn.toFixed(5);
-            document.getElementById('cost-gemini-out').innerText = '$' + geminiOut.toFixed(5);
-            document.getElementById('cost-gemini-total').innerText = '$' + geminiTotal.toFixed(5);
+            document.getElementById('cost-gemini-in').innerText = '$' + gemini.in.toFixed(5);
+            document.getElementById('cost-gemini-out').innerText = '$' + gemini.out.toFixed(5);
+            document.getElementById('cost-gemini-total').innerText = '$' + gemini.total.toFixed(5);
         }
 
-        // UTILITIES: CLIPBOARD COPY
+        // ==========================================
+        // EXPORT UTILITIES (NEW: .DOC & PDF ADDED)
+        // ==========================================
+
         function copyToClipboard() {
-            if (!workspace.value.trim()) {
-                alert("Workspace is empty!");
-                return;
-            }
+            if (!workspace.value.trim()) { alert("Workspace is empty!"); return; }
             navigator.clipboard.writeText(workspace.value);
             alert("📋 Copied to clipboard successfully!");
         }
 
-        // UTILITIES: DOWNLOAD MARKDOWN
         function downloadMarkdown() {
-            const content = workspace.value;
-            if (!content.trim()) {
-                alert("Workspace is empty!");
-                return;
-            }
-            const blob = new Blob([content], { type: 'text/markdown;charset=utf-8;' });
+            if (!workspace.value.trim()) { alert("Workspace is empty!"); return; }
+            const blob = new Blob([workspace.value], { type: 'text/markdown;charset=utf-8;' });
+            triggerDownload(blob, 'prompt-matrix.md');
+        }
+
+        function downloadWordDoc() {
+            if (!workspace.value.trim()) { alert("Workspace is empty!"); return; }
+            // Using a simple application/msword blob makes a file that MS Word can open
+            const blob = new Blob([workspace.value], { type: 'application/msword;charset=utf-8;' });
+            triggerDownload(blob, 'prompt-matrix.doc');
+        }
+
+        function exportPDF() {
+            if (!workspace.value.trim()) { alert("Workspace is empty!"); return; }
+            // Zero-dependency way to generate PDF without sending user data to a server
+            const printWindow = window.open('', '_blank', 'height=600,width=800');
+            printWindow.document.write('<html><head><title>Prompt Matrix Export</title>');
+            printWindow.document.write('<style>body{font-family: system-ui, sans-serif; line-height:1.6; white-space:pre-wrap; padding:2rem;}</style>');
+            printWindow.document.write('</head><body>');
+            printWindow.document.write(workspace.value);
+            printWindow.document.write('</body></html>');
+            printWindow.document.close();
+            printWindow.focus();
+            
+            // Allow the window to render the text before triggering print
+            setTimeout(() => {
+                printWindow.print();
+                printWindow.close();
+            }, 250);
+        }
+
+        // Helper function for downloads
+        function triggerDownload(blob, filename) {
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
-            link.setAttribute('download', 'prompt-matrix.md');
+            link.setAttribute('download', filename);
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
