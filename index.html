@@ -117,15 +117,19 @@
                     <div class="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center justify-between border-b border-slate-800 pb-4">
                         <div class="space-y-1 flex-1">
                             <label class="block text-xs font-semibold uppercase tracking-wider text-indigo-400">Active Template Frame</label>
-                            <select id="template-dropdown" onchange="loadSelectedTemplate()" class="w-full bg-slate-900/90 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-indigo-500 transition">
-                                <option value="blank">-- Select a Blank Canvas --</option>
-                                <!-- Preloaded templates -->
-                                <option value="viral-hook">⚡ Vault Slot 1: The Viral IG Hook Generator</option>
-                                <option value="pastor-sales">💼 Vault Slot 2: P.A.S.T.O.R. Sales Page Framework</option>
-                                <option value="pitch-deck">🎯 Vault Slot 3: High-Ticket Client Pitch Deck</option>
-                                <option value="caption-matrix">📝 Vault Slot 4: Social Media Caption Matrix</option>
-                                <option value="brand-manifesto">💎 Vault Slot 5: Luxury Brand Manifesto Template</option>
-                            </select>
+                         <select id="template-dropdown" onchange="loadSelectedTemplate()" class="w-full bg-slate-900/90 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-indigo-500 transition">
+    <option value="blank">-- Select a Blank Canvas --</option>
+    <option value="viral-hook">⚡ Viral IG Hook Generator</option>
+    <option value="pastor-sales">💼 P.A.S.T.O.R. Sales Page</option>
+    <option value="cold-email">📧 Cold Email Outreach</option>
+    <option value="fb-ad">📢 FB Ad: Pain-Agitate-Solve</option>
+    <option value="landing-hero">🚀 Landing Page Hero</option>
+    <option value="yt-script">🎥 YouTube Video Script</option>
+    <option value="newsletter">✉️ Newsletter Welcome</option>
+    <option value="case-study">📊 Case Study Outline</option>
+    <option value="webinar-hook">🎯 Webinar Hook</option>
+    <option value="brand-manifesto">💎 Luxury Brand Manifesto</option>
+</select>  
                         </div>
                         <div id="delete-btn-container" class="hidden items-end pt-5">
                             <button onclick="deleteCustomTemplate()" class="bg-red-950/40 hover:bg-red-900/60 text-red-400 p-2 rounded-lg border border-red-800/40 transition" title="Delete Custom Template">
