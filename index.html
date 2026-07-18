@@ -1,122 +1,673 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prompt Lightning Studio | Premium Copywriting Vault & Token Matrix</title>
+    <!-- Tailwind CSS for modern layout -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { background-color: #020617; font-family: system-ui, -apple-system, sans-serif; }
-        .glass-panel { background: rgba(15, 23, 42, 0.65); backdrop-filter: blur(12px); border: 1px solid rgba(51, 65, 85, 0.5); }
+        body {
+            background-color: #020617;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(51, 65, 85, 0.5);
+        }
     </style>
 </head>
-<body class="text-slate-100 min-h-screen py-8 px-4">
+<body class="text-slate-100 min-h-screen py-8 px-4 sm:px-6 lg:px-8">
+
     <div class="max-w-7xl mx-auto space-y-8">
+        
+        <!-- HEADER -->
         <header class="text-center space-y-3 pb-4 border-b border-slate-800">
-            <h1 class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-pink-400">PROMPT LIGHTNING STUDIO</h1>
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 text-xs font-semibold uppercase tracking-wider">
+                ⚡ Premium Copywriting Studio v2.0
+            </div>
+            <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400">
+                PROMPT LIGHTNING STUDIO
+            </h1>
+            <p class="text-slate-400 max-w-2xl mx-auto text-sm sm:text-base">
+                Your sandbox for crafting, drafting, and managing high-converting copywriting frameworks without data risk.
+            </p>
         </header>
 
+        <!-- MAIN TWO-COLUMN WORKSPACE -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            <!-- LEFT COLUMN: DYNAMIC ENGINE -->
-            <div class="lg:col-span-5 space-y-6">       
+            
+            <!-- LEFT COLUMN: GENERATION ENGINE PANEL (40% width on desktop) -->
+            <div class="lg:col-span-5 space-y-6">
                 <div class="glass-panel p-6 rounded-2xl shadow-xl space-y-6">
-                    <h2 class="text-lg font-bold text-indigo-300">✨ Dynamic Variable Engine</h2>
-                    <div id="dynamic-inputs-container" class="space-y-4">
-                        <p class="text-slate-500 text-sm">Select a template to auto-generate input fields...</p>
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                        <h2 class="text-lg font-bold text-indigo-300 flex items-center gap-2">
+                            <span>✨ Copy Generation Engine</span>
+                        </h2>
+                        <button onclick="toggleAiSettings()" class="text-xs text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition">
+                            ⚙️ AI Setup
+                        </button>
                     </div>
-                    <button onclick="runAiGeneration()" class="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white py-3 rounded-xl font-bold transition">
-                        🤖 AI-Draft Generation
-                    </button>
+
+                    <!-- AI KEY INPUT DRAWER (Collapsible) -->
+                    <div id="ai-settings-drawer" class="hidden bg-slate-950/80 p-4 rounded-xl border border-slate-800 space-y-3 text-xs">
+                        <div class="font-semibold text-indigo-400">Secure Direct-AI Connection</div>
+                        <p class="text-slate-400 leading-relaxed">
+                            Paste your OpenAI API Key below to enable true AI copywriting generation. Your key remains strictly saved in your local browser storage and queries OpenAI directly.
+                        </p>
+                        <div class="space-y-1">
+                            <label class="block text-slate-300">OpenAI API Key:</label>
+                            <input type="password" id="api-key-input" placeholder="sk-proj-..." class="w-full bg-slate-900 border border-slate-700 rounded px-2.5 py-1.5 text-slate-200 focus:outline-none focus:border-indigo-500">
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="saveApiKey()" class="bg-indigo-600 hover:bg-indigo-500 px-3 py-1 rounded font-medium text-white transition">Save Key</button>
+                            <button onclick="clearApiKey()" class="bg-slate-800 hover:bg-slate-700 px-3 py-1 rounded text-slate-300 transition">Clear Key</button>
+                        </div>
+                    </div>
+
+                    <!-- GENERATION FORM CONTROLS -->
+                    <div class="space-y-4">
+                        <div class="space-y-1">
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400">Product / Service Name</label>
+                            <input id="gen-product" type="text" placeholder="e.g., Lightning Fit Gym" class="w-full bg-slate-900/80 border border-slate-800 rounded-lg px-3.5 py-2 text-sm text-slate-100 focus:outline-none focus:border-indigo-500 transition">
+                        </div>
+
+                        <div class="space-y-1">
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400">Target Audience</label>
+                            <input id="gen-audience" type="text" placeholder="e.g., Busy working moms over 30" class="w-full bg-slate-900/80 border border-slate-800 rounded-lg px-3.5 py-2 text-sm text-slate-100 focus:outline-none focus:border-indigo-500 transition">
+                        </div>
+
+                        <div class="space-y-1">
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400">Core USP / Primary Benefit</label>
+                            <textarea id="gen-usp" rows="2" placeholder="e.g., 20-minute guided high-intensity sessions that burn fat for up to 36 hours" class="w-full bg-slate-900/80 border border-slate-800 rounded-lg px-3.5 py-2 text-sm text-slate-100 focus:outline-none focus:border-indigo-500 transition resize-none"></textarea>
+                        </div>
+
+                        <div class="space-y-1">
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400">Desired Brand Tone</label>
+                            <select id="gen-tone" class="w-full bg-slate-900/80 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-indigo-500 transition">
+                                <option value="Bold & Punchy">Bold & Punchy</option>
+                                <option value="Warm & Conversational">Warm & Conversational</option>
+                                <option value="Professional & Authoritative">Professional & Authoritative</option>
+                                <option value="Playful & Witty">Playful & Witty</option>
+                                <option value="Scientific & Logical">Scientific & Logical</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- TRIGGER ACTION BUTTONS -->
+                    <div class="grid grid-cols-1 gap-3 pt-2">
+                        <button onclick="runLocalDraft()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white py-2.5 px-4 rounded-xl font-bold text-sm transition-all duration-200 shadow-md flex items-center justify-center gap-2">
+                            ⚡ Run Smart Local Draft
+                        </button>
+                        <button id="ai-generate-btn" onclick="runAiGeneration()" class="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white py-2.5 px-4 rounded-xl font-bold text-sm transition-all duration-200 shadow-md flex items-center justify-center gap-2">
+                            🤖 AI-Draft (Requires API Key)
+                        </button>
+                    </div>
                 </div>
             </div>
 
-            <!-- RIGHT COLUMN: WORKSPACE -->
+            <!-- RIGHT COLUMN: CORE WORKSPACE & VAULT (70% width on desktop) -->
             <div class="lg:col-span-7 space-y-6">
+                
+                <!-- WORKSPACE CARD -->
                 <div class="glass-panel p-6 rounded-2xl shadow-xl space-y-4">
-                    <select id="template-dropdown" onchange="loadSelectedTemplate()" class="w-full bg-slate-900 border border-slate-800 rounded-lg p-3 text-sm text-slate-100"></select>
                     
-                    <div class="grid grid-cols-4 gap-2">
-                        <button onclick="copyToClipboard()" class="bg-slate-800 p-2 rounded-lg text-xs">📋 Copy</button>
-                        <button onclick="downloadMarkdown()" class="bg-slate-800 p-2 rounded-lg text-xs">📥 .MD</button>
-                        <button onclick="downloadWordDoc()" class="bg-blue-900/40 p-2 rounded-lg text-xs text-blue-300">📝 Doc</button>
-                        <button onclick="exportPDF()" class="bg-red-900/40 p-2 rounded-lg text-xs text-red-300">📄 PDF</button>
+                    <!-- WORKSPACE CONTROLS -->
+                    <div class="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center justify-between border-b border-slate-800 pb-4">
+                        <div class="space-y-1 flex-1">
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-indigo-400">Active Template Frame</label>
+                            <select id="template-dropdown" onchange="loadSelectedTemplate()" class="w-full bg-slate-900/90 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-indigo-500 transition">
+                                <option value="blank">-- Select a Blank Canvas --</option>
+                                <!-- Preloaded templates -->
+                                <option value="viral-hook">⚡ Vault Slot 1: The Viral IG Hook Generator</option>
+                                <option value="pastor-sales">💼 Vault Slot 2: P.A.S.T.O.R. Sales Page Framework</option>
+                                <option value="pitch-deck">🎯 Vault Slot 3: High-Ticket Client Pitch Deck</option>
+                                <option value="caption-matrix">📝 Vault Slot 4: Social Media Caption Matrix</option>
+                                <option value="brand-manifesto">💎 Vault Slot 5: Luxury Brand Manifesto Template</option>
+                            </select>
+                        </div>
+                        <div id="delete-btn-container" class="hidden items-end pt-5">
+                            <button onclick="deleteCustomTemplate()" class="bg-red-950/40 hover:bg-red-900/60 text-red-400 p-2 rounded-lg border border-red-800/40 transition" title="Delete Custom Template">
+                                🗑️
+                            </button>
+                        </div>
                     </div>
 
-                    <textarea id="prompt-workspace" oninput="handleManualInput()" rows="14" class="w-full bg-slate-950/80 border border-slate-800 rounded-xl p-4 text-slate-200 text-sm"></textarea>
+                    <!-- EXPORT ACTION ROW -->
+                    <div class="flex justify-between items-center gap-2">
+                        <button onclick="copyToClipboard()" class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-200 py-2 px-3 rounded-lg text-xs font-semibold transition flex items-center justify-center gap-2 border border-slate-700/50">
+                            📋 Copy to Clipboard
+                        </button>
+                        <button onclick="downloadMarkdown()" class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-200 py-2 px-3 rounded-lg text-xs font-semibold transition flex items-center justify-center gap-2 border border-slate-700/50">
+                            📥 Download .MD File
+                        </button>
+                    </div>
+
+                    <!-- CORE WORKSPACE TEXTAREA -->
+                    <div class="space-y-2">
+                        <textarea id="prompt-workspace" oninput="handleInput()" rows="14" class="w-full bg-slate-950/80 border border-slate-800 rounded-xl p-4 text-slate-200 font-mono text-sm leading-relaxed focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500" placeholder="Type or load your copywriting prompt matrix here..."></textarea>
+                    </div>
+
+                    <!-- SAVE CUSTOM VAULT FRAMEWORK -->
+                    <div class="grid grid-cols-1 sm:grid-cols-4 gap-3 items-center bg-slate-950/40 p-3 rounded-xl border border-slate-800/60">
+                        <input id="vault-name" type="text" placeholder="Name this custom prompt..." class="sm:col-span-3 bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-indigo-500">
+                        <button onclick="saveToVault()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 px-4 rounded-lg text-xs transition whitespace-nowrap">
+                            💾 Save to Vault
+                        </button>
+                    </div>
+
+                    <!-- METRICS GRID -->
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-2">
+                        <div class="bg-slate-900/40 rounded-xl p-3 border border-slate-800/60 text-center">
+                            <div id="char-count" class="text-lg font-bold text-indigo-400">0</div>
+                            <div class="text-[10px] text-slate-400 uppercase tracking-wider">Total Characters</div>
+                        </div>
+                        <div class="bg-slate-900/40 rounded-xl p-3 border border-slate-800/60 text-center">
+                            <div id="word-count" class="text-lg font-bold text-purple-400">0</div>
+                            <div class="text-[10px] text-slate-400 uppercase tracking-wider">Word Units</div>
+                        </div>
+                        <div class="bg-slate-900/40 rounded-xl p-3 border border-slate-800/60 text-center">
+                            <div id="openai-tokens" class="text-lg font-bold text-pink-400">0</div>
+                            <div class="text-[10px] text-slate-400 uppercase tracking-wider">Est. Tokens (OpenAI)</div>
+                        </div>
+                        <div class="bg-slate-900/40 rounded-xl p-3 border border-slate-800/60 text-center">
+                            <div id="claude-tokens" class="text-lg font-bold text-sky-400">0</div>
+                            <div class="text-[10px] text-slate-400 uppercase tracking-wider">Est. Tokens (Claude)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DYNAMIC COST MATRIX -->
+                <div class="glass-panel p-6 rounded-2xl shadow-xl space-y-4">
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                        <h4 class="text-sm font-bold uppercase tracking-wider text-slate-300 flex items-center gap-2">
+                            📊 Live Input/Output Cost Matrix
+                        </h4>
+                        <div class="text-xs text-indigo-400 font-semibold">
+                            Simulated Output: <span id="slider-val" class="font-bold">50</span> Tokens
+                        </div>
+                    </div>
+                    <div class="space-y-2">
+                        <input id="output-slider" oninput="updateCosts()" type="range" min="10" max="2000" step="10" value="500" class="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-indigo-500">
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-xs text-left text-slate-300">
+                            <thead>
+                                <tr class="text-slate-400 border-b border-slate-800">
+                                    <th class="py-2.5">Model Interface</th>
+                                    <th class="py-2.5">Input Cost</th>
+                                    <th class="py-2.5">Output Cost</th>
+                                    <th class="py-2.5 text-right text-indigo-400">Total Est.</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b border-slate-900">
+                                    <td class="py-2.5 font-semibold">GPT-4o</td>
+                                    <td id="cost-gpt-in" class="py-2.5">$0.00000</td>
+                                    <td id="cost-gpt-out" class="py-2.5">$0.00000</td>
+                                    <td id="cost-gpt-total" class="py-2.5 text-right font-bold text-emerald-400">$0.00000</td>
+                                </tr>
+                                <tr class="border-b border-slate-900">
+                                    <td class="py-2.5 font-semibold">Claude 3.5 Sonnet</td>
+                                    <td id="cost-claude-in" class="py-2.5">$0.00000</td>
+                                    <td id="cost-claude-out" class="py-2.5">$0.00000</td>
+                                    <td id="cost-claude-total" class="py-2.5 text-right font-bold text-emerald-400">$0.00000</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2.5 font-semibold">Gemini 1.5 Pro</td>
+                                    <td id="cost-gemini-in" class="py-2.5">$0.00000</td>
+                                    <td id="cost-gemini-out" class="py-2.5">$0.00000</td>
+                                    <td id="cost-gemini-total" class="py-2.5 text-right font-bold text-emerald-400">$0.00000</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="pt-2">
+                        <button class="w-full bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 border border-indigo-500/20 py-2.5 rounded-xl text-xs font-semibold transition uppercase tracking-wider">
+                            💎 Upgrade to Elite Studio Dashboard
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <!-- FOOTER -->
+        <footer class="text-center text-slate-500 text-xs py-6 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div>
+                PROMPT LIGHTNING STUDIO &copy; 2026 • ALL RIGHTS RESERVED
+            </div>
+            <div class="text-indigo-400 flex items-center gap-1.5 font-medium">
+                🔒 Zero-Data Sandbox: Your inputs never leave your browser
+            </div>
+        </footer>
     </div>
 
+    <!-- CORE LOGIC & CUSTOM ENGINE SCRIPT -->
     <script>
+        // Core framework dictionary
         const PRELOADED_TEMPLATES = {
-            'viral-hook': `[Topic] [Audience] [Style]\n\n🎯 VIRAL HOOK:\n"Everyone tells you to work harder to get [Goal] results, but they aren't telling you about [Product]..."`,
-            'landing-page': `[Headline] [Benefit] [CTA]\n\n🚀 AIDA PAGE:\nAttention: [Headline]\nInterest: Why [Audience] need [Product].\nDesire: Imagine [Benefit].\nAction: [CTA]`
+            'viral-hook': `[Topic: Product/Service Name] [Audience: Target Audience] [Style: Desired Tone]
+
+🎯 VIRAL IG HOOK FRAMEWORK
+---
+Hook Option 1 (The Antidote):
+"Everyone tells you to work harder to get [Target Audience] results, but they aren't telling you about [Product/Service Name]..."
+
+Hook Option 2 (The Direct Callout):
+"If you are a [Target Audience] struggling with [Core USP/Primary Benefit], stop scrolling immediately..."
+
+Hook Option 3 (The Pattern Interrupt):
+"Most people think [Core USP/Primary Benefit] requires months. Here is how we do it in minutes with [Product/Service Name]..."`,
+
+            'pastor-sales': `[Topic: Product/Service Name] [Audience: Target Audience] [Style: Desired Tone]
+
+💼 P.A.S.T.O.R. HIGH-CONVERTING SALES PAGE
+---
+P - Problem: Are you a [Target Audience] dealing with the painful setup of existing programs?
+A - Amplify: Every hour you waste trying to configure traditional workflows is cash down the drain.
+S - Story: We built [Product/Service Name] specifically to end that cycle. 
+T - Testimony: Imagine getting [Core USP/Primary Benefit] active in your business on day one.
+O - Offer: Get full lifetime access to [Product/Service Name] today and claim your unfair advantage.
+R - Response: Click below to launch.`,
+
+            'pitch-deck': `[Topic: Product/Service Name] [Audience: Target Audience] [Style: Desired Tone]
+
+🎯 HIGH-TICKET CLIENT PITCH FRAMEWORK
+---
+The Problem:
+"Most enterprise operations in your space waste thousands of hours on [Core USP/Primary Benefit] bottlenecks. They are bleeding efficiency."
+
+The Solution:
+"Our service, [Product/Service Name], automates this entire process specifically for [Target Audience]."
+
+The Results & Deliverables:
+"By connecting our framework, we guarantee [Core USP/Primary Benefit] within 14 days."`,
+
+            'caption-matrix': `[Topic: Product/Service Name] [Audience: Target Audience] [Style: Desired Tone]
+
+📝 MULTI-PLATFORM SOCIAL MATRIX
+---
+Platform: LinkedIn
+"Struggling to find an edge as a [Target Audience]? Here is our blueprint for utilizing [Product/Service Name] to achieve [Core USP/Primary Benefit] in half the time..."
+
+Platform: Twitter/X
+"Too many [Target Audience] suffer from slow processes. 
+[Product/Service Name] fixes this completely. 
+Here is how: [Core USP/Primary Benefit]. 🧵👇"`,
+
+            'brand-manifesto': `[Topic: Product/Service Name] [Audience: Target Audience] [Style: Desired Tone]
+
+💎 LUXURY BRAND MANIFESTO
+---
+"To the select few [Target Audience] who refuse to settle. 
+We do not build tools for the masses. We forge frameworks for the exceptional.
+Welcome to [Product/Service Name]. 
+Our obsession is [Core USP/Primary Benefit]. 
+Nothing less, nothing compromised."`
         };
 
         const workspace = document.getElementById('prompt-workspace');
         const dropdown = document.getElementById('template-dropdown');
-        const container = document.getElementById('dynamic-inputs-container');
-        let lastVars = [];
 
-        function parseVariables(text) {
-            const regex = /\[(.*?)\]/g;
-            const matches = text.match(regex) || [];
-            return [...new Set(matches.map(m => m.replace(/[\[\]]/g, '')))];
-        }
+        // Initial Load on Page Open
+        window.addEventListener('DOMContentLoaded', () => {
+            // Restore API Key state
+            const key = localStorage.getItem('user_openai_key');
+            if (key) {
+                document.getElementById('api-key-input').value = key;
+                updateAiButtonState(true);
+            }
 
-        function renderInputs(text) {
-            const vars = parseVariables(text);
-            if (JSON.stringify(vars) === JSON.stringify(lastVars)) return;
-            
-            lastVars = vars;
-            container.innerHTML = vars.length > 0 ? '' : '<p class="text-slate-500 text-sm">No variables detected in template.</p>';
-            
-            vars.forEach(v => {
-                const div = document.createElement('div');
-                div.className = 'space-y-1';
-                div.innerHTML = `<label class="block text-xs uppercase text-slate-400 font-semibold">${v}</label>
-                                 <input type="text" data-var="${v}" oninput="updateTemplateFromInputs()" class="w-full bg-slate-900 border border-slate-800 rounded px-3 py-2 text-sm text-slate-100">`;
-                container.appendChild(div);
-            });
-        }
+            // Restore previous workspace state or fall back to default
+            const savedContent = localStorage.getItem('saved_studio_workspace');
+            if (savedContent) {
+                workspace.value = savedContent;
+            } else {
+                workspace.value = PRELOADED_TEMPLATES['viral-hook'];
+                dropdown.value = 'viral-hook';
+            }
 
-        function updateTemplateFromInputs() {
-            let text = PRELOADED_TEMPLATES[dropdown.value] || workspace.value;
-            const inputs = container.querySelectorAll('input');
-            inputs.forEach(input => {
-                const varName = input.getAttribute('data-var');
-                const val = input.value || `[${varName}]`;
-                const regex = new RegExp(`\\[${varName}\\]`, 'g');
-                text = text.replace(regex, val);
-            });
-            workspace.value = text;
-        }
-
-        function loadSelectedTemplate() {
-            const val = dropdown.value;
-            if (val === 'blank') { workspace.value = ''; container.innerHTML = ''; return; }
-            workspace.value = PRELOADED_TEMPLATES[val] || '';
-            renderInputs(workspace.value);
-        }
-
-        const blankOpt = document.createElement('option');
-        blankOpt.value = 'blank'; blankOpt.innerText = '-- Select a Template --';
-        dropdown.appendChild(blankOpt);
-        
-        Object.keys(PRELOADED_TEMPLATES).forEach(key => {
-            const opt = document.createElement('option');
-            opt.value = key; opt.innerText = key;
-            dropdown.appendChild(opt);
+            // Load Custom Dropdowns
+            renderVaultDropdownOptions();
+            updateStats();
         });
 
-        function handleManualInput() { renderInputs(workspace.value); }
-        
-        function copyToClipboard() { navigator.clipboard.writeText(workspace.value); }
-        function downloadMarkdown() { const blob = new Blob([workspace.value], {type:'text/markdown'}); const a = document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='draft.md'; a.click(); }
-        function downloadWordDoc() { const blob = new Blob([workspace.value], {type:'application/msword'}); const a = document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='draft.doc'; a.click(); }
-        function exportPDF() { window.print(); }
-        async function runAiGeneration() { alert("AI Generation triggered."); }
+        // Track user typing in workspace & auto-save to browser
+        function handleInput() {
+            localStorage.setItem('saved_studio_workspace', workspace.value);
+            updateStats();
+        }
+
+        // Dropdown selection loading
+        function loadSelectedTemplate() {
+            const selectedVal = dropdown.value;
+            if (selectedVal === 'blank') {
+                workspace.value = '';
+                toggleDeleteBtn(false);
+            } else if (PRELOADED_TEMPLATES[selectedVal]) {
+                workspace.value = PRELOADED_TEMPLATES[selectedVal];
+                toggleDeleteBtn(false);
+            } else {
+                // It's a custom template saved in local storage
+                const vault = JSON.parse(localStorage.getItem('custom_studio_vault')) || {};
+                if (vault[selectedVal]) {
+                    workspace.value = vault[selectedVal];
+                    toggleDeleteBtn(true);
+                }
+            }
+            handleInput();
+        }
+
+        // Toggle UI Trashcan for custom templates
+        function toggleDeleteBtn(show) {
+            const container = document.getElementById('delete-btn-container');
+            if (show) {
+                container.classList.remove('hidden');
+                container.classList.add('flex');
+            } else {
+                container.classList.add('hidden');
+                container.classList.remove('flex');
+            }
+        }
+
+        // SMART LOCAL DRAFT COMPILER
+        function runLocalDraft() {
+            const product = document.getElementById('gen-product').value.trim() || '[Your Product]';
+            const audience = document.getElementById('gen-audience').value.trim() || '[Your Target Audience]';
+            const usp = document.getElementById('gen-usp').value.trim() || '[Your Core Benefit/USP]';
+            const tone = document.getElementById('gen-tone').value;
+
+            let currentText = workspace.value;
+
+            // Simple regex replacement pattern for our template placeholders
+            const replacements = [
+                { pattern: /\[Topic: Product\/Service Name\]/gi, replace: `Product/Service: ${product}` },
+                { pattern: /\[Audience: Target Audience\]/gi, replace: `Target: ${audience}` },
+                { pattern: /\[Style: Desired Tone\]/gi, replace: `Tone: ${tone}` },
+                { pattern: /\[Product\/Service Name\]/gi, replace: product },
+                { pattern: /\[Target Audience\]/gi, replace: audience },
+                { pattern: /\[Core USP\/Primary Benefit\]/gi, replace: usp }
+            ];
+
+            let modified = false;
+            replacements.forEach(item => {
+                if (item.pattern.test(currentText)) {
+                    currentText = currentText.replace(item.pattern, item.replace);
+                    modified = true;
+                }
+            });
+
+            if (!modified) {
+                // If there are no active placeholder tags found, compile a beautiful draft template directly from inputs
+                currentText = `✨ COMPILED LOCAL DRAFT (${tone} Tone)
+---
+Target Audience: ${audience}
+Core Hook: "Struggling with ${usp}? We built ${product} specifically to solve this."
+
+The Solution:
+"${product} helps ${audience} achieve ${usp} without the standard painful setup times."
+
+Call To Action:
+"Launch ${product} today and start experiencing real results."`;
+            }
+
+            workspace.value = currentText;
+            handleInput();
+        }
+
+        // AI SETTINGS TOGGLE DRAWER
+        function toggleAiSettings() {
+            const drawer = document.getElementById('ai-settings-drawer');
+            drawer.classList.toggle('hidden');
+        }
+
+        function saveApiKey() {
+            const key = document.getElementById('api-key-input').value.trim();
+            if (key) {
+                localStorage.setItem('user_openai_key', key);
+                updateAiButtonState(true);
+                alert("API Key secured locally in browser!");
+                toggleAiSettings();
+            } else {
+                alert("Please enter a valid key.");
+            }
+        }
+
+        function clearApiKey() {
+            localStorage.removeItem('user_openai_key');
+            document.getElementById('api-key-input').value = '';
+            updateAiButtonState(false);
+            alert("API Key cleared!");
+        }
+
+        function updateAiButtonState(connected) {
+            const btn = document.getElementById('ai-generate-btn');
+            if (connected) {
+                btn.innerHTML = `🤖 Run AI Draft Generation`;
+                btn.classList.remove('from-purple-600', 'to-pink-600');
+                btn.classList.add('bg-emerald-600', 'hover:bg-emerald-500');
+            } else {
+                btn.innerHTML = `🤖 AI-Draft (Requires API Key)`;
+                btn.classList.remove('bg-emerald-600', 'hover:bg-emerald-500');
+                btn.classList.add('from-purple-600', 'to-pink-600');
+            }
+        }
+
+        // LIVE AI COMPILER VIA OPENAI ENDPOINT
+        async function runAiGeneration() {
+            const apiKey = localStorage.getItem('user_openai_key');
+            if (!apiKey) {
+                alert("Please click 'AI Setup' and enter your OpenAI API key to use true AI generation!");
+                toggleAiSettings();
+                return;
+            }
+
+            const product = document.getElementById('gen-product').value.trim() || '[Your Product Name]';
+            const audience = document.getElementById('gen-audience').value.trim() || '[Your Target Audience]';
+            const usp = document.getElementById('gen-usp').value.trim() || '[Your Core USP]';
+            const tone = document.getElementById('gen-tone').value;
+            const templateText = workspace.value;
+
+            const btn = document.getElementById('ai-generate-btn');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = `⏳ AI Engine Thinking...`;
+            btn.disabled = true;
+
+            try {
+                const response = await fetch('https://api.openai.com/v1/chat/completions', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${apiKey}`
+                    },
+                    body: JSON.stringify({
+                        model: 'gpt-4o-mini',
+                        messages: [
+                            { 
+                                role: 'system', 
+                                content: 'You are an elite, high-converting direct response copywriter. Write targeted, production-ready copywriting based exactly on the provided structural framework and inputs.' 
+                            },
+                            { 
+                                role: 'user', 
+                                content: `Using this copywriting template structure:\n\n${templateText}\n\nDraft a ready-to-use version filled out with these custom details:\n- Product/Service: ${product}\n- Target Audience: ${audience}\n- Primary Benefit/USP: ${usp}\n- Copywriting Tone: ${tone}\n\nReturn ONLY the finished written copy beautifully formatted. Do not include introductory conversational text or markdown enclosing code blocks (like \`\`\`).` 
+                            }
+                        ],
+                        temperature: 0.7
+                    })
+                });
+
+                const data = await response.json();
+                if (data.choices && data.choices[0]) {
+                    workspace.value = data.choices[0].message.content.trim();
+                    handleInput();
+                } else if (data.error) {
+                    alert(`API Error: ${data.error.message}`);
+                } else {
+                    alert("AI Generation failed. Please check your credentials.");
+                }
+            } catch (e) {
+                alert("Network Error: Could not connect to OpenAI. Check your internet connection.");
+            } finally {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
+        }
+
+        // SAVE FRAMEWORK TO PRIVATE VAULT
+        function saveToVault() {
+            const vaultName = document.getElementById('vault-name').value.trim();
+            const textToSave = workspace.value;
+
+            if (!vaultName) {
+                alert("Please name your custom prompt layout before saving.");
+                return;
+            }
+            if (!textToSave.trim()) {
+                alert("Cannot save an empty prompt workspace to your vault.");
+                return;
+            }
+
+            let vault = JSON.parse(localStorage.getItem('custom_studio_vault')) || {};
+            vault[vaultName] = textToSave;
+            localStorage.setItem('custom_studio_vault', JSON.stringify(vault));
+
+            renderVaultDropdownOptions();
+            dropdown.value = vaultName;
+            toggleDeleteBtn(true);
+            document.getElementById('vault-name').value = '';
+
+            alert(`📁 Successfully saved "${vaultName}" to your local browser vault!`);
+        }
+
+        // DELETE CUSTOM TEMPLATE FROM VAULT
+        function deleteCustomTemplate() {
+            const selectedVal = dropdown.value;
+            if (PRELOADED_TEMPLATES[selectedVal] || selectedVal === 'blank') {
+                return; // Can't delete system preloaded entries
+            }
+
+            if (confirm(`Are you sure you want to delete "${selectedVal}" from your private vault?`)) {
+                let vault = JSON.parse(localStorage.getItem('custom_studio_vault')) || {};
+                delete vault[selectedVal];
+                localStorage.setItem('custom_studio_vault', JSON.stringify(vault));
+
+                renderVaultDropdownOptions();
+                dropdown.value = 'blank';
+                workspace.value = '';
+                toggleDeleteBtn(false);
+                handleInput();
+            }
+        }
+
+        // RENDER DROP-DOWN LIST ELEMENTS WITH USER-SAVED PRESETS
+        function renderVaultDropdownOptions() {
+            // Keep default preloaded templates intact
+            let optionsHTML = `
+                <option value="blank">-- Select a Blank Canvas --</option>
+                <option value="viral-hook">⚡ Vault Slot 1: The Viral IG Hook Generator</option>
+                <option value="pastor-sales">💼 Vault Slot 2: P.A.S.T.O.R. Sales Page Framework</option>
+                <option value="pitch-deck">🎯 Vault Slot 3: High-Ticket Client Pitch Deck</option>
+                <option value="caption-matrix">📝 Vault Slot 4: Social Media Caption Matrix</option>
+                <option value="brand-manifesto">💎 Vault Slot 5: Luxury Brand Manifesto Template</option>
+            `;
+
+            const vault = JSON.parse(localStorage.getItem('custom_studio_vault')) || {};
+            const keys = Object.keys(vault);
+
+            if (keys.length > 0) {
+                optionsHTML += `<option disabled>────────── Private Local Vault ──────────</option>`;
+                keys.forEach(key => {
+                    optionsHTML += `<option value="${key}">📁 Custom: ${key}</option>`;
+                });
+            }
+
+            dropdown.innerHTML = optionsHTML;
+        }
+
+        // STATS, CHARACTER COUNTER & TOKEN PROXIES
+        function updateStats() {
+            const text = workspace.value;
+            const chars = text.length;
+            const words = text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
+
+            // Token proxies: OpenAI average 1 token = 4 characters. Claude average 1 token = 3.5 characters
+            const openaiTokens = Math.ceil(chars / 4);
+            const claudeTokens = Math.ceil(chars / 3.5);
+
+            document.getElementById('char-count').innerText = chars.toLocaleString();
+            document.getElementById('word-count').innerText = words.toLocaleString();
+            document.getElementById('openai-tokens').innerText = openaiTokens.toLocaleString();
+            document.getElementById('claude-tokens').innerText = claudeTokens.toLocaleString();
+
+            updateCosts();
+        }
+
+        // DYNAMIC COST MATRIX ENGINE
+        function updateCosts() {
+            const inTokens = parseInt(document.getElementById('openai-tokens').innerText.replace(/,/g, '')) || 0;
+            const outSliderVal = parseInt(document.getElementById('output-slider').value);
+
+            document.getElementById('slider-val').innerText = outSliderVal;
+
+            // Up-to-date token pricing models per 1M tokens
+            const models = {
+                gpt4o: { in: 2.50, out: 10.00 },
+                claude: { in: 3.00, out: 15.00 },
+                gemini: { in: 1.25, out: 5.00 }
+            };
+
+            const gptIn = (inTokens * models.gpt4o.in) / 1000000;
+            const gptOut = (outSliderVal * models.gpt4o.out) / 1000000;
+            const gptTotal = gptIn + gptOut;
+
+            const claudeIn = (inTokens * models.claude.in) / 1000000;
+            const claudeOut = (outSliderVal * models.claude.out) / 1000000;
+            const claudeTotal = claudeIn + claudeOut;
+
+            const geminiIn = (inTokens * models.gemini.in) / 1000000;
+            const geminiOut = (outSliderVal * models.gemini.out) / 1000000;
+            const geminiTotal = geminiIn + geminiOut;
+
+            // Render numbers nicely
+            document.getElementById('cost-gpt-in').innerText = '$' + gptIn.toFixed(5);
+            document.getElementById('cost-gpt-out').innerText = '$' + gptOut.toFixed(5);
+            document.getElementById('cost-gpt-total').innerText = '$' + gptTotal.toFixed(5);
+
+            document.getElementById('cost-claude-in').innerText = '$' + claudeIn.toFixed(5);
+            document.getElementById('cost-claude-out').innerText = '$' + claudeOut.toFixed(5);
+            document.getElementById('cost-claude-total').innerText = '$' + claudeTotal.toFixed(5);
+
+            document.getElementById('cost-gemini-in').innerText = '$' + geminiIn.toFixed(5);
+            document.getElementById('cost-gemini-out').innerText = '$' + geminiOut.toFixed(5);
+            document.getElementById('cost-gemini-total').innerText = '$' + geminiTotal.toFixed(5);
+        }
+
+        // UTILITIES: CLIPBOARD COPY
+        function copyToClipboard() {
+            if (!workspace.value.trim()) {
+                alert("Workspace is empty!");
+                return;
+            }
+            navigator.clipboard.writeText(workspace.value);
+            alert("📋 Copied to clipboard successfully!");
+        }
+
+        // UTILITIES: DOWNLOAD MARKDOWN
+        function downloadMarkdown() {
+            const content = workspace.value;
+            if (!content.trim()) {
+                alert("Workspace is empty!");
+                return;
+            }
+            const blob = new Blob([content], { type: 'text/markdown;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.setAttribute('download', 'prompt-matrix.md');
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
     </script>
 </body>
 </html>
