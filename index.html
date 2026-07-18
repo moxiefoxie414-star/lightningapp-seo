@@ -67,7 +67,6 @@
 
         function renderInputs(text) {
             const vars = parseVariables(text);
-            // Smart check: Only re-render if the variable list actually changes
             if (JSON.stringify(vars) === JSON.stringify(lastVars)) return;
             
             lastVars = vars;
@@ -101,6 +100,10 @@
             renderInputs(workspace.value);
         }
 
+        const blankOpt = document.createElement('option');
+        blankOpt.value = 'blank'; blankOpt.innerText = '-- Select a Template --';
+        dropdown.appendChild(blankOpt);
+        
         Object.keys(PRELOADED_TEMPLATES).forEach(key => {
             const opt = document.createElement('option');
             opt.value = key; opt.innerText = key;
