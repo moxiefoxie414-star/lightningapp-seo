@@ -1,775 +1,277 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prompt Lightning Studio | Premium Copywriting Vault & Token Matrix</title>
-    <!-- Tailwind CSS for modern layout -->
+    <title>Prompt Lightning Studio | Premium AI Copywriting — 40 Templates</title>
+    <meta name="description" content="Generate high-converting copy in seconds using 40 proven frameworks. Sales pages, ads, emails, social, and brand voice — powered by AI.">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body {
-            background-color: #020617;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-        }
-        .glass-panel {
-            background: rgba(15, 23, 42, 0.65);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(51, 65, 85, 0.5);
-        }
+        body { background-color: #020617; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        .glass-panel { background: rgba(15, 23, 42, 0.65); backdrop-filter: blur(12px); border: 1px solid rgba(51, 65, 85, 0.5); }
+        .dot { width: 7px; height: 7px; border-radius: 50%; background: #6366f1; animation: pulse 1.2s ease-in-out infinite; display: inline-block; margin: 0 2px; }
+        .dot:nth-child(2) { animation-delay: .2s; }
+        .dot:nth-child(3) { animation-delay: .4s; }
+        @keyframes pulse { 0%, 100% { opacity: .25; transform: scale(.75); } 50% { opacity: 1; transform: scale(1.1); } }
+        select option { background: #0f172a; color: #e2e8f0; }
+        optgroup { background: #0f172a; color: #6366f1; font-weight: 700; }
     </style>
 </head>
 <body class="text-slate-100 min-h-screen py-8 px-4 sm:px-6 lg:px-8">
-
-    <div class="max-w-7xl mx-auto space-y-8">
-        
-        <!-- HEADER -->
-        <header class="text-center space-y-3 pb-4 border-b border-slate-800">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 text-xs font-semibold uppercase tracking-wider">
-                ⚡ Premium Copywriting Studio v2.0
-            </div>
-            <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400">
-                PROMPT LIGHTNING STUDIO
-            </h1>
-            <p class="text-slate-400 max-w-2xl mx-auto text-sm sm:text-base">
-                Your sandbox for crafting, drafting, and managing high-converting copywriting frameworks without data risk.
-            </p>
-        </header>
-
-        <!-- MAIN TWO-COLUMN WORKSPACE -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            
-            <!-- LEFT COLUMN: GENERATION ENGINE PANEL (40% width on desktop) -->
-            <div class="lg:col-span-5 space-y-6">
-                <div class="glass-panel p-6 rounded-2xl shadow-xl space-y-6">
-                    <div class="flex items-center justify-between border-b border-slate-800 pb-3">
-                        <h2 class="text-lg font-bold text-indigo-300 flex items-center gap-2">
-                            <span>✨ Copy Generation Engine</span>
-                        </h2>
-                        <button onclick="toggleAiSettings()" class="text-xs text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition">
-                            ⚙️ AI Setup
-                        </button>
+<div class="max-w-7xl mx-auto space-y-8">
+    <header class="text-center space-y-3 pb-4 border-b border-slate-800">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 text-xs font-semibold uppercase tracking-wider">⚡ Premium Copywriting Studio V2.0</div>
+        <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400">PROMPT LIGHTNING STUDIO</h1>
+        <p class="text-slate-400 max-w-2xl mx-auto text-sm sm:text-base">Pick a template. Fill in your details. Get real AI-generated copy in seconds — 40 proven frameworks across sales, ads, email, social, and brand voice.</p>
+    </header>
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <div class="lg:col-span-5 space-y-5">
+            <div class="glass-panel p-6 rounded-2xl shadow-xl space-y-5">
+                <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                    <h2 class="text-lg font-bold text-indigo-300 flex items-center gap-2">✨ Copy Generation Engine</h2>
+                    <span class="text-xs text-emerald-400 font-semibold bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-full">AI Powered</span>
+                </div>
+                <div class="space-y-4">
+                    <div class="space-y-1">
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400">Product / Service Name *</label>
+                        <input id="gen-product" type="text" placeholder="e.g., Lightning Fit Gym" class="w-full bg-slate-900/80 border border-slate-800 rounded-lg px-3.5 py-2 text-sm text-slate-100 focus:outline-none focus:border-indigo-500 transition">
                     </div>
-
-                    <!-- AI KEY INPUT DRAWER (Collapsible) -->
-                    <div id="ai-settings-drawer" class="hidden bg-slate-950/80 p-4 rounded-xl border border-slate-800 space-y-3 text-xs">
-                        <div class="font-semibold text-indigo-400">Secure Direct-AI Connection</div>
-                        <p class="text-slate-400 leading-relaxed">
-                            Paste your OpenAI API Key below to enable true AI copywriting generation. Your key remains strictly saved in your local browser storage and queries OpenAI directly.
-                        </p>
-                        <div class="space-y-1">
-                            <label class="block text-slate-300">OpenAI API Key:</label>
-                            <input type="password" id="api-key-input" placeholder="sk-proj-..." class="w-full bg-slate-900 border border-slate-700 rounded px-2.5 py-1.5 text-slate-200 focus:outline-none focus:border-indigo-500">
-                        </div>
-                        <div class="flex gap-2">
-                            <button onclick="saveApiKey()" class="bg-indigo-600 hover:bg-indigo-500 px-3 py-1 rounded font-medium text-white transition">Save Key</button>
-                            <button onclick="clearApiKey()" class="bg-slate-800 hover:bg-slate-700 px-3 py-1 rounded text-slate-300 transition">Clear Key</button>
-                        </div>
+                    <div class="space-y-1">
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400">Target Audience *</label>
+                        <input id="gen-audience" type="text" placeholder="e.g., Busy working moms over 30" class="w-full bg-slate-900/80 border border-slate-800 rounded-lg px-3.5 py-2 text-sm text-slate-100 focus:outline-none focus:border-indigo-500 transition">
                     </div>
-
-                    <!-- GENERATION FORM CONTROLS -->
-                    <div class="space-y-4">
-                        <div class="space-y-1">
-                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400">Product / Service Name</label>
-                            <input id="gen-product" type="text" placeholder="e.g., Lightning Fit Gym" class="w-full bg-slate-900/80 border border-slate-800 rounded-lg px-3.5 py-2 text-sm text-slate-100 focus:outline-none focus:border-indigo-500 transition">
-                        </div>
-
-                        <div class="space-y-1">
-                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400">Target Audience</label>
-                            <input id="gen-audience" type="text" placeholder="e.g., Busy working moms over 30" class="w-full bg-slate-900/80 border border-slate-800 rounded-lg px-3.5 py-2 text-sm text-slate-100 focus:outline-none focus:border-indigo-500 transition">
-                        </div>
-
-                        <div class="space-y-1">
-                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400">Core USP / Primary Benefit</label>
-                            <textarea id="gen-usp" rows="2" placeholder="e.g., 20-minute guided high-intensity sessions that burn fat for up to 36 hours" class="w-full bg-slate-900/80 border border-slate-800 rounded-lg px-3.5 py-2 text-sm text-slate-100 focus:outline-none focus:border-indigo-500 transition resize-none"></textarea>
-                        </div>
-
-                        <div class="space-y-1">
-                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400">Desired Brand Tone</label>
-                            <select id="gen-tone" class="w-full bg-slate-900/80 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-indigo-500 transition">
-                                <option value="Bold & Punchy">Bold & Punchy</option>
-                                <option value="Warm & Conversational">Warm & Conversational</option>
-                                <option value="Professional & Authoritative">Professional & Authoritative</option>
-                                <option value="Playful & Witty">Playful & Witty</option>
-                                <option value="Scientific & Logical">Scientific & Logical</option>
-                            </select>
-                        </div>
+                    <div class="space-y-1">
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400">Core USP / Primary Benefit</label>
+                        <textarea id="gen-usp" rows="2" placeholder="e.g., 20-minute sessions that burn fat for up to 36 hours" class="w-full bg-slate-900/80 border border-slate-800 rounded-lg px-3.5 py-2 text-sm text-slate-100 focus:outline-none focus:border-indigo-500 transition resize-none"></textarea>
                     </div>
-
-                    <!-- TRIGGER ACTION BUTTONS -->
-                    <div class="grid grid-cols-1 gap-3 pt-2">
-                        <button onclick="runLocalDraft()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white py-2.5 px-4 rounded-xl font-bold text-sm transition-all duration-200 shadow-md flex items-center justify-center gap-2">
-                            ⚡ Run Smart Local Draft
-                        </button>
-                        <button id="ai-generate-btn" onclick="runAiGeneration()" class="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white py-2.5 px-4 rounded-xl font-bold text-sm transition-all duration-200 shadow-md flex items-center justify-center gap-2">
-                            🤖 AI-Draft (Requires API Key)
-                        </button>
+                    <div class="space-y-1">
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400">Desired Brand Tone</label>
+                        <select id="gen-tone" class="w-full bg-slate-900/80 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-indigo-500 transition">
+                            <option>Urgent</option><option selected>Conversational</option><option>Luxury</option><option>Witty</option><option>Authoritative</option><option>Empathetic</option><option>Bold & Punchy</option><option>Professional</option>
+                        </select>
+                    </div>
+                    <div id="extra-field-wrap" class="space-y-1 hidden">
+                        <label id="extra-label" class="block text-xs font-semibold uppercase tracking-wider text-slate-400">Extra Detail</label>
+                        <input id="gen-extra" type="text" placeholder="" class="w-full bg-slate-900/80 border border-slate-800 rounded-lg px-3.5 py-2 text-sm text-slate-100 focus:outline-none focus:border-indigo-500 transition">
                     </div>
                 </div>
-            </div>
-
-            <!-- RIGHT COLUMN: CORE WORKSPACE & VAULT (70% width on desktop) -->
-            <div class="lg:col-span-7 space-y-6">
-                
-                <!-- WORKSPACE CARD -->
-                <div class="glass-panel p-6 rounded-2xl shadow-xl space-y-4">
-                    
-                    <!-- WORKSPACE CONTROLS -->
-                    <div class="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center justify-between border-b border-slate-800 pb-4">
-                        <div class="space-y-1 flex-1">
-                            <label class="block text-xs font-semibold uppercase tracking-wider text-indigo-400">Active Template Frame</label>
-                         <select id="template-dropdown" onchange="loadSelectedTemplate()" class="w-full bg-slate-900/90 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-indigo-500 transition">
-    <option value="blank">-- Select a Blank Canvas --</option>
-    <option value="viral-hook">⚡ Viral IG Hook Generator</option>
-    <option value="pastor-sales">💼 P.A.S.T.O.R. Sales Page</option>
-    <option value="cold-email">📧 Cold Email Outreach</option>
-    <option value="fb-ad">📢 FB Ad: Pain-Agitate-Solve</option>
-    <option value="landing-hero">🚀 Landing Page Hero</option>
-    <option value="yt-script">🎥 YouTube Video Script</option>
-    <option value="newsletter">✉️ Newsletter Welcome</option>
-    <option value="case-study">📊 Case Study Outline</option>
-    <option value="webinar-hook">🎯 Webinar Hook</option>
-    <option value="brand-manifesto">💎 Luxury Brand Manifesto</option>
-</select>  
-                        </div>
-                        <div id="delete-btn-container" class="hidden items-end pt-5">
-                            <button onclick="deleteCustomTemplate()" class="bg-red-950/40 hover:bg-red-900/60 text-red-400 p-2 rounded-lg border border-red-800/40 transition" title="Delete Custom Template">
-                                🗑️
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- EXPORT ACTION ROW -->
-                    <div class="flex justify-between items-center gap-2">
-                        <button onclick="copyToClipboard()" class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-200 py-2 px-3 rounded-lg text-xs font-semibold transition flex items-center justify-center gap-2 border border-slate-700/50">
-                            📋 Copy to Clipboard
-                        </button>
-                        <button onclick="downloadMarkdown()" class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-200 py-2 px-3 rounded-lg text-xs font-semibold transition flex items-center justify-center gap-2 border border-slate-700/50">
-                            📥 Download .MD File
-                        </button>
-                    </div>
-
-                    <!-- CORE WORKSPACE TEXTAREA -->
-                    <div class="space-y-2">
-                        <textarea id="prompt-workspace" oninput="handleInput()" rows="14" class="w-full bg-slate-950/80 border border-slate-800 rounded-xl p-4 text-slate-200 font-mono text-sm leading-relaxed focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500" placeholder="Type or load your copywriting prompt matrix here..."></textarea>
-                    </div>
-
-                    <!-- SAVE CUSTOM VAULT FRAMEWORK -->
-                    <div class="grid grid-cols-1 sm:grid-cols-4 gap-3 items-center bg-slate-950/40 p-3 rounded-xl border border-slate-800/60">
-                        <input id="vault-name" type="text" placeholder="Name this custom prompt..." class="sm:col-span-3 bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-indigo-500">
-                        <button onclick="saveToVault()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 px-4 rounded-lg text-xs transition whitespace-nowrap">
-                            💾 Save to Vault
-                        </button>
-                    </div>
-
-                    <!-- METRICS GRID -->
-                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-2">
-                        <div class="bg-slate-900/40 rounded-xl p-3 border border-slate-800/60 text-center">
-                            <div id="char-count" class="text-lg font-bold text-indigo-400">0</div>
-                            <div class="text-[10px] text-slate-400 uppercase tracking-wider">Total Characters</div>
-                        </div>
-                        <div class="bg-slate-900/40 rounded-xl p-3 border border-slate-800/60 text-center">
-                            <div id="word-count" class="text-lg font-bold text-purple-400">0</div>
-                            <div class="text-[10px] text-slate-400 uppercase tracking-wider">Word Units</div>
-                        </div>
-                        <div class="bg-slate-900/40 rounded-xl p-3 border border-slate-800/60 text-center">
-                            <div id="openai-tokens" class="text-lg font-bold text-pink-400">0</div>
-                            <div class="text-[10px] text-slate-400 uppercase tracking-wider">Est. Tokens (OpenAI)</div>
-                        </div>
-                        <div class="bg-slate-900/40 rounded-xl p-3 border border-slate-800/60 text-center">
-                            <div id="claude-tokens" class="text-lg font-bold text-sky-400">0</div>
-                            <div class="text-[10px] text-slate-400 uppercase tracking-wider">Est. Tokens (Claude)</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- DYNAMIC COST MATRIX -->
-                <div class="glass-panel p-6 rounded-2xl shadow-xl space-y-4">
-                    <div class="flex items-center justify-between border-b border-slate-800 pb-3">
-                        <h4 class="text-sm font-bold uppercase tracking-wider text-slate-300 flex items-center gap-2">
-                            📊 Live Input/Output Cost Matrix
-                        </h4>
-                        <div class="text-xs text-indigo-400 font-semibold">
-                            Simulated Output: <span id="slider-val" class="font-bold">50</span> Tokens
-                        </div>
-                    </div>
-                    <div class="space-y-2">
-                        <input id="output-slider" oninput="updateCosts()" type="range" min="10" max="2000" step="10" value="500" class="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-indigo-500">
-                    </div>
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-xs text-left text-slate-300">
-                            <thead>
-                                <tr class="text-slate-400 border-b border-slate-800">
-                                    <th class="py-2.5">Model Interface</th>
-                                    <th class="py-2.5">Input Cost</th>
-                                    <th class="py-2.5">Output Cost</th>
-                                    <th class="py-2.5 text-right text-indigo-400">Total Est.</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="border-b border-slate-900">
-                                    <td class="py-2.5 font-semibold">GPT-4o</td>
-                                    <td id="cost-gpt-in" class="py-2.5">$0.00000</td>
-                                    <td id="cost-gpt-out" class="py-2.5">$0.00000</td>
-                                    <td id="cost-gpt-total" class="py-2.5 text-right font-bold text-emerald-400">$0.00000</td>
-                                </tr>
-                                <tr class="border-b border-slate-900">
-                                    <td class="py-2.5 font-semibold">Claude 3.5 Sonnet</td>
-                                    <td id="cost-claude-in" class="py-2.5">$0.00000</td>
-                                    <td id="cost-claude-out" class="py-2.5">$0.00000</td>
-                                    <td id="cost-claude-total" class="py-2.5 text-right font-bold text-emerald-400">$0.00000</td>
-                                </tr>
-                                <tr>
-                                    <td class="py-2.5 font-semibold">Gemini 1.5 Pro</td>
-                                    <td id="cost-gemini-in" class="py-2.5">$0.00000</td>
-                                    <td id="cost-gemini-out" class="py-2.5">$0.00000</td>
-                                    <td id="cost-gemini-total" class="py-2.5 text-right font-bold text-emerald-400">$0.00000</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="pt-2">
-                        <button class="w-full bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 border border-indigo-500/20 py-2.5 rounded-xl text-xs font-semibold transition uppercase tracking-wider">
-                            💎 Upgrade to Elite Studio Dashboard
-                        </button>
-                    </div>
-                </div>
+                <div id="error-box" class="hidden bg-red-950/40 border border-red-800/40 text-red-400 text-xs p-3 rounded-lg"></div>
+                <button id="gen-btn" onclick="runGeneration(false)" class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white py-3 px-4 rounded-xl font-bold text-sm transition-all duration-200 shadow-md flex items-center justify-center gap-2">⚡ Generate Copy</button>
+                <div id="tip-box" class="hidden bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 text-xs p-3 rounded-xl leading-relaxed"></div>
             </div>
         </div>
-
-        <!-- FOOTER -->
-        <footer class="text-center text-slate-500 text-xs py-6 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div>
-                PROMPT LIGHTNING STUDIO &copy; 2026 • ALL RIGHTS RESERVED
+        <div class="lg:col-span-7 space-y-6">
+            <div class="glass-panel p-6 rounded-2xl shadow-xl space-y-4">
+                <div class="border-b border-slate-800 pb-4 space-y-2">
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-indigo-400">Active Template Frame</label>
+                    <select id="template-dropdown" onchange="onTemplateChange()" class="w-full bg-slate-900/90 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-indigo-500 transition">
+                        <option value="">-- Select a Template --</option>
+                        <optgroup label="─── Sales Pages ───">
+                            <option value="pastor">💼 PASTOR Framework Sales Page</option>
+                            <option value="aida">🚀 AIDA Landing Page</option>
+                            <option value="vsl">🎥 VSL Video Sales Letter Script</option>
+                            <option value="webinar">🎯 Webinar Registration Pitch</option>
+                            <option value="highticket">💎 High-Ticket Application Page</option>
+                            <option value="launch">⚡ Product Launch Page</option>
+                            <option value="saas">💻 SaaS Pricing Page</option>
+                            <option value="leadmag">📥 Lead Magnet Opt-in Page</option>
+                        </optgroup>
+                        <optgroup label="─── Ads ───">
+                            <option value="fbad">📢 Facebook/Instagram Ad (PAS)</option>
+                            <option value="googlead">🔍 Google Search Ad (RSA)</option>
+                            <option value="ythook">▶️ YouTube Pre-Roll Hook</option>
+                            <option value="retarget">🔁 Retargeting Ad</option>
+                            <option value="native">📰 Native Ad Headline Pack</option>
+                            <option value="igstory">📱 Instagram Story Ad</option>
+                            <option value="liad">💼 LinkedIn Sponsored Post</option>
+                            <option value="twad">🐦 Twitter/X Ad</option>
+                        </optgroup>
+                        <optgroup label="─── Email ───">
+                            <option value="coldemail">📧 Cold Outreach Email</option>
+                            <option value="welcome">✉️ Welcome Email</option>
+                            <option value="reengage">🔄 Re-engagement Email</option>
+                            <option value="cart">🛒 Cart Abandonment Sequence</option>
+                            <option value="launchemail">🚀 Launch Announcement Email</option>
+                            <option value="newsletter">📰 Newsletter Opener</option>
+                            <option value="followup">📋 Follow-up Sequence</option>
+                            <option value="subjects">📬 Subject Line Generator</option>
+                        </optgroup>
+                        <optgroup label="─── Social ───">
+                            <option value="lipost">💼 LinkedIn Thought-Leadership Post</option>
+                            <option value="thread">🐦 Twitter Thread (10 tweets)</option>
+                            <option value="igcap">📷 Instagram Caption + Hashtags</option>
+                            <option value="viralhook">⚡ Viral Hook Generator (15 hooks)</option>
+                            <option value="storycta">📱 Story CTA Sequence</option>
+                            <option value="pinterest">📌 Pinterest Description</option>
+                            <option value="ytdesc">▶️ YouTube SEO Description</option>
+                            <option value="tiktok">🎵 TikTok Script</option>
+                        </optgroup>
+                        <optgroup label="─── Brand Voice ───">
+                            <option value="manifesto">💎 Luxury Brand Manifesto</option>
+                            <option value="positioning">🎯 Brand Positioning Statement</option>
+                            <option value="taglines">✨ Tagline Generator (15 options)</option>
+                            <option value="about">📖 About Page</option>
+                            <option value="founder">👤 Founder Origin Story</option>
+                            <option value="bio">📝 Brand Bio (3 versions)</option>
+                            <option value="mission">🌟 Mission Statement + Values</option>
+                            <option value="elevator">🎤 Elevator Pitch (3 versions)</option>
+                        </optgroup>
+                    </select>
+                </div>
+                <div class="flex justify-between items-center gap-2">
+                    <button onclick="copyToClipboard()" class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-200 py-2 px-3 rounded-lg text-xs font-semibold transition flex items-center justify-center gap-1.5 border border-slate-700/50">📋 Copy to Clipboard</button>
+                    <button onclick="downloadMarkdown()" class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-200 py-2 px-3 rounded-lg text-xs font-semibold transition flex items-center justify-center gap-1.5 border border-slate-700/50">📥 Download .MD File</button>
+                    <button id="regen-btn" onclick="runGeneration(false)" disabled class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-400 py-2 px-3 rounded-lg text-xs font-semibold transition flex items-center justify-center gap-1.5 border border-slate-700/50 disabled:opacity-40 disabled:cursor-not-allowed">↺ Regenerate</button>
+                </div>
+                <textarea id="prompt-workspace" oninput="handleInput()" rows="14" class="w-full bg-slate-950/80 border border-slate-800 rounded-xl p-4 text-slate-200 font-mono text-sm leading-relaxed focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500" placeholder="Select a template above, fill in your details on the left, and click Generate Copy..."></textarea>
+                <div id="refine-wrap" class="hidden flex gap-2">
+                    <input id="refine-input" type="text" placeholder="Refine: e.g. make it shorter, add more urgency..." class="flex-1 bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-indigo-500">
+                    <button onclick="runGeneration(true)" class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-lg text-xs font-bold transition whitespace-nowrap">Refine →</button>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-4 gap-3 items-center bg-slate-950/40 p-3 rounded-xl border border-slate-800/60">
+                    <input id="vault-name" type="text" placeholder="Name this custom prompt..." class="sm:col-span-3 bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-indigo-500">
+                    <button onclick="saveToVault()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 px-4 rounded-lg text-xs transition whitespace-nowrap">💾 Save to Vault</button>
+                </div>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-2">
+                    <div class="bg-slate-900/40 rounded-xl p-3 border border-slate-800/60 text-center"><div id="char-count" class="text-lg font-bold text-indigo-400">0</div><div class="text-[10px] text-slate-400 uppercase tracking-wider">Total Characters</div></div>
+                    <div class="bg-slate-900/40 rounded-xl p-3 border border-slate-800/60 text-center"><div id="word-count" class="text-lg font-bold text-purple-400">0</div><div class="text-[10px] text-slate-400 uppercase tracking-wider">Word Units</div></div>
+                    <div class="bg-slate-900/40 rounded-xl p-3 border border-slate-800/60 text-center"><div id="openai-tokens" class="text-lg font-bold text-pink-400">0</div><div class="text-[10px] text-slate-400 uppercase tracking-wider">Est. Tokens (OpenAI)</div></div>
+                    <div class="bg-slate-900/40 rounded-xl p-3 border border-slate-800/60 text-center"><div id="claude-tokens" class="text-lg font-bold text-sky-400">0</div><div class="text-[10px] text-slate-400 uppercase tracking-wider">Est. Tokens (Claude)</div></div>
+                </div>
             </div>
-            <div class="text-indigo-400 flex items-center gap-1.5 font-medium">
-                🔒 Zero-Data Sandbox: Your inputs never leave your browser
+            <div class="glass-panel p-6 rounded-2xl shadow-xl space-y-4">
+                <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                    <h4 class="text-sm font-bold uppercase tracking-wider text-slate-300 flex items-center gap-2">📊 Live Input/Output Cost Matrix</h4>
+                    <div class="text-xs text-indigo-400 font-semibold">Output: <span id="slider-val">500</span> Tokens</div>
+                </div>
+                <input id="output-slider" oninput="updateCosts()" type="range" min="10" max="2000" step="10" value="500" class="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-indigo-500">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-xs text-left text-slate-300">
+                        <thead><tr class="text-slate-400 border-b border-slate-800"><th class="py-2.5">Model</th><th class="py-2.5">Input Cost</th><th class="py-2.5">Output Cost</th><th class="py-2.5 text-right text-indigo-400">Total Est.</th></tr></thead>
+                        <tbody>
+                            <tr class="border-b border-slate-900"><td class="py-2.5 font-semibold">GPT-4o</td><td id="cost-gpt-in" class="py-2.5">$0.00000</td><td id="cost-gpt-out" class="py-2.5">$0.00000</td><td id="cost-gpt-total" class="py-2.5 text-right font-bold text-emerald-400">$0.00000</td></tr>
+                            <tr class="border-b border-slate-900"><td class="py-2.5 font-semibold">Claude Sonnet 4.6</td><td id="cost-claude-in" class="py-2.5">$0.00000</td><td id="cost-claude-out" class="py-2.5">$0.00000</td><td id="cost-claude-total" class="py-2.5 text-right font-bold text-emerald-400">$0.00000</td></tr>
+                            <tr><td class="py-2.5 font-semibold">Gemini 2.0 Flash</td><td id="cost-gemini-in" class="py-2.5">$0.00000</td><td id="cost-gemini-out" class="py-2.5">$0.00000</td><td id="cost-gemini-total" class="py-2.5 text-right font-bold text-emerald-400">$0.00000</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <button class="w-full bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 border border-indigo-500/20 py-2.5 rounded-xl text-xs font-semibold transition uppercase tracking-wider">💎 Upgrade to Pro — Unlimited Generations</button>
             </div>
-        </footer>
+        </div>
     </div>
-
-    <!-- CORE LOGIC & CUSTOM ENGINE SCRIPT -->
-    <script>
-        // Core framework dictionary
-const PRELOADED_TEMPLATES = {
-    'viral-hook': `🎯 VIRAL IG HOOK FRAMEWORK\n---\nHook Option 1: "Everyone tells you to work harder, but they aren't telling you about [Product/Service Name]..."\nHook Option 2: "If you are a [Target Audience] struggling with [Core USP], stop scrolling..."`,
-    'pastor-sales': `💼 P.A.S.T.O.R. SALES PAGE\n---\nP: Problem\nA: Amplify\nS: Story\nT: Testimony\nO: Offer\nR: Response`,
-    'cold-email': `📧 COLD EMAIL OUTREACH\n---\nSubject: Quick question about [Core USP]\nHi [Name],\nI noticed [Target Audience] struggle with [Core USP].\nWe built [Product/Service Name] to fix that.`,
-    'fb-ad': `📢 FB AD: PAIN-AGITATE-SOLVE\n---\nStop settling for [Pain Point].\nMost [Target Audience] fail because they lack [Core USP].\nHere is how [Product/Service Name] changes everything.`,
-    'landing-hero': `🚀 LANDING PAGE HERO\n---\nHeadline: The Easiest Way to [Core USP]\nSubheadline: Join 500+ [Target Audience] using [Product/Service Name].`,
-    'yt-script': `🎥 YOUTUBE SCRIPT\n---\n"Welcome back. Today we are talking about [Core USP].\nIf you are a [Target Audience] tired of slow processes, this is for you."`,
-    'newsletter': `✉️ NEWSLETTER WELCOME\n---\nWelcome to the inner circle.\nAs a [Target Audience], [Core USP] is your lifeblood.\n[Product/Service Name] makes it effortless.`,
-    'case-study': `📊 CASE STUDY\n---\nChallenge: [Target Audience] could not achieve [Core USP].\nSolution: [Product/Service Name].\nResult: 200% efficiency increase.`,
-    'webinar-hook': `🎯 WEBINAR HOOK\n---\n"How we helped [Target Audience] achieve [Core USP] in under 30 days."`,
-    'brand-manifesto': `💎 BRAND MANIFESTO\n---\n"We do not build tools for the masses. We forge frameworks for the exceptional.\nWelcome to [Product/Service Name]."`
+    <footer class="text-center text-slate-500 text-xs py-6 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div>PROMPT LIGHTNING STUDIO © 2026 · ALL RIGHTS RESERVED</div>
+        <div class="text-indigo-400 font-medium">⚡ 40 Templates · Real AI Generation · Token Counter</div>
+    </footer>
+</div>
+<script>
+const TEMPLATES = {
+    pastor: { tip: "💡 Story section converts best with a real customer transformation — not your own.", extra: { label: "Call to Action Text", placeholder: "e.g. Book your free strategy call today" }, sp: "You are a world-class direct-response copywriter. Write a complete PASTOR framework sales page with clearly labeled sections: ## PROBLEM, ## AMPLIFY, ## STORY, ## TRANSFORMATION, ## OFFER, ## RESPONSE. Second-person voice. Short punchy paragraphs. Be specific and vivid. No filler phrases. Use the exact details provided." },
+    aida: { tip: "💡 Stack 3 specific benefits in Desire — not features.", extra: { label: "Main Objection to Address", placeholder: "e.g. Too expensive, not enough time" }, sp: "You are an expert conversion copywriter. Write a complete AIDA landing page: ## ATTENTION (bold hook headline + subhead), ## INTEREST (why current solutions fail), ## DESIRE (stack specific benefits, address the stated objection, add social proof), ## ACTION (clear CTA with urgency). No filler phrases. Use exact details provided." },
+    vsl: { tip: "💡 The first 30 seconds determine if they watch. Open with the result, not your name.", extra: { label: "Before & After Transformation", placeholder: "e.g. 0 to $10k/month in 90 days" }, sp: "You are a VSL scriptwriter. Write a complete Video Sales Letter with timestamps: [0:00] HOOK, [1:00] PROBLEM, [3:00] STORY, [6:00] PROOF, [8:00] OFFER, [10:00] CTA. Include [PAUSE] and [DELIVERY NOTE:] cues. No filler phrases. Use exact details provided." },
+    webinar: { tip: "💡 List exactly 3 specific things they will learn — vague promises kill registrations.", extra: { label: "Webinar Date & Time", placeholder: "e.g. Thursday July 31 at 7PM EST" }, sp: "You are a webinar funnel specialist. Write a complete webinar registration page: Power headline, subheadline, 3 specific learning bullet points, Host credibility 2 sentences, urgency element, strong CTA. No filler phrases. Use exact details provided." },
+    highticket: { tip: "💡 State who this is NOT for — it increases desire from people who ARE a fit.", extra: { label: "Price Point", placeholder: "e.g. $3,000 / $10,000 / starts at $5k" }, sp: "You are a premium offer copywriter. Write a high-ticket application page: Bold positioning headline, ## WHO THIS IS FOR (3 specific bullets), ## WHO THIS IS NOT FOR (2 bullets), ## WHAT YOU GET (outcomes not features), investment framing, exclusive application CTA. No filler phrases. Use exact details provided." },
+    launch: { tip: "💡 Deadlines must be real. Fake urgency destroys trust and kills future launches.", extra: { label: "Launch Deadline", placeholder: "e.g. Cart closes Friday at midnight EST" }, sp: "You are a product launch specialist. Write a complete launch page: Pre-launch hook, launch announcement with full offer details, early-bird bonus, deadline consequences, FAQ 3 objections answered, strong buy CTA with PS line. Genuine urgency only. No filler phrases. Use exact details provided." },
+    saas: { tip: "💡 Anchor the middle tier as Most Popular — 70% of buyers choose it.", extra: { label: "Number of Pricing Tiers", placeholder: "e.g. 3 tiers: Starter, Pro, Enterprise" }, sp: "You are a SaaS conversion specialist. Write a complete pricing page: value headline, tier names and positioning benefits not just features, recommended plan callout, FAQ addressing cost objections 3 questions, enterprise CTA. Frame price in ROI. No filler phrases. Use exact details provided." },
+    leadmag: { tip: "💡 The 7-Step Guide to X outperforms Guide to X by 30% — use a number.", extra: { label: "What is the Free Resource?", placeholder: "e.g. PDF checklist, video training, email course" }, sp: "You are an email list growth specialist. Write a lead magnet opt-in page: curiosity-driven headline with a number and specific outcome, 3 bullet points of what they will get, social proof element, form copy, privacy assurance. Make it sound unmissable. No filler phrases. Use exact details provided." },
+    fbad: { tip: "💡 The first line must work without the image — write it as if the visual is invisible.", extra: { label: "Ad Objective", placeholder: "e.g. Drive to sales page, book a call, download lead magnet" }, sp: "You are a Facebook/Instagram ads specialist. Write a complete PAS ad: Hook 1 line stops the scroll, Pain 2-3 sentences, Agitate make it vivid, Solve introduce product, CTA one clear action. Also write: 3 headline variations under 40 chars, 2 primary text variations, 2 link descriptions. No filler phrases. Use exact details provided." },
+    googlead: { tip: "💡 Include the keyword in Headline 1 exactly as typed — Quality Score depends on it.", extra: { label: "Target Keywords", placeholder: "e.g. copywriting software, AI writing tool" }, sp: "You are a Google Ads specialist. Write a complete Responsive Search Ad: 15 headline variations max 30 characters each, 4 description variations max 90 characters each, 2 sitelink extensions. Label everything clearly. No filler phrases. Use exact details provided." },
+    ythook: { tip: "💡 Say something that cannot be completed in 5 seconds — they must stay to hear the end.", extra: { label: "Video Topic", placeholder: "e.g. How I made $50k in one month with copywriting" }, sp: "You are a YouTube ad specialist. Write 5 pre-roll hook variations each under 40 words. Each creates an open loop, never starts with Hey or Hi. Rank hooks 1-5 by strength with one-sentence explanation. No filler phrases. Use exact details provided." },
+    retarget: { tip: "💡 Still thinking about it? outperforms generic retargeting ads by 3x.", extra: { label: "What They Viewed or Abandoned", placeholder: "e.g. visited pricing page, abandoned cart" }, sp: "You are a retargeting ad specialist. Write 3 retargeting ad variations: Variation 1 Objection-handling, Variation 2 Social proof specific result, Variation 3 Urgency genuine only. Each: hook plus 2-3 sentence body plus CTA. Reference that they already saw the product. No filler phrases. Use exact details provided." },
+    native: { tip: "💡 Headlines with a number plus result outperform curiosity-only headlines by 40%.", extra: { label: "Content Type", placeholder: "e.g. article, video, quiz, guide" }, sp: "You are a native advertising specialist. Write 15 native ad headlines mixing: curiosity gap, number plus result, question, how-to, warning, story tease, controversy. Under 60 characters each. Identify the top 5 and explain the psychological trigger each uses. No filler phrases. Use exact details provided." },
+    igstory: { tip: "💡 Frame 1 gets 3 seconds of attention. It must deliver the entire hook.", extra: { label: "Swipe-Up or Tap Destination", placeholder: "e.g. product page, lead magnet, booking page" }, sp: "You are an Instagram Story ad specialist. Write a 5-frame Story ad: Frame 1 0-3s bold text hook, Frame 2 3-6s problem amplified, Frame 3 6-10s solution tease, Frame 4 10-14s social proof, Frame 5 14-15s CTA frame. Include [VISUAL DIRECTION] in brackets. Max 6 words per frame. No filler phrases. Use exact details provided." },
+    liad: { tip: "💡 Long-form LinkedIn ads with a genuine insight outperform short ads 2x in B2B.", extra: { label: "Target Audience Title or Company Size", placeholder: "e.g. Marketing managers at B2B SaaS, 50-200 employees" }, sp: "You are a LinkedIn B2B advertising specialist. Write a LinkedIn sponsored post: Intro text 150 chars max, Hook bold professional insight not a question, Body 3-4 paragraphs genuine insight, CTA low friction. Also write headline under 70 chars. Professional but not corporate. No filler phrases. Use exact details provided." },
+    twad: { tip: "💡 Ads that look like real tweets get 3x more engagement — write the organic version first.", extra: { label: "Campaign Goal", placeholder: "e.g. drive website traffic, grow followers, promote offer" }, sp: "You are a Twitter/X ads specialist. Write 5 Twitter ad variations under 240 characters each: genuine opinion, number/stat, question, bold claim, micro-story. For each write website card headline under 70 chars and description under 100 chars. No hashtag spam. No filler phrases. Use exact details provided." },
+    coldemail: { tip: "💡 The best cold emails are 5 sentences. Every extra sentence reduces reply rate by 8%.", extra: { label: "Personalization Hook", placeholder: "e.g. saw your post about X, noticed you just launched Y" }, sp: "You are a cold email specialist. Write a cold outreach email under 100 words: Subject line personalized under 7 words, Opening reference the personalization hook, 1-2 sentence value prop specific result, Social proof one line, Single low-friction CTA. Also write 3 subject line alternatives. No filler phrases. Use exact details provided." },
+    welcome: { tip: "💡 Welcome emails have 4x higher open rates. Don't waste them on pleasantries.", extra: { label: "Next Step to Drive To", placeholder: "e.g. read your best post, join the community, book a call" }, sp: "You are an email marketing specialist. Write a welcome email under 200 words: Subject line feels personal, Opening skip thanks for subscribing start with value they are about to get, What to expect 3 specific bullet points, Quick win, Next step CTA. Warm direct voice. No filler phrases. Use exact details provided." },
+    reengage: { tip: "💡 I know it has been a while subject lines outperform normal subjects by 35%.", extra: { label: "Incentive to Offer if any", placeholder: "e.g. discount code, free resource, or none" }, sp: "You are an email re-engagement specialist. Write a re-engagement email: Subject line acknowledge the silence human tone, Opening honest and brief, Re-introduce value why they subscribed, Offer or reason to stay, Binary CTA stay or easy unsubscribe. No filler phrases. Use exact details provided." },
+    cart: { tip: "💡 Send Email 1 within 1 hour — not 24 hours. Speed is the number 1 recovery factor.", extra: { label: "Product Name and Price", placeholder: "e.g. The Content Kit, $97" }, sp: "You are an e-commerce email specialist. Write a 3-email cart abandonment sequence. Email 1 at 1hr: simple reminder no pressure under 80 words. Email 2 at 24hrs: address the most likely objection add social proof. Email 3 at 72hrs: final notice genuine urgency. For each: subject line, preview text, body, CTA. Label each email. No filler phrases. Use exact details provided." },
+    launchemail: { tip: "💡 Tuesday or Wednesday at 10am local time gets 22% higher open rates.", extra: { label: "Launch Deadline", placeholder: "e.g. Available until Sunday midnight" }, sp: "You are a product launch email specialist. Write a launch announcement email: Subject line announcement energy specific outcome, Preview text, Opening hook get to point in sentence one, Offer summary in bullets, Urgency element genuine only, Primary CTA with surrounding copy, PS line. Under 300 words. No filler phrases. Use exact details provided." },
+    newsletter: { tip: "💡 The opener must promise in line 1 what the rest of the email delivers.", extra: { label: "This Week's Topic", placeholder: "e.g. What I learned from losing a major client" }, sp: "You are a newsletter writer. Write a newsletter opener: Subject line intriguing specific personal, Preview text, Opening hook 2-3 sentences pattern interrupt or micro-story, Bridge paragraph, Transition into content. Write 3 alternative subject lines. Real person not brand voice. No filler phrases. Use exact details provided." },
+    followup: { tip: "💡 80% of sales happen between follow-up 5 and 12. Most people give up after 2.", extra: { label: "Original Offer or Context", placeholder: "e.g. Sales call for $2k program, sent web design proposal" }, sp: "You are a sales follow-up specialist. Write a 3-email follow-up sequence: Email 1 Day 2 value add no direct ask, Email 2 Day 5 address the most likely objection, Email 3 Day 10 gentle close with easy out and final reason to move forward. Each: subject line, under 100 words, single CTA. Human tone. No filler phrases. Use exact details provided." },
+    subjects: { tip: "💡 Test completely different angles — curiosity vs direct benefit is the best A/B pair.", extra: { label: "Email Type and Goal", placeholder: "e.g. promotional email to B2B audience, goal: 30% open rate" }, sp: "You are an email subject line specialist. Generate 15 subject line variations covering: direct benefit, curiosity gap, number/list, question, urgency, personal/conversational, social proof, negative framing, controversy, and story tease. All under 50 characters. Identify the top 5 and explain which audience segment each works best for. No filler phrases. Use exact details provided." },
+    lipost: { tip: "💡 The first line is your headline. If it doesn't stop the scroll, nothing else matters.", extra: { label: "Industry or Niche", placeholder: "e.g. SaaS, real estate, personal finance, marketing" }, sp: "You are a LinkedIn content strategist. Write a thought-leadership post: Hook first line bold statement counterintuitive fact or micro-story never say I am excited to share, Body 3-4 short paragraphs genuine insight or framework, Takeaway one clear lesson, CTA question or comment invite. Format with line breaks. Under 300 words. No filler phrases. Use exact details provided." },
+    thread: { tip: "💡 Tweet 1 is an ad for the thread — it must promise a specific, valuable outcome.", extra: { label: "Thread Topic", placeholder: "e.g. 10 copywriting mistakes that kill conversions" }, sp: "You are a Twitter/X content strategist. Write a complete 10-tweet thread: Tweet 1 hook specific outcome promised unmissable, Tweets 2-9 one insight per tweet short sentences concrete examples numbers, Tweet 10 summary plus CTA. Write 3 alternative Tweet 1 hooks. Format as numbered tweets under 280 characters each. No filler phrases. Use exact details provided." },
+    igcap: { tip: "💡 The first line must work standalone — it shows before the more cutoff.", extra: { label: "Post Type", placeholder: "e.g. educational carousel, personal story, product promo" }, sp: "You are an Instagram content strategist. Write a complete Instagram caption: Hook first line under 125 chars creates curiosity or delivers immediate value, Body short paragraphs white space, CTA specific ask save this or tag someone or drop a question below, Hashtag block 20-25 hashtags mix niche medium broad separated from caption. No filler phrases. Use exact details provided." },
+    viralhook: { tip: "💡 Hooks that challenge conventional wisdom consistently outperform all others.", extra: { label: "Platform", placeholder: "e.g. LinkedIn, Twitter, Instagram, TikTok, or All platforms" }, sp: "You are a viral content specialist. Generate 15 opening hooks using: counterintuitive statement, number plus result, bold claim, question, short micro-story, Unpopular opinion:, warning or mistake alert, before/after contrast, challenge to common belief, curiosity gap, and confession. Identify the top 5 with highest viral potential and explain why in one sentence each. No filler phrases. Use exact details provided." },
+    storycta: { tip: "💡 The words right now create micro-urgency without being pushy.", extra: { label: "Swipe-Up or Tap Destination", placeholder: "e.g. sales page, lead magnet, YouTube video, product page" }, sp: "You are a Stories content specialist. Write a 5-frame Story sequence: Frame 1 attention hook bold text, Frame 2 problem or desire 2-3 words on screen, Frame 3 solution tease, Frame 4 social proof one specific stat, Frame 5 CTA direct instruction tap or swipe why now. Include [VISUAL DIRECTION] in brackets. Max 8 words per frame. No filler phrases. Use exact details provided." },
+    pinterest: { tip: "💡 Pinterest is a search engine. Front-load your keywords in the first 2 lines.", extra: { label: "Board Category", placeholder: "e.g. meal prep, home decor, wedding planning, finance" }, sp: "You are a Pinterest SEO specialist. Write a complete pin: Title under 100 chars keyword-first, Description with keyword-rich first sentence, value description, 3-5 bullet points with embedded keywords, CTA, Hashtag set 10-15 hashtags mixing broad and niche. No keyword stuffing. No filler phrases. Use exact details provided." },
+    ytdesc: { tip: "💡 The first 157 characters appear in YouTube search results — treat them as a meta description.", extra: { label: "Target Keywords", placeholder: "e.g. copywriting tutorial, how to write ads, email marketing" }, sp: "You are a YouTube SEO specialist. Write a complete video description: Opening paragraph first 157 chars with primary keyword in sentence 1 and a hook, Full description 3-4 paragraphs natural keywords, Timestamps section 5-8 chapter timestamps, Links section placeholders, Hashtag set 3-5 hashtags. Also write: video title under 70 chars keyword-first and 5 tag suggestions. No filler phrases. Use exact details provided." },
+    tiktok: { tip: "💡 TikTok rewards watch time — end each section with an unresolved hook.", extra: { label: "Video Style", placeholder: "e.g. talking head, tutorial, POV, storytime, tips list" }, sp: "You are a TikTok content specialist. Write a complete TikTok script 60-90 seconds spoken: [0:00-0:03] HOOK irresistible first words on screen AND spoken, [0:03-0:30] SETUP context plus open loop, [0:30-0:55] CONTENT 3 points max, [0:55-1:00] RESOLUTION plus CTA. Include [VISUAL DIRECTION] notes. Write 3 alternative hooks. No filler phrases. Use exact details provided." },
+    manifesto: { tip: "💡 A manifesto should make some people uncomfortable — if everyone agrees it has no edge.", extra: { label: "Brand Values (3 words)", placeholder: "e.g. craftsmanship, discretion, legacy" }, sp: "You are a luxury brand copywriter. Write a luxury brand manifesto. Tone: confident earned never desperate. Structure: Opening belief statement what the brand stands for not what it sells, What the brand stands against specific, Who the brand is for describe them not demographics, How the brand sees the world differently, Closing commitment. Declarative sentences. Never use: revolutionary, unparalleled, world-class. No filler phrases. Use exact details provided." },
+    positioning: { tip: "💡 A good positioning statement is specific enough that it excludes most businesses.", extra: { label: "Main Competitor to Differentiate From", placeholder: "e.g. other agencies, DIY tools, big-name software" }, sp: "You are a brand strategist. Write a complete positioning package: 1 Internal positioning statement Geoffrey Moore format, 2 External one-paragraph positioning, 3 Competitive differentiation matrix 3 key differences in customer language, 4 Three positioning tagline options. No jargon. No filler phrases. Use exact details provided." },
+    taglines: { tip: "💡 The best taglines are understood in 3 seconds and remembered for 3 years.", extra: { label: "Brand Personality", placeholder: "e.g. bold/irreverent, clean/minimal, warm/human, luxury" }, sp: "You are a brand copywriter. Generate 15 tagline options covering: direct benefit, emotional, aspirational, differentiation, minimalist 3 words or fewer, question, imperative, alliteration, unexpected/subversive, and category-defining. Identify the top 5 with a one-sentence rationale each. No generic taglines. No filler phrases. Use exact details provided." },
+    about: { tip: "💡 The About page is actually about the reader — frame your story through what it means for them.", extra: { label: "Founding Story (2 sentences)", placeholder: "e.g. Started after losing my job, built while raising 3 kids" }, sp: "You are a brand copywriter. Write a complete About page: Opening hook frame the reader's situation not Welcome to our website, Mission statement what you believe and who you fight for, Story founding story specific honest human, Three specific differentiators, Credibility section specific results, Social proof, CTA next logical step. Write as if speaking to one ideal client. No filler phrases. Use exact details provided." },
+    founder: { tip: "💡 Give the pivotal moment a date, a place, a scene — specificity creates trust.", extra: { label: "The Pivotal Moment", placeholder: "e.g. moment I quit my job, the client that changed everything" }, sp: "You are a personal brand specialist. Write a founder origin story in first person: The Before specific situation, The Inciting Incident specific moment make it a scene, The Struggle what you had to figure out, The Breakthrough what you discovered, The Now what you do and who you help, The Invitation why this matters to the reader. Specific over general. No filler phrases. Use exact details provided." },
+    bio: { tip: "💡 Lead with impact not title. I help X do Y outperforms I am a job title every time.", extra: { label: "Platform Focus", placeholder: "e.g. website plus press kit, LinkedIn, Instagram, speaker bio" }, sp: "You are a personal branding specialist. Write three bio versions: Short bio under 50 words, Medium bio 100-150 words, Long bio 300 plus words. All three: lead with impact not job title, include a specific credential or proof point, close with a human personal detail, include appropriate CTA. No filler phrases. Use exact details provided." },
+    mission: { tip: "💡 A mission statement should be specific enough you could measure whether you are achieving it.", extra: { label: "Who You Serve and How", placeholder: "e.g. help freelancers build sustainable businesses through positioning" }, sp: "You are a brand strategist. Write: 10 mission statement variations Action-oriented Belief-driven Outcome-focused and Simple declarative formats, Vision statement, Values list 5 core values with one-sentence explanations, Purpose statement. Identify the top 3 mission statements and explain why they are strongest. No filler phrases. Use exact details provided." },
+    elevator: { tip: "💡 The goal of an elevator pitch is not to close — it is to earn a longer conversation.", extra: { label: "Pitch Context", placeholder: "e.g. networking event, investor meeting, sales call, conference" }, sp: "You are a pitch specialist. Write 3 elevator pitch variations 60-80 words each 30 seconds when spoken: Variation 1 Problem-first, Variation 2 Result-first specific outcome, Variation 3 Story-first 1-sentence client result. Each: names who you help what you do specific result they get ends with natural conversation-opener question. No jargon. No filler phrases. Use exact details provided." }
 };
-"Everyone tells you to work harder to get [Target Audience] results, but they aren't telling you about [Product/Service Name]..."
-
-Hook Option 2 (The Direct Callout):
-"If you are a [Target Audience] struggling with [Core USP/Primary Benefit], stop scrolling immediately..."`,
-
-    'pastor-sales': `[Topic: Product/Service Name] [Audience: Target Audience] [Style: Desired Tone]
-
-💼 P.A.S.T.O.R. HIGH-CONVERTING SALES PAGE
----
-P - Problem: Are you a [Target Audience] dealing with the painful setup of existing programs?
-A - Amplify: Every hour you waste trying to configure traditional workflows is cash down the drain.
-S - Story: We built [Product/Service Name] specifically to end that cycle. 
-T - Testimony: Imagine getting [Core USP/Primary Benefit] active in your business on day one.
-O - Offer: Get full lifetime access to [Product/Service Name] today and claim your unfair advantage.
-R - Response: Click below to launch.`,
-
-    'cold-email': `[Topic: Product/Service Name] [Audience: Target Audience] [Style: Desired Tone]
-
-📧 COLD EMAIL OUTREACH (High Open Rate)
----
-Subject: Quick question regarding [Core USP/Primary Benefit]
-Hi [Name],
-I noticed that [Target Audience] like you often struggle with [Core USP/Primary Benefit].
-We developed [Product/Service Name] to solve this exact bottleneck.
-Are you open to seeing how we do it in 5 minutes?`,
-
-    'fb-ad': `[Topic: Product/Service Name] [Audience: Target Audience] [Style: Desired Tone]
-
-📢 FACEBOOK AD: PAIN-AGITATE-SOLVE
----
-Stop settling for [Pain Point related to Audience].
-Most [Target Audience] spend thousands trying to fix [Core USP/Primary Benefit] without success.
-The truth is: You aren't missing the work, you are missing the right framework.
-Enter [Product/Service Name]. 
-[Link/Call to Action]`,
-
-    'landing-hero': `[Topic: Product/Service Name] [Audience: Target Audience] [Style: Desired Tone]
-
-🚀 LANDING PAGE HERO SECTION
----
-Headline: The Easiest Way to [Core USP/Primary Benefit]
-Subheadline: Join 500+ [Target Audience] who have already switched to [Product/Service Name] to reclaim their time and results.
-Primary CTA: Start Your Journey
-Social Proof: "The best tool for [Target Audience] hands down." - Industry Expert`,
-
-    'yt-script': `[Topic: Product/Service Name] [Audience: Target Audience] [Style: Desired Tone]
-
-🎥 YOUTUBE VIDEO SCRIPT (The Hook)
----
-"Welcome back. Today we are talking about [Core USP/Primary Benefit].
-If you are a [Target Audience] tired of slow processes, this is for you.
-I am going to show you exactly how [Product/Service Name] changes the game, and why you are likely doing it wrong right now."`,
-
-    'newsletter': `[Topic: Product/Service Name] [Audience: Target Audience] [Style: Desired Tone]
-
-✉️ NEWSLETTER WELCOME
----
-Welcome to the inner circle.
-As a [Target Audience], you know that [Core USP/Primary Benefit] is everything. 
-We built [Product/Service Name] to make sure you never have to worry about that again.
-Expect deep dives, actionable frameworks, and occasional direct access to the team.`,
-
-    'case-study': `[Topic: Product/Service Name] [Audience: Target Audience] [Style: Desired Tone]
-
-📊 CASE STUDY OUTLINE
----
-The Challenge: [Target Audience] could not achieve [Core USP/Primary Benefit].
-The Pivot: Integrating [Product/Service Name].
-The Result: 200% increase in efficiency and zero downtime.
-The Takeaway: When you use [Product/Service Name], this becomes your standard.`,
-
-    'webinar-hook': `[Topic: Product/Service Name] [Audience: Target Audience] [Style: Desired Tone]
-
-🎯 WEBINAR REGISTRATION HOOK
----
-"How we helped [Target Audience] achieve [Core USP/Primary Benefit] in under 30 days.
-No fluff. No complex setups. Just the raw, repeatable framework that [Product/Service Name] uses every single day."`,
-
-    'brand-manifesto': `[Topic: Product/Service Name] [Audience: Target Audience] [Style: Desired Tone]
-
-💎 LUXURY BRAND MANIFESTO
----
-"To the select few [Target Audience] who refuse to settle. 
-We do not build tools for the masses. We forge frameworks for the exceptional.
-Welcome to [Product/Service Name]. 
-Our obsession is [Core USP/Primary Benefit]. 
-Nothing less, nothing compromised."`
-}; 
-
-🎯 VIRAL IG HOOK FRAMEWORK
----
-Hook Option 1 (The Antidote):
-"Everyone tells you to work harder to get [Target Audience] results, but they aren't telling you about [Product/Service Name]..."
-
-Hook Option 2 (The Direct Callout):
-"If you are a [Target Audience] struggling with [Core USP/Primary Benefit], stop scrolling immediately..."
-
-Hook Option 3 (The Pattern Interrupt):
-"Most people think [Core USP/Primary Benefit] requires months. Here is how we do it in minutes with [Product/Service Name]..."`,
-
-            'pastor-sales': `[Topic: Product/Service Name] [Audience: Target Audience] [Style: Desired Tone]
-
-💼 P.A.S.T.O.R. HIGH-CONVERTING SALES PAGE
----
-P - Problem: Are you a [Target Audience] dealing with the painful setup of existing programs?
-A - Amplify: Every hour you waste trying to configure traditional workflows is cash down the drain.
-S - Story: We built [Product/Service Name] specifically to end that cycle. 
-T - Testimony: Imagine getting [Core USP/Primary Benefit] active in your business on day one.
-O - Offer: Get full lifetime access to [Product/Service Name] today and claim your unfair advantage.
-R - Response: Click below to launch.`,
-
-            'pitch-deck': `[Topic: Product/Service Name] [Audience: Target Audience] [Style: Desired Tone]
-
-🎯 HIGH-TICKET CLIENT PITCH FRAMEWORK
----
-The Problem:
-"Most enterprise operations in your space waste thousands of hours on [Core USP/Primary Benefit] bottlenecks. They are bleeding efficiency."
-
-The Solution:
-"Our service, [Product/Service Name], automates this entire process specifically for [Target Audience]."
-
-The Results & Deliverables:
-"By connecting our framework, we guarantee [Core USP/Primary Benefit] within 14 days."`,
-
-            'caption-matrix': `[Topic: Product/Service Name] [Audience: Target Audience] [Style: Desired Tone]
-
-📝 MULTI-PLATFORM SOCIAL MATRIX
----
-Platform: LinkedIn
-"Struggling to find an edge as a [Target Audience]? Here is our blueprint for utilizing [Product/Service Name] to achieve [Core USP/Primary Benefit] in half the time..."
-
-Platform: Twitter/X
-"Too many [Target Audience] suffer from slow processes. 
-[Product/Service Name] fixes this completely. 
-Here is how: [Core USP/Primary Benefit]. 🧵👇"`,
-
-            'brand-manifesto': `[Topic: Product/Service Name] [Audience: Target Audience] [Style: Desired Tone]
-
-💎 LUXURY BRAND MANIFESTO
----
-"To the select few [Target Audience] who refuse to settle. 
-We do not build tools for the masses. We forge frameworks for the exceptional.
-Welcome to [Product/Service Name]. 
-Our obsession is [Core USP/Primary Benefit]. 
-Nothing less, nothing compromised."`
-        };
-
-        const workspace = document.getElementById('prompt-workspace');
-        const dropdown = document.getElementById('template-dropdown');
-
-        // Initial Load on Page Open
-        window.addEventListener('DOMContentLoaded', () => {
-            // Restore API Key state
-            const key = localStorage.getItem('user_openai_key');
-            if (key) {
-                document.getElementById('api-key-input').value = key;
-                updateAiButtonState(true);
-            }
-
-            // Restore previous workspace state or fall back to default
-            const savedContent = localStorage.getItem('saved_studio_workspace');
-            if (savedContent) {
-                workspace.value = savedContent;
-            } else {
-                workspace.value = PRELOADED_TEMPLATES['viral-hook'];
-                dropdown.value = 'viral-hook';
-            }
-
-            // Load Custom Dropdowns
-            renderVaultDropdownOptions();
-            updateStats();
-        });
-
-        // Track user typing in workspace & auto-save to browser
-        function handleInput() {
-            localStorage.setItem('saved_studio_workspace', workspace.value);
-            updateStats();
-        }
-
-        // Dropdown selection loading
-        function loadSelectedTemplate() {
-            const selectedVal = dropdown.value;
-            if (selectedVal === 'blank') {
-                workspace.value = '';
-                toggleDeleteBtn(false);
-            } else if (PRELOADED_TEMPLATES[selectedVal]) {
-                workspace.value = PRELOADED_TEMPLATES[selectedVal];
-                toggleDeleteBtn(false);
-            } else {
-                // It's a custom template saved in local storage
-                const vault = JSON.parse(localStorage.getItem('custom_studio_vault')) || {};
-                if (vault[selectedVal]) {
-                    workspace.value = vault[selectedVal];
-                    toggleDeleteBtn(true);
-                }
-            }
-            handleInput();
-        }
-
-        // Toggle UI Trashcan for custom templates
-        function toggleDeleteBtn(show) {
-            const container = document.getElementById('delete-btn-container');
-            if (show) {
-                container.classList.remove('hidden');
-                container.classList.add('flex');
-            } else {
-                container.classList.add('hidden');
-                container.classList.remove('flex');
-            }
-        }
-
-        // SMART LOCAL DRAFT COMPILER
-        function runLocalDraft() {
-            const product = document.getElementById('gen-product').value.trim() || '[Your Product]';
-            const audience = document.getElementById('gen-audience').value.trim() || '[Your Target Audience]';
-            const usp = document.getElementById('gen-usp').value.trim() || '[Your Core Benefit/USP]';
-            const tone = document.getElementById('gen-tone').value;
-
-            let currentText = workspace.value;
-
-            // Simple regex replacement pattern for our template placeholders
-            const replacements = [
-                { pattern: /\[Topic: Product\/Service Name\]/gi, replace: `Product/Service: ${product}` },
-                { pattern: /\[Audience: Target Audience\]/gi, replace: `Target: ${audience}` },
-                { pattern: /\[Style: Desired Tone\]/gi, replace: `Tone: ${tone}` },
-                { pattern: /\[Product\/Service Name\]/gi, replace: product },
-                { pattern: /\[Target Audience\]/gi, replace: audience },
-                { pattern: /\[Core USP\/Primary Benefit\]/gi, replace: usp }
-            ];
-
-            let modified = false;
-            replacements.forEach(item => {
-                if (item.pattern.test(currentText)) {
-                    currentText = currentText.replace(item.pattern, item.replace);
-                    modified = true;
-                }
-            });
-
-            if (!modified) {
-                // If there are no active placeholder tags found, compile a beautiful draft template directly from inputs
-                currentText = `✨ COMPILED LOCAL DRAFT (${tone} Tone)
----
-Target Audience: ${audience}
-Core Hook: "Struggling with ${usp}? We built ${product} specifically to solve this."
-
-The Solution:
-"${product} helps ${audience} achieve ${usp} without the standard painful setup times."
-
-Call To Action:
-"Launch ${product} today and start experiencing real results."`;
-            }
-
-            workspace.value = currentText;
-            handleInput();
-        }
-
-        // AI SETTINGS TOGGLE DRAWER
-        function toggleAiSettings() {
-            const drawer = document.getElementById('ai-settings-drawer');
-            drawer.classList.toggle('hidden');
-        }
-
-        function saveApiKey() {
-            const key = document.getElementById('api-key-input').value.trim();
-            if (key) {
-                localStorage.setItem('user_openai_key', key);
-                updateAiButtonState(true);
-                alert("API Key secured locally in browser!");
-                toggleAiSettings();
-            } else {
-                alert("Please enter a valid key.");
-            }
-        }
-
-        function clearApiKey() {
-            localStorage.removeItem('user_openai_key');
-            document.getElementById('api-key-input').value = '';
-            updateAiButtonState(false);
-            alert("API Key cleared!");
-        }
-
-        function updateAiButtonState(connected) {
-            const btn = document.getElementById('ai-generate-btn');
-            if (connected) {
-                btn.innerHTML = `🤖 Run AI Draft Generation`;
-                btn.classList.remove('from-purple-600', 'to-pink-600');
-                btn.classList.add('bg-emerald-600', 'hover:bg-emerald-500');
-            } else {
-                btn.innerHTML = `🤖 AI-Draft (Requires API Key)`;
-                btn.classList.remove('bg-emerald-600', 'hover:bg-emerald-500');
-                btn.classList.add('from-purple-600', 'to-pink-600');
-            }
-        }
-
-        // LIVE AI COMPILER VIA OPENAI ENDPOINT
-        async function runAiGeneration() {
-            const apiKey = localStorage.getItem('user_openai_key');
-            if (!apiKey) {
-                alert("Please click 'AI Setup' and enter your OpenAI API key to use true AI generation!");
-                toggleAiSettings();
-                return;
-            }
-
-            const product = document.getElementById('gen-product').value.trim() || '[Your Product Name]';
-            const audience = document.getElementById('gen-audience').value.trim() || '[Your Target Audience]';
-            const usp = document.getElementById('gen-usp').value.trim() || '[Your Core USP]';
-            const tone = document.getElementById('gen-tone').value;
-            const templateText = workspace.value;
-
-            const btn = document.getElementById('ai-generate-btn');
-            const originalText = btn.innerHTML;
-            btn.innerHTML = `⏳ AI Engine Thinking...`;
-            btn.disabled = true;
-
-            try {
-                const response = await fetch('https://api.openai.com/v1/chat/completions', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${apiKey}`
-                    },
-                    body: JSON.stringify({
-                        model: 'gpt-4o-mini',
-                        messages: [
-                            { 
-                                role: 'system', 
-                                content: 'You are an elite, high-converting direct response copywriter. Write targeted, production-ready copywriting based exactly on the provided structural framework and inputs.' 
-                            },
-                            { 
-                                role: 'user', 
-                                content: `Using this copywriting template structure:\n\n${templateText}\n\nDraft a ready-to-use version filled out with these custom details:\n- Product/Service: ${product}\n- Target Audience: ${audience}\n- Primary Benefit/USP: ${usp}\n- Copywriting Tone: ${tone}\n\nReturn ONLY the finished written copy beautifully formatted. Do not include introductory conversational text or markdown enclosing code blocks (like \`\`\`).` 
-                            }
-                        ],
-                        temperature: 0.7
-                    })
-                });
-
-                const data = await response.json();
-                if (data.choices && data.choices[0]) {
-                    workspace.value = data.choices[0].message.content.trim();
-                    handleInput();
-                } else if (data.error) {
-                    alert(`API Error: ${data.error.message}`);
-                } else {
-                    alert("AI Generation failed. Please check your credentials.");
-                }
-            } catch (e) {
-                alert("Network Error: Could not connect to OpenAI. Check your internet connection.");
-            } finally {
-                btn.innerHTML = originalText;
-                btn.disabled = false;
-            }
-        }
-
-        // SAVE FRAMEWORK TO PRIVATE VAULT
-        function saveToVault() {
-            const vaultName = document.getElementById('vault-name').value.trim();
-            const textToSave = workspace.value;
-
-            if (!vaultName) {
-                alert("Please name your custom prompt layout before saving.");
-                return;
-            }
-            if (!textToSave.trim()) {
-                alert("Cannot save an empty prompt workspace to your vault.");
-                return;
-            }
-
-            let vault = JSON.parse(localStorage.getItem('custom_studio_vault')) || {};
-            vault[vaultName] = textToSave;
-            localStorage.setItem('custom_studio_vault', JSON.stringify(vault));
-
-            renderVaultDropdownOptions();
-            dropdown.value = vaultName;
-            toggleDeleteBtn(true);
-            document.getElementById('vault-name').value = '';
-
-            alert(`📁 Successfully saved "${vaultName}" to your local browser vault!`);
-        }
-
-        // DELETE CUSTOM TEMPLATE FROM VAULT
-        function deleteCustomTemplate() {
-            const selectedVal = dropdown.value;
-            if (PRELOADED_TEMPLATES[selectedVal] || selectedVal === 'blank') {
-                return; // Can't delete system preloaded entries
-            }
-
-            if (confirm(`Are you sure you want to delete "${selectedVal}" from your private vault?`)) {
-                let vault = JSON.parse(localStorage.getItem('custom_studio_vault')) || {};
-                delete vault[selectedVal];
-                localStorage.setItem('custom_studio_vault', JSON.stringify(vault));
-
-                renderVaultDropdownOptions();
-                dropdown.value = 'blank';
-                workspace.value = '';
-                toggleDeleteBtn(false);
-                handleInput();
-            }
-        }
-
-        // RENDER DROP-DOWN LIST ELEMENTS WITH USER-SAVED PRESETS
-        function renderVaultDropdownOptions() {
-            // Keep default preloaded templates intact
-            let optionsHTML = `
-                <option value="blank">-- Select a Blank Canvas --</option>
-                <option value="viral-hook">⚡ Vault Slot 1: The Viral IG Hook Generator</option>
-                <option value="pastor-sales">💼 Vault Slot 2: P.A.S.T.O.R. Sales Page Framework</option>
-                <option value="pitch-deck">🎯 Vault Slot 3: High-Ticket Client Pitch Deck</option>
-                <option value="caption-matrix">📝 Vault Slot 4: Social Media Caption Matrix</option>
-                <option value="brand-manifesto">💎 Vault Slot 5: Luxury Brand Manifesto Template</option>
-            `;
-
-            const vault = JSON.parse(localStorage.getItem('custom_studio_vault')) || {};
-            const keys = Object.keys(vault);
-
-            if (keys.length > 0) {
-                optionsHTML += `<option disabled>────────── Private Local Vault ──────────</option>`;
-                keys.forEach(key => {
-                    optionsHTML += `<option value="${key}">📁 Custom: ${key}</option>`;
-                });
-            }
-
-            dropdown.innerHTML = optionsHTML;
-        }
-
-        // STATS, CHARACTER COUNTER & TOKEN PROXIES
-        function updateStats() {
-            const text = workspace.value;
-            const chars = text.length;
-            const words = text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
-
-            // Token proxies: OpenAI average 1 token = 4 characters. Claude average 1 token = 3.5 characters
-            const openaiTokens = Math.ceil(chars / 4);
-            const claudeTokens = Math.ceil(chars / 3.5);
-
-            document.getElementById('char-count').innerText = chars.toLocaleString();
-            document.getElementById('word-count').innerText = words.toLocaleString();
-            document.getElementById('openai-tokens').innerText = openaiTokens.toLocaleString();
-            document.getElementById('claude-tokens').innerText = claudeTokens.toLocaleString();
-
-            updateCosts();
-        }
-
-        // DYNAMIC COST MATRIX ENGINE
-        function updateCosts() {
-            const inTokens = parseInt(document.getElementById('openai-tokens').innerText.replace(/,/g, '')) || 0;
-            const outSliderVal = parseInt(document.getElementById('output-slider').value);
-
-            document.getElementById('slider-val').innerText = outSliderVal;
-
-            // Up-to-date token pricing models per 1M tokens
-            const models = {
-                gpt4o: { in: 2.50, out: 10.00 },
-                claude: { in: 3.00, out: 15.00 },
-                gemini: { in: 1.25, out: 5.00 }
-            };
-
-            const gptIn = (inTokens * models.gpt4o.in) / 1000000;
-            const gptOut = (outSliderVal * models.gpt4o.out) / 1000000;
-            const gptTotal = gptIn + gptOut;
-
-            const claudeIn = (inTokens * models.claude.in) / 1000000;
-            const claudeOut = (outSliderVal * models.claude.out) / 1000000;
-            const claudeTotal = claudeIn + claudeOut;
-
-            const geminiIn = (inTokens * models.gemini.in) / 1000000;
-            const geminiOut = (outSliderVal * models.gemini.out) / 1000000;
-            const geminiTotal = geminiIn + geminiOut;
-
-            // Render numbers nicely
-            document.getElementById('cost-gpt-in').innerText = '$' + gptIn.toFixed(5);
-            document.getElementById('cost-gpt-out').innerText = '$' + gptOut.toFixed(5);
-            document.getElementById('cost-gpt-total').innerText = '$' + gptTotal.toFixed(5);
-
-            document.getElementById('cost-claude-in').innerText = '$' + claudeIn.toFixed(5);
-            document.getElementById('cost-claude-out').innerText = '$' + claudeOut.toFixed(5);
-            document.getElementById('cost-claude-total').innerText = '$' + claudeTotal.toFixed(5);
-
-            document.getElementById('cost-gemini-in').innerText = '$' + geminiIn.toFixed(5);
-            document.getElementById('cost-gemini-out').innerText = '$' + geminiOut.toFixed(5);
-            document.getElementById('cost-gemini-total').innerText = '$' + geminiTotal.toFixed(5);
-        }
-
-        // UTILITIES: CLIPBOARD COPY
-        function copyToClipboard() {
-            if (!workspace.value.trim()) {
-                alert("Workspace is empty!");
-                return;
-            }
-            navigator.clipboard.writeText(workspace.value);
-            alert("📋 Copied to clipboard successfully!");
-        }
-
-        // UTILITIES: DOWNLOAD MARKDOWN
-        function downloadMarkdown() {
-            const content = workspace.value;
-            if (!content.trim()) {
-                alert("Workspace is empty!");
-                return;
-            }
-            const blob = new Blob([content], { type: 'text/markdown;charset=utf-8;' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.setAttribute('download', 'prompt-matrix.md');
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-    </script>
+let currentOutput = '';
+function onTemplateChange() {
+    const id = document.getElementById('template-dropdown').value;
+    const tpl = TEMPLATES[id];
+    const tipBox = document.getElementById('tip-box');
+    const extraWrap = document.getElementById('extra-field-wrap');
+    if (!tpl) { tipBox.classList.add('hidden'); extraWrap.classList.add('hidden'); return; }
+    tipBox.textContent = tpl.tip; tipBox.classList.remove('hidden');
+    if (tpl.extra) { document.getElementById('extra-label').textContent = tpl.extra.label; document.getElementById('gen-extra').placeholder = tpl.extra.placeholder; document.getElementById('gen-extra').value = ''; extraWrap.classList.remove('hidden'); }
+    else extraWrap.classList.add('hidden');
+}
+async function runGeneration(isRefine) {
+    const tplId = document.getElementById('template-dropdown').value;
+    const tpl = TEMPLATES[tplId];
+    const product = document.getElementById('gen-product').value.trim();
+    const audience = document.getElementById('gen-audience').value.trim();
+    const usp = document.getElementById('gen-usp').value.trim();
+    const tone = document.getElementById('gen-tone').value;
+    const extra = document.getElementById('gen-extra').value.trim();
+    const refineText = document.getElementById('refine-input').value.trim();
+    if (!tpl) { showError('Please select a template first.'); return; }
+    if (!product || !audience) { showError('Please fill in Product/Service Name and Target Audience.'); return; }
+    showError(''); setGenerating(true);
+    const userMsg = isRefine && refineText
+        ? `Here is the copy:\n\n${currentOutput}\n\nPlease refine it: ${refineText}`
+        : `Product/Service: ${product}\nTarget Audience: ${audience}\nTone: ${tone}\nKey Benefit: ${usp}\n${tpl.extra ? tpl.extra.label + ': ' + extra : ''}\n\nWrite the complete copy using the exact details above. Be specific, concrete, and persuasive.`;
+    try {
+        const response = await fetch('/api/generate', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ system: tpl.sp, messages: [{ role: 'user', content: userMsg }] }) });
+        const data = await response.json();
+        if (data.error) throw new Error(data.error);
+        if (!data.content || !data.content[0]) throw new Error('No content returned');
+        const txt = data.content.map(b => b.type === 'text' ? b.text : '').join('');
+        currentOutput = txt;
+        document.getElementById('prompt-workspace').value = txt;
+        document.getElementById('refine-input').value = '';
+        document.getElementById('refine-wrap').classList.remove('hidden');
+        document.getElementById('regen-btn').disabled = false;
+        handleInput();
+    } catch (err) { showError('Generation failed: ' + err.message + '. Make sure ANTHROPIC_API_KEY is set in Vercel environment variables.'); }
+    setGenerating(false);
+}
+function showError(msg) { const b = document.getElementById('error-box'); if (msg) { b.textContent = msg; b.classList.remove('hidden'); } else b.classList.add('hidden'); }
+function setGenerating(on) { const btn = document.getElementById('gen-btn'); btn.disabled = on; btn.innerHTML = on ? '<span class="dot"></span><span class="dot"></span><span class="dot"></span> <span>Generating your copy...</span>' : '⚡ Generate Copy'; }
+function handleInput() {
+    const text = document.getElementById('prompt-workspace').value; currentOutput = text;
+    const chars = text.length; const words = text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
+    document.getElementById('char-count').innerText = chars.toLocaleString();
+    document.getElementById('word-count').innerText = words.toLocaleString();
+    document.getElementById('openai-tokens').innerText = Math.ceil(chars / 4).toLocaleString();
+    document.getElementById('claude-tokens').innerText = Math.ceil(chars / 3.5).toLocaleString();
+    updateCosts();
+}
+function updateCosts() {
+    const inTokens = parseInt(document.getElementById('openai-tokens').innerText.replace(/,/g, '')) || 0;
+    const outVal = parseInt(document.getElementById('output-slider').value);
+    document.getElementById('slider-val').innerText = outVal;
+    const m = { gpt4o: { in: 2.50, out: 10.00 }, claude: { in: 3.00, out: 15.00 }, gemini: { in: 0.075, out: 0.30 } };
+    const c = (model) => ({ i: (inTokens * model.in) / 1e6, o: (outVal * model.out) / 1e6 });
+    const g = c(m.gpt4o), cl = c(m.claude), ge = c(m.gemini);
+    ['gpt', 'claude', 'gemini'].forEach((k, i) => { const v = [g, cl, ge][i]; document.getElementById(`cost-${k}-in`).innerText = '$' + v.i.toFixed(5); document.getElementById(`cost-${k}-out`).innerText = '$' + v.o.toFixed(5); document.getElementById(`cost-${k}-total`).innerText = '$' + (v.i + v.o).toFixed(5); });
+}
+function copyToClipboard() { const c = document.getElementById('prompt-workspace').value; if (!c.trim()) { alert('Nothing to copy!'); return; } navigator.clipboard.writeText(c); alert('📋 Copied to clipboard!'); }
+function downloadMarkdown() { const c = document.getElementById('prompt-workspace').value; if (!c.trim()) { alert('Nothing to download!'); return; } const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([c], { type: 'text/markdown' })); a.download = 'prompt-lightning-copy.md'; a.click(); }
+function saveToVault() { const n = document.getElementById('vault-name').value.trim(); const t = document.getElementById('prompt-workspace').value; if (!n) { alert('Please name your prompt.'); return; } if (!t.trim()) { alert('Cannot save empty workspace.'); return; } let v = JSON.parse(localStorage.getItem('pls_vault') || '{}'); v[n] = t; localStorage.setItem('pls_vault', JSON.stringify(v)); document.getElementById('vault-name').value = ''; alert(`💾 Saved "${n}" to vault!`); }
+handleInput(); updateCosts();
+</script>
 </body>
 </html>
