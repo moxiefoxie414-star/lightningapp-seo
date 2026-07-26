@@ -121,11 +121,9 @@ document.getElementById('wf').addEventListener('submit',function(e){
   sb.disabled=true;sb.textContent='Saving...';
   document.getElementById('err').style.display='none';
 
-  // Saves email to browser console for now
-  // Replace YOUR_SPLITFORMS_KEY with real key from splitforms.com
-  const key='YOUR_SPLITFORMS_KEY';
-
-  if(key==='YOUR_SPLITFORMS_KEY'){
+  
+  const key='994c227c-5885-407a-8139-988ed83ae311';
+  if(key==='PLACEHOLDER'){
     // No key yet — show success but log to console
     console.log('Waitlist email (not yet saved to service):',em);
     document.getElementById('ok').style.display='block';
@@ -134,7 +132,7 @@ document.getElementById('wf').addEventListener('submit',function(e){
     return;
   }
 
-  fetch('https://splitforms.com/api/submit',{
+  fetch('https://api.web3forms.com/submit',{
     method:'POST',
     headers:{'Content-Type':'application/json'},
     body:JSON.stringify({
