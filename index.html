@@ -160,9 +160,13 @@
         </div>
     </div>
     <footer class="text-center text-slate-500 text-xs py-6 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div>PROMPT LIGHTNING STUDIO © 2026 · ALL RIGHTS RESERVED</div>
-        <div class="text-indigo-400 font-medium">⚡ 40 Templates · Real AI Generation · Token Counter</div>
-    </footer>
+    <div>PROMPT LIGHTNING STUDIO © 2026 · ALL RIGHTS RESERVED</div>
+    <div class="flex items-center gap-4">
+        <a href="/privacy.html" class="hover:text-slate-300 transition">Privacy Policy</a>
+        <a href="/terms.html" class="hover:text-slate-300 transition">Terms of Service</a>
+        <span class="text-indigo-400 font-medium">⚡ 40 Templates · Real AI Generation · Token Counter</span>
+    </div>
+</footer>
 </div>
 <script>
 const TEMPLATES = {
@@ -246,7 +250,7 @@ async function runGeneration(isRefine) {
         document.getElementById('refine-wrap').classList.add('flex');
         document.getElementById('regen-btn').disabled = false;
         handleInput();
-    } catch (err) { showError('Generation failed: ' + err.message + '. Make sure ANTHROPIC_API_KEY is set in Vercel environment variables.'); }
+    } catch (err) { showError('Generation failed: ' + err.message + '. Make sure GROQ_API_KEY is set in Vercel environment variables.'); }
     setGenerating(false);
 }
 function showError(msg) { const b = document.getElementById('error-box'); if (msg) { b.textContent = msg; b.classList.remove('hidden'); } else b.classList.add('hidden'); }
