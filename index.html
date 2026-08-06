@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <script src="https://js-de.sentry-cdn.com/04f62a4e987cdffaf6c422b8893dd8c6.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prompt Lightning Studio | Premium AI Copywriting — 40 Templates</title>
@@ -19,6 +20,11 @@
     </style>
 </head>
 <body class="text-slate-100 min-h-screen py-8 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto flex justify-end pt-2">
+    <div id="auth-area">
+        <button id="google-signin-btn" class="text-xs font-semibold bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 border border-indigo-500/20 px-3 py-1.5 rounded-lg transition">Sign in with Google</button>
+    </div>
+</div>
 <div class="max-w-7xl mx-auto space-y-8">
     <header class="text-center space-y-3 pb-4 border-b border-slate-800">
         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 text-xs font-semibold uppercase tracking-wider">⚡ Premium Copywriting Studio V2.0</div>
@@ -278,6 +284,27 @@ function copyToClipboard() { const c = document.getElementById('prompt-workspace
 function downloadMarkdown() { const c = document.getElementById('prompt-workspace').value; if (!c.trim()) { alert('Nothing to download!'); return; } const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([c], { type: 'text/markdown' })); a.download = 'prompt-lightning-copy.md'; a.click(); }
 function saveToVault() { const n = document.getElementById('vault-name').value.trim(); const t = document.getElementById('prompt-workspace').value; if (!n) { alert('Please name your prompt.'); return; } if (!t.trim()) { alert('Cannot save empty workspace.'); return; } let v = JSON.parse(localStorage.getItem('pls_vault') || '{}'); v[n] = t; localStorage.setItem('pls_vault', JSON.stringify(v)); document.getElementById('vault-name').value = ''; alert(`💾 Saved "${n}" to vault!`); }
 handleInput(); updateCosts();
+    const _supabase = supabase.createClient(
+    'https://uaepuitwmtwanyezxxva.supabase.co',
+    'sb_publishable_IJptBF6-8exmqlPL0MqnmQ_kAyNBuhc'
+);
+
+document.getElementById('google-signin-btn').addEventListener('click', async () => {
+    await _supabase.auth.signInWithOAuth({ provider: 'google' });
+});
+
+async function updateAuthUI() {
+    const { data: { session } } = await _supabase.auth.getSession();
+    const authArea = document.getElementById('auth-area');
+    if (session) {
+        authArea.innerHTML = `<div class="flex items-center gap-2 text-xs text-slate-300"><span>${session.user.email}</span><button id="signout-btn" class="font-semibold text-red-400 hover:text-red-300">Sign out</button></div>`;
+        document.getElementById('signout-btn').addEventListener('click', async () => {
+            await _supabase.auth.signOut();
+            updateAuthUI();
+        });
+    }
+}
+updateAuthUI();
 </script>
 </body>
 </html>
