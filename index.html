@@ -257,6 +257,10 @@ async function runGeneration(isRefine) {
         document.getElementById('refine-wrap').classList.add('flex');
         document.getElementById('regen-btn').disabled = false;
         handleInput();
+        const { data: { session } } = await _supabase.auth.getSession();
+        if (session) {
+            await _supabase.from('generations').insert({ user_id: session.user.id, output: txt, template: tplId });
+        }
     } catch (err) { showError('Generation failed: ' + err.message + '. Make sure GROQ_API_KEY is set in Vercel environment variables.'); }
     setGenerating(false);
 }
