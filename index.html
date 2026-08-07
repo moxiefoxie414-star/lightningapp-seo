@@ -25,6 +25,15 @@
         <button id="google-signin-btn" class="text-xs font-semibold bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 border border-indigo-500/20 px-3 py-1.5 rounded-lg transition">Sign in with Google</button>
     </div>
 </div>
+    <div id="history-modal" class="hidden fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4">
+    <div class="glass-panel rounded-2xl max-w-2xl w-full max-h-[80vh] overflow-y-auto p-6">
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="text-lg font-bold text-slate-100">Your History</h3>
+            <button onclick="document.getElementById('history-modal').classList.add('hidden')" class="text-slate-400 hover:text-slate-200">✕</button>
+        </div>
+        <div id="history-list" class="space-y-3 text-sm"></div>
+    </div>
+</div>
 <div class="max-w-7xl mx-auto space-y-8">
     <header class="text-center space-y-3 pb-4 border-b border-slate-800">
         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 text-xs font-semibold uppercase tracking-wider">⚡ Premium Copywriting Studio V2.0</div>
@@ -301,7 +310,8 @@ async function updateAuthUI() {
     const { data: { session } } = await _supabase.auth.getSession();
     const authArea = document.getElementById('auth-area');
     if (session) {
-        authArea.innerHTML = `<div class="flex items-center gap-2 text-xs text-slate-300"><span>${session.user.email}</span><button id="signout-btn" class="font-semibold text-red-400 hover:text-red-300">Sign out</button></div>`;
+authArea.innerHTML = `<div class="flex items-center gap-2 text-xs text-slate-300"><button id="history-btn" class="font-semibold text-indigo-400 hover:text-indigo-300">History</button><span>${session.user.email}</span><button id="signout-btn" class="font-semibold text-red-400 hover:text-red-300">Sign out</button></div>`;
+        document.getElementById('history-btn').addEventListener('click', showHistory);
         document.getElementById('signout-btn').addEventListener('click', async () => {
             await _supabase.auth.signOut();
             updateAuthUI();
@@ -309,6 +319,24 @@ async function updateAuthUI() {
     }
 }
 updateAuthUI();
+    async function showHistory() {
+    const { data, error } = await _supabase.from('generations').select('*').order('created_at', { ascending: false }).limit(20);
+    const list = document.getElementById('history-list');
+    if (error || !data || data.length === 0) {
+        list.innerHTML = '<p class="text-slate-400">No saved generations yet.</p>';
+    } else {
+        window._historyData = data;
+        list.innerHTML = data.map((row, i) => `<div class="border border-slate-800 rounded-lg p-3 hover:border-indigo-500/50 cursor-pointer" onclick="loadHistoryItem(${i})"><div class="flex justify-between text-xs text-slate-400 mb-1"><span>${row.template}</span><span>${new Date(row.created_at).toLocaleString()}</span></div><div class="text-slate-300 truncate">${row.output.slice(0, 100)}...</div></div>`).join('');
+    }
+    document.getElementById('history-modal').classList.remove('hidden');
+}
+function loadHistoryItem(i) {
+    const item = window._historyData[i];
+    document.getElementById('prompt-workspace').value = item.output;
+    currentOutput = item.output;
+    document.getElementById('history-modal').classList.add('hidden');
+    handleInput();
+}
 </script>
 </body>
 </html>
