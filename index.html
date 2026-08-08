@@ -239,6 +239,15 @@ function onTemplateChange() {
     else extraWrap.classList.add('hidden');
 }
 async function runGeneration(isRefine) {
+    const { data: { session } } = await _supabase.auth.getSession();
+    if (session) {
+        const startOfMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString();
+        const { count } = await _supabase.from('generations').select('*', { count: 'exact', head: true }).eq('user_id', session.user.id).gte('created_at', startOfMonth);
+        if (count >= 12) {
+            showError('You have used all 12 free generations this month. Upgrade to Pro for more.');
+            return;
+        }
+    }
     const tplId = document.getElementById('template-dropdown').value;
     const tpl = TEMPLATES[tplId];
     const product = document.getElementById('gen-product').value.trim();
