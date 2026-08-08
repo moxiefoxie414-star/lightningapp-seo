@@ -319,8 +319,9 @@ async function updateAuthUI() {
     const { data: { session } } = await _supabase.auth.getSession();
     const authArea = document.getElementById('auth-area');
     if (session) {
-authArea.innerHTML = `<div class="flex items-center gap-2 text-xs text-slate-300"><button id="history-btn" class="font-semibold text-indigo-400 hover:text-indigo-300">History</button><span>${session.user.email}</span><button id="signout-btn" class="font-semibold text-red-400 hover:text-red-300">Sign out</button></div>`;
+authArea.innerHTML = `<div class="flex items-center gap-2 text-xs text-slate-300"><span id="usage-counter" class="text-slate-500 mr-1"></span><button id="history-btn" class="font-semibold text-indigo-400 hover:text-indigo-300">History</button><span>${session.user.email}</span><button id="signout-btn" class="font-semibold text-red-400 hover:text-red-300">Sign out</button></div>`;
         document.getElementById('history-btn').addEventListener('click', showHistory);
+        updateUsageCounter(session.user.id);
         document.getElementById('signout-btn').addEventListener('click', async () => {
             await _supabase.auth.signOut();
             updateAuthUI();
@@ -328,6 +329,11 @@ authArea.innerHTML = `<div class="flex items-center gap-2 text-xs text-slate-300
     }
 }
 updateAuthUI();
+    async function updateUsageCounter(userId) {
+    const startOfMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString();
+    const { count } = await _supabase.from('generations').select('*', { count: 'exact', head: true }).eq('user_id', userId).gte('created_at', startOfMonth);
+    document.getElementById('usage-counter').textContent = `${count}/12 this month`;
+}
     async function showHistory() {
     const { data, error } = await _supabase.from('generations').select('*').order('created_at', { ascending: false }).limit(20);
     const list = document.getElementById('history-list');
